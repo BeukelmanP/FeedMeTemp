@@ -21,7 +21,7 @@ public class Database {
 
     private java.sql.Connection conn;
     private PreparedStatement pstmt;
-    private ResultSet myRs;
+    private ResultSet rs;
     
     private String server;
     private String name;
@@ -66,8 +66,8 @@ public class Database {
      */
     public boolean disconnectFromDB() {
         try {
-            if (myRs != null) {
-                myRs.close();
+            if (rs != null) {
+                rs.close();
             }
             if (conn != null) {
                 conn.close();
