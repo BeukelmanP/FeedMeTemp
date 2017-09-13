@@ -21,6 +21,7 @@ CREATE TABLE `feedback`
 `sendTo` INT(4),
 `sendFrom` INT(4),
 `feedback` VARCHAR(255) NOT NULL,
+`timeCreated` DATETIME NOT NULL,
 PRIMARY KEY(id),
 FOREIGN KEY (sendTo) REFERENCES `user`(id),
 FOREIGN KEY (sendFrom) REFERENCES `user`(id)
@@ -42,12 +43,12 @@ VALUES (1,'test', 'test', 'test', 'test');
 INSERT INTO `user` (id,firstname,lastname,email,password)
 VALUES (2, 'wes', 'wes', 'wes@wes.nl', 'wes'); 
 
-INSERT INTO `feedback` (id,sendTo,sendFrom,feedback)
-VALUES (1,1,2,'lekker gewerkt pik');
-INSERT INTO `feedback` (id,sendTo,sendFrom,feedback)
-VALUES (2,2,1, 'Feedback all the way');
-INSERT INTO `feedback` (id,sendTo,sendFrom,feedback)
-VALUES (3,2,1, 'Je stinkt');
+INSERT INTO `feedback` (id,sendTo,sendFrom,feedback,timeCreated)
+VALUES (1,1,2,'lekker gewerkt pik',CURRENT_TIMESTAMP());
+INSERT INTO `feedback` (id,sendTo,sendFrom,feedback,timeCreated)
+VALUES (2,2,1, 'Feedback all the way',CURRENT_TIMESTAMP());
+INSERT INTO `feedback` (id,sendTo,sendFrom,feedback,timeCreated)
+VALUES (3,2,1, 'Je stinkt',CURRENT_TIMESTAMP());
 
 INSERT INTO `user_feedback` (id,feedbackId,likeFrom,helpful)
 VALUES (1,1,1,1);
