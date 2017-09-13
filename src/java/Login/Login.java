@@ -5,6 +5,7 @@
  */
 package Login;
 
+import Database.Database;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 
@@ -20,62 +21,61 @@ import javax.servlet.http.HttpSession;
  *
  * @author Sander
  */
-
 @ManagedBean
 @SessionScoped
 public class Login implements Serializable {
 
-	private static final long serialVersionUID = 1344828042104158293L;
-	
-	private String password;
-	private String message;
-	private String username;
+    private static final long serialVersionUID = 1344828042104158293L;
 
-	public String getPassword() {
-		return password;
-	}
+    private String password;
+    private String message;
+    private String username;
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	//validate login
-	public String validateUsernamePassword() {
-		boolean valid = LoginDAO.validate(username, password);
-		if (valid) {
-			HttpSession session = SessionUtils.getSession();
-			session.setAttribute("username", username);
-			return "admin";
-		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Incorrect Username and Password",
-							"Please enter correct username and Password"));
-			return "login";
-		}
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	//logout event, invalidate session
-	public String logout() {
-		HttpSession session = SessionUtils.getSession();
-		session.invalidate();
-		return "login";
-	}
+    //validate login
+    public String validateUsernamePassword() {
+        boolean valid = Database.validate(username, password);
+        if (valid) {
+            HttpSession session = SessionUtils.getSession();
+            session.setAttribute("username", username);
+            return "admin";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "Incorrect Username and Password",
+                            "Please enter correct username and Password"));
+            return "login";
+        }
+    }
+
+    //logout event, invalidate session
+    public String logout() {
+        HttpSession session = SessionUtils.getSession();
+        session.invalidate();
+        return "login";
+    }
 }
