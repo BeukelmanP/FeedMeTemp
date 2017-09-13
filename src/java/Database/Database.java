@@ -5,6 +5,7 @@
  */
 package Database;
 
+import Feedback.Feedback;
 import Login.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,18 +26,18 @@ public class Database {
     private PreparedStatement pstmt;
     private ResultSet rs;
     
-    private String server;
-    private String name;
-    private String username;
-    private String password;
-    private int port;
+    private String dbServer;
+    private String dbName;
+    private String dbUsername;
+    private String dbPassword;
+    private int dbPort;
 
-    public Database() {
-        server = "sql11.freemysqlhosting.net";
-        name = "sql11194356";
-        username = "sql11194356";
-        password = "YpVPS7iJwE";
-        port = 3306;
+    public Database() {       
+        dbServer = "sql11.freemysqlhosting.net";
+        dbName = "sql11194356";
+        dbUsername = "sql11194356";
+        dbPassword = "YpVPS7iJwE";
+        dbPort = 3306;
     }
 
     /**
@@ -46,9 +47,8 @@ public class Database {
     public boolean connectToDB() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://" + server + ":" + port;
-            //conn = DriverManager.getConnection("jdbc:mysql://vserver213.axc.nl:3306/lesleya213_pts?zeroDateTimeBehavior=convertToNull", "lesleya213_pts", "wachtwoord123");
-            conn = DriverManager.getConnection(url, username, password);
+            String url = "jdbc:mysql://" + dbServer + ":" + dbPort + "/" + dbName;
+            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
             System.out.println("started connection to database...");
             return true;
         } catch (ClassNotFoundException | SQLException ex) {
@@ -87,26 +87,79 @@ public class Database {
     }
     
     /**
-     * Gets all users from the database
+     * Gets all users from the database.
      * @return ArrayList<User>
      */
-    public ArrayList<User> getTableContents() {
-        ArrayList<User> contents = new ArrayList<User>();
+    public ArrayList<User> getAllUsers() {
+        ArrayList<User> result = new ArrayList<User>();
         
-        //implement method
+        int id; 
+        String firstname;
+        String lastname;
+        String email;
+        String password;
+
+        if (conn != null) {
+            try {
+                pstmt = conn.prepareStatement("SELECT * FROM user");
+                rs = pstmt.executeQuery();
+
+                while (rs.next()) {
+                    id = rs.getInt("id");
+                    firstname = rs.getString("firstname");
+                    lastname = rs.getString("lastname");
+                    email = rs.getString("email");
+                    password = rs.getString("password");
+                    User user = new User(id, firstname, lastname, email, password);
+                    result.add(user);
+                }
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            System.out.println("There is no existing connection");
+        }        
         
-        return contents;
+        return result;
     }
     
     /**
      * gets all feedback from the database
      * @return ArrayList<Feedback>
      */
-    public ArrayList<Object> getAllUsers() {
-        ArrayList<Object> contents = new ArrayList<Object>();
+    public ArrayList<Feedback> getAllFeedback() {
+        ArrayList<Feedback> result = new ArrayList<Feedback>();
+        int id; 
+        int sendTo; 
+        int sendFrom; 
+        String feedbackContent;
+
+        if (conn != null) {
+            try {
+                pstmt = conn.prepareStatement("SELECT * FROM user");
+                rs = pstmt.executeQuery();
+
+                while (rs.next()) {
+                    id = rs.getInt("id");
+                    sendTo = rs.getInt("sendTo");
+                    sendFrom = rs.getInt("sendFrom");
+                    feedbackContent = rs.getString("feedback");
+                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
+                    result.add(feedback);
+                }
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            System.out.println("There is no existing connection");
+        }        
         
-        //implement method
-        
-        return contents;
+        return result;
     }
 }
