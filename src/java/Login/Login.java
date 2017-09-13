@@ -11,11 +11,11 @@ package Login;
  */
 public class Login {
 
-    public boolean Authenticate(String email, String password) {
+    public String Authenticate(String email, String password) {
         if ("root".equals(email) && "root".equals(password)) {
-            return true;
+            return "Loggedin";
         } else {
-            return false;
+            return "Index";
         }
     }
 }
