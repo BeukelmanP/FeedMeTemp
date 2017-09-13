@@ -5,7 +5,9 @@
  */
 package Database;
 
+import Login.User;
 import java.sql.Connection;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -75,4 +77,29 @@ public class DatabaseTest {
         assertTrue(result);
     }
     
+    /**
+     * Test of getAllUsers method, of class Database.
+     */
+    @Test
+    public void testGetAllUsers() {
+        System.out.println("getAllUsers");
+        Database instance = new Database();
+        instance.connectToDB(); //connect to database before attempting disconnect
+        ArrayList<User> result = instance.getAllUsers();
+        assertTrue(result.size() > 0);
+        instance.disconnectFromDB(); //disconnect after test
+    }
+    
+    /**
+     * Test of getAllFeedback method, of class Database.
+     */
+    @Test
+    public void testGetAllFeedback() {
+        System.out.println("getAllUsers");
+        Database instance = new Database();
+        instance.connectToDB(); //connect to database before attempting action
+        ArrayList<User> result = instance.getAllUsers();
+        assertTrue(result.size() > 0);
+        instance.disconnectFromDB(); //disconnect after test
+    }
 }
