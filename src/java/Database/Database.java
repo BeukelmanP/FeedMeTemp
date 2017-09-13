@@ -5,11 +5,13 @@
  */
 package Database;
 
+import Login.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,5 +84,29 @@ public class Database {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+    
+    /**
+     * Gets all users from the database
+     * @return ArrayList<User>
+     */
+    public ArrayList<User> getTableContents() {
+        ArrayList<User> contents = new ArrayList<User>();
+        
+        //implement method
+        
+        return contents;
+    }
+    
+    /**
+     * gets all feedback from the database
+     * @return ArrayList<Feedback>
+     */
+    public ArrayList<Object> getAllUsers() {
+        ArrayList<Object> contents = new ArrayList<Object>();
+        
+        //implement method
+        
+        return contents;
     }
 }
