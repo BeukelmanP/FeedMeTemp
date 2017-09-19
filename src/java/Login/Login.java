@@ -5,17 +5,14 @@
  */
 package Login;
 
-import Database.Database;
-import javax.inject.Named;
-import javax.enterprise.context.Dependent;
-
 import java.io.Serializable;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  *
@@ -57,19 +54,25 @@ public class Login implements Serializable {
 
     //validate login
     public String validateUsernamePassword() {
-        boolean valid = Database.validate(username, password);
-        if (valid) {
+        //boolean valid = Database.validate(username, hashPassword(password);
+        User usr = new User(0, "Fred", "The", "f-the@hotmail.com", "Test123");
+        String pw = getPassword();
+        String usrnm = getUsername();
+        
+        if (usrnm.equals(usr.getEmail()) && pw.equals(usr.getPassword())) {
+            System.out.println("loggedin");
             HttpSession session = SessionUtils.getSession();
             session.setAttribute("username", username);
             return "admin";
         } else {
-            FacesContext.getCurrentInstance().addMessage(
-                    null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN,
-                            "Incorrect Username and Password",
-                            "Please enter correct username and Password"));
-            return "login";
+            FacesMessage error = new FacesMessage("Incorrect Username and Password combination!");
+            FacesContext.getCurrentInstance().addMessage("loginform:Loginbtn", error);
+            return "Index";
         }
+    }
+    
+    public String hashPassword(String password){
+        throw new NotImplementedException();
     }
 
     //logout event, invalidate session
