@@ -38,13 +38,13 @@
                 <div id="alertlogin"></div>
                 <div class="row">
                     <div class="input-field col s6 offset-s3">
-                        <p:inputText id="email" type="email" class="validate" value="#{login.setUsername(username)}" required="true" />
+                        <input id="email" type="email" class="validate" value="#{login.username}" />
                         <label for="email">Email</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s6 offset-s3">
-                        <input id="password" type="password" class="validate" value="#{login.setPassword(password)}"></input>
+                        <input id="password" type="password" class="validate" value="#{login.password}" />
                         <label for="password">Password</label>
                     </div>
                 </div>

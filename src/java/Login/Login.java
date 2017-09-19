@@ -56,10 +56,8 @@ public class Login implements Serializable {
     public String validateUsernamePassword() {
         //boolean valid = Database.validate(username, hashPassword(password);
         User usr = new User(0, "Fred", "The", "f-the@hotmail.com", "Test123");
-        String pw = getPassword();
-        String usrnm = getUsername();
         
-        if (usrnm.equals(usr.getEmail()) && pw.equals(usr.getPassword())) {
+        if (getUsername().equals(usr.getEmail()) && getPassword().equals(usr.getPassword())) {
             System.out.println("loggedin");
             HttpSession session = SessionUtils.getSession();
             session.setAttribute("username", username);
