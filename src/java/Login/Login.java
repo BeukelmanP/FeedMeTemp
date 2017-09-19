@@ -55,22 +55,23 @@ public class Login implements Serializable {
 		this.username = username;
 	}
 
-	//validate login
-	public String validateUsernamePassword() {
-		boolean valid = LoginDAO.validate(username, password);
-		if (valid) {
-			HttpSession session = SessionUtils.getSession();
-			session.setAttribute("username", username);
-			return "admin";
-		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Incorrect Username and Password",
-							"Please enter correct username and Password"));
-			return "login";
-		}
-	}
+    //validate login
+    public String validateUsernamePassword() {
+        //fixdb con
+        //boolean valid = Database.validate(username, hashPassword(password);
+        User usr = new User(0, "Fred", "The", "f-the@hotmail.com", "Test123");
+        
+        if (getUsername().equals(usr.getEmail()) && getPassword().equals(usr.getPassword())) {
+            System.out.println("loggedin");
+            HttpSession session = SessionUtils.getSession();
+            session.setAttribute("username", username);
+            return "admin";
+        } else {
+            FacesMessage error = new FacesMessage("Incorrect Username and Password combination!");
+            FacesContext.getCurrentInstance().addMessage("loginform:Loginbtn", error);
+            return "Index";
+        }
+}
 
 	//logout event, invalidate session
 	public String logout() {
