@@ -95,7 +95,7 @@ public class DatabaseTest {
      */
     @Test
     public void testGetAllFeedback() {
-        System.out.println("getAllUsers");
+        System.out.println("getAllFeedback");
         Database instance = new Database();
         instance.connectToDB(); //connect to database before attempting action
         ArrayList<User> result = instance.getAllUsers();
