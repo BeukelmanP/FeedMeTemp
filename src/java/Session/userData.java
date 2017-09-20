@@ -10,18 +10,17 @@ package Session;
  * @author piete
  */
 import Database.UserDatabase;
-import Login.User;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import Login.User;
 
 @ManagedBean(name = "userData", eager = true)
 @SessionScoped
 public class userData implements Serializable {
 
-    String LoggedInName = "Pieter";
+    User userLoggedIn = new User(1,"Frederick","the","fred@the.eu","https://pbs.twimg.com/profile_images/3432967857/9b811b619c00d8d32c4f50bac292644f.jpeg","FEO");
     String NameUserToGiveFeedback = "t";
     //@ManagedProperty(value = "#{searchKeyWord}")
     String searchKeyWord;
@@ -39,8 +38,8 @@ public class userData implements Serializable {
         this.searchKeyWord = searchKeyWord;
     }
 
-    public String getLoggedInName() {
-        return ("Pieter");
+    public User getLoggedInUser() {
+        return (userLoggedIn);
     }
 
     public String getNameUserToGiveFeedbackTo() {

@@ -5,12 +5,49 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f = "http://java.sun.com/jsf/core"    
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" style="height: 100%;">
+    <h:head>
+        <title>FeedMe</title>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <!--Import materialize.css-->
+            <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/></link>
+        <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+    </h:head>
+    <h:body>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <ui:include src="/includes/nav.xhtml" />
+        <div class="row">
+            <div class="row"></div>
+            <div style="background-color: #fcfcfc; min-height: 500px;" class="col s8 offset-s2 z-depth-5">
+                <h4 style="text-align: center">Profile</h4>
+
+                <div class="row" style="position: relative; left: 25%; top: 50px">
+                    <div class="row">
+                        <div style="float: left; margin-right:10%;"><img src="#{userData.loggedInUser.picture}"/></div>
+                        <div sytle="float: left">
+                            <div>
+                                <p class="col-md-4">Name: 
+                                    <span style="display:inline-block; width: 5%;"></span>
+                                    <h:outputText class="col-md-8" style="color: grey" value = "#{userData.loggedInUser.firstname} #{userData.loggedInUser.lastname}"/>
+                                </p>
+                            </div>
+                            <div>
+                                <p class="col-md-4">Email:
+                                    <span style="display:inline-block; width: 5%;"></span>
+                                    <h:outputText class="col-md-8" style="color: grey" value = "#{userData.loggedInUser.email}"/>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </h:body>
 </html>
