@@ -25,14 +25,24 @@ and open the template in the editor.
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <ui:include src="/includes/nav.xhtml" />
-         <!--include Nav bar-->
+        <!--include Nav bar-->
         <div class="row">
             <div class="row" style="height: 10%"></div>
             <div style="background-color: #fcfcfc;" class="col s8 offset-s2 z-depth-5">
-                <H4>
-                    Welcome back
-                    <h:outputText value = "#{userData.getLoggedInName()}"/>
-                </H4>
+                <H6>Results for: 
+                    <h:outputText value = "#{userData.getSearchKeyWord()}" /></H6>
+                <h:dataTable value = "#{userData.searchedUsers}" var = "User">
+
+                    <h:column>    				
+                        <f:facet name = "header">Name</f:facet>    				
+                            #{User.firstname} #{User.lastname}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name = "header">Department</f:facet>
+                            #{User.lastname}
+                    </h:column>
+                </h:dataTable>
             </div>
         </div>
     </h:body>
