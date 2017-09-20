@@ -56,7 +56,7 @@ public class Login implements Serializable {
     public String validateUsernamePassword() {
         //fixdb con
         //boolean valid = Database.validate(username, hashPassword(password);
-        User usr = new User(0, "Fred", "The", "f-the@hotmail.com");
+        User usr = new User(0, "Fred", "The", "f-the@hotmail.com","","");
         String pw = "Test123";
         
         if (getUsername().equals(usr.getEmail()) && getPassword().equals(pw)) {

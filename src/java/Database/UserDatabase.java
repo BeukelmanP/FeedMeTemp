@@ -23,8 +23,8 @@ import java.util.logging.Logger;
 public class UserDatabase extends Database {
 
     /**
-     * Gets all users from the database.
-     *-------------------
+     * Gets all users from the database. -------------------
+     *
      * @return ArrayList<User>
      */
     public static ArrayList<User> getAllUsers() {
@@ -37,7 +37,43 @@ public class UserDatabase extends Database {
             try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user")) {
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
-                    User user = new User(rs.getInt("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("email"));
+                    User user = new User(rs.getInt("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("email"), rs.getString("picture"), rs.getString("department"));
+                    result.add(user);
+                }
+            }
+            rs.close();
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("connection isnt closed but cant close");
+                }
+            }
+        }
+        return result;
+    }
+
+    public static ArrayList<User> searchUser(String keyword) {
+        ArrayList<User> result = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = getConnection();
+            ResultSet rs;
+
+            try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE firstname LIKE %"+keyword+"% OR lastname LIKE %"+keyword+"% OR firstname LIKE %"+keyword+"% AND lastname LIKE %"+keyword+"% ")) {
+                pstmt.setString(1, "%"+keyword+"%");
+                pstmt.setString(2, "%"+keyword+"%");
+                pstmt.setString(3, "%"+keyword+"%");
+                pstmt.setString(4, "%"+keyword+"%");
+                rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    User user = new User(rs.getInt("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("email"), rs.getString("picture"), rs.getString("department"));
                     result.add(user);
                 }
             }
@@ -67,7 +103,7 @@ public class UserDatabase extends Database {
      * @param password The password of the user.
      * @return User with the given username and password
      */
-    public User getUser(String username, String password) {
+    public User User(String username, String password) {
         User result = null;
         Connection con = null;
 
@@ -86,8 +122,10 @@ public class UserDatabase extends Database {
                 String firstname = rs.getString("firstname");
                 String lastname = rs.getString("lastname");
                 String email = rs.getString("email");
+                String picture = rs.getString("picture");
+                String department = rs.getString("department");
 
-                result = new User(id, firstname, lastname, email);
+                result = new User(id, firstname, lastname, email, picture, department);
                 rs.close();
             }
         } catch (SQLException ex) {
