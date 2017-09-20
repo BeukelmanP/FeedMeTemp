@@ -81,11 +81,7 @@ public class userData implements Serializable {
     }
 
     public String search() {
-        searchedUsers = UserDatabase.searchUser(searchKeyWord);
-        //searchedUsers = new ArrayList<>();
-        searchedUsers.add(new User(1,"Pieter","Beukelman","pieter@beukelman.eu","https://pbs.twimg.com/profile_images/3153805472/8e34159787675b620c6773224d44cc19.jpeg","CEO"));
-        searchedUsers.add(new User(1,"Frederick","the","fred@the.eu","https://pbs.twimg.com/profile_images/3432967857/9b811b619c00d8d32c4f50bac292644f.jpeg","FEO"));
-        return ("searchUser");
+        searchedUsers = UserDatabase.searchUser(searchKeyWord);return ("searchUser");
     }
 
 }
