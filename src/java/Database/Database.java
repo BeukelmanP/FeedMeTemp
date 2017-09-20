@@ -8,6 +8,7 @@ package Database;
 import Feedback.Feedback;
 import Login.User;
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +31,14 @@ public class Database {
      * @throws java.sql.SQLException
      */
     public static Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://s2.one2xs.com:3306/streedie_profs4";
-        return DriverManager.getConnection(url, "streedie_profs4", "test123");
+        try {
+            String url = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11194356";
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            Connection con = DriverManager.getConnection(url, "sql11194356", "YpVPS7iJwE");
+            return con;
+        } catch (Exception ex) {
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 }

@@ -6,7 +6,6 @@
 package Database;
 
 import static Database.Database.getConnection;
-import Feedback.Feedback;
 import Login.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -103,7 +102,7 @@ public class UserDatabase extends Database {
                     System.out.println("connection isnt closed but cant close");
                 }
             }
-            return result;
         }
+        return result;
     }
 }
