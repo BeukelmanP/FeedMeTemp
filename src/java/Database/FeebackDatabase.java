@@ -9,6 +9,6 @@ package Database;
  *
  * @author Gebruiker
  */
-public class FeebackDatabase extends Database{
-    
+public class FeebackDatabase extends Database {
+
 }
