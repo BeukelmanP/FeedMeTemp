@@ -5,11 +5,13 @@
  */
 package Database;
 
+import Feedback.Feedback;
 import Login.User;
 import java.sql.Connection;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,7 +19,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Sam Dirkx
+ * @author Gebruiker
  */
 public class DatabaseTest {
     
@@ -100,6 +102,28 @@ public class DatabaseTest {
         instance.connectToDB(); //connect to database before attempting action
         ArrayList<User> result = instance.getAllUsers();
         assertTrue(result.size() > 0);
+        instance.disconnectFromDB(); //disconnect after test
+    }
+    
+    
+    /**
+     * Test of getUser method, of class Database.
+     */
+    @Test
+    public void testGetUser() {        
+        System.out.println("getUserCorrect");
+        Database instance = new Database();
+        instance.connectToDB(); //connect to database before attempting disconnect
+        
+        String username = "test";
+        String password = "test";
+        User result = instance.getUser(username, password);
+        Assert.assertEquals("wrong id", result.getId(), 1);
+        Assert.assertEquals("wrong firstname", result.getFirstname(), "test");
+        Assert.assertEquals("wrong lastname", result.getLastname(), "test");
+        Assert.assertEquals("wrong email", result.getEmail(), "test");
+        Assert.assertEquals("wrong password", result.getPassword(), "test");
+        
         instance.disconnectFromDB(); //disconnect after test
     }
 }
