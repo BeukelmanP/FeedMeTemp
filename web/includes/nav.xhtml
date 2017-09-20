@@ -9,27 +9,32 @@ and open the template in the editor.
       xmlns:f = "http://java.sun.com/jsf/core"    
       xmlns:ui = "http://java.sun.com/jsf/facelets"  
       xmlns:h = "http://java.sun.com/jsf/html">
-<nav>
-    <div class="nav-wrapper">
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li><a href="sass.html">My Profile</a></li>
-            <li><a href="badges.html">My Feedback</a></li>
-        </ul>
-        <!--<a href="homePage.xhtml"  class="brand-logo center">FeedMe</a>-->
-        <h:link outcome = "homePage.xhtml" class="brand-logo center" >FeedMe</h:link>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><h:form onkeypress="if (event.keyCode == 13) { document.getElementById('hdnBtn').click()}; return false; }">
-                    <div class="input-field" style="height: 54px ;width: 300px;padding: 5px; margin:0;">
-                        <h:inputText id="search" type="search"  value="#{userData.searchKeyWord}" style="height:54px; "/>
-                        <label class="label-icon" for="search" style="padding: 0px 0px 0px 250px; margin: 0;"><i class="material-icons">search</i></label>
-                        <!--                                    <i class="material-icons">close</i>-->
-                    </div>
-                    <h:commandButton id="hdnBtn" action ="#{userData.search}" style="display: none;" />
+    <nav>
+        <div class="nav-wrapper">
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="sass.html">My Profile</a></li>
+                <li><a href="badges.html">My Feedback</a></li>
+            </ul>
+            <!--<a href="homePage.xhtml"  class="brand-logo center">FeedMe</a>-->
+            <h:link outcome = "homePage.xhtml" class="brand-logo center" >FeedMe</h:link>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><h:form onkeypress="if (event.keyCode == 13) {
+                            document.getElementById('hdnBtn').click()
+                        }
+                        ;
+                        return false;
+                        }">
+                        <div class="input-field" style="height: 54px ;width: 300px;padding: 5px; margin:0;">
+                            <h:inputText id="search" type="search"  value="#{userData.searchKeyWord}" style="height:54px; "/>
+                            <label class="label-icon" for="search" style="padding: 0px 0px 0px 250px; margin: 0;"><i class="material-icons">search</i></label>
+                            <!--                                    <i class="material-icons">close</i>-->
+                        </div>
+                        <h:commandButton id="hdnBtn" action ="#{userData.search}" style="display: none;" />
 
-                </h:form></li>
-            <li ><h:link outcome="giveFeedback.xhtml">Request Feedback</h:link></li>
-            <li><a href="giveFeedback.xhtml"><i class="material-icons">more_vert</i></a></li>
-        </ul>
-    </div>
-</nav>    
-    </html>
+                    </h:form></li>
+                <li ><h:link outcome="giveFeedback.xhtml">Request Feedback</h:link></li>
+                <li><a href="giveFeedback.xhtml"><i class="material-icons">more_vert</i></a></li>
+            </ul>
+        </div>
+    </nav>    
+</html>

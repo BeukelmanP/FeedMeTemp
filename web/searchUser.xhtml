@@ -32,15 +32,34 @@ and open the template in the editor.
                 <H6>Results for: 
                     <h:outputText value = "#{userData.getSearchKeyWord()}" /></H6>
                 <h:dataTable value = "#{userData.searchedUsers}" var = "User">
-
+                    <h:column>    				
+                        <f:facet name = "header">Results:</f:facet>    				
+                        <img style="border-radius: 50%; Height:100px;width:100px;" src="#{User.picture}"/>
+                    </h:column>
                     <h:column>    				
                         <f:facet name = "header">Name</f:facet>    				
-                            #{User.firstname} #{User.lastname}
+                        <H5>#{User.firstname} #{User.lastname}</H5>
                     </h:column>
 
                     <h:column>
                         <f:facet name = "header">Department</f:facet>
-                            #{User.lastname}
+                        <H5>#{User.department}</H5>
+                    </h:column>
+                    <h:column>
+                        <f:facet name = "header">Feedback</f:facet>
+                        <h:form>
+                            <h:commandButton value="test" action ="#{userData.setGiveFeedback()}">
+                                <f:setPropertyActionListener target="#{userData.nameUserToGiveFeedback}" value="#{User.firstname}" />
+                                <f:setPropertyActionListener target="#{userData.pictureUserToGiveFeedback}" value="#{User.picture}" />
+                                <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{User.id}" />
+                            </h:commandButton>
+
+                        </h:form>
+                        <h:link outcome="" ><i class="material-icons">feedback</i></h:link>
+                    </h:column>
+                    <h:column>
+                        <f:facet name = "header">Profile</f:facet>
+                        <h:link outcome=""><H4><i class="material-icons">person</i></H4></h:link>
                     </h:column>
                 </h:dataTable>
             </div>

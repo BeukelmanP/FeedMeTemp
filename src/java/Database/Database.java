@@ -27,8 +27,8 @@ public class Database {
      * @return true if connected, false if failed to connect.
      * @throws java.sql.SQLException
      */
-    public static Connection getConnection() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Class.forName("com.mysql.jdbc.Driver").newInstance();;
+    public static Connection getConnection() throws SQLException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver ());
         String url = "jdbc:mysql://localhost:3307/streedie_profs4";
         return DriverManager.getConnection(url, "root", "usbw");
     }

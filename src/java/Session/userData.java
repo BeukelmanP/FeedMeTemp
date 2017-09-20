@@ -12,6 +12,7 @@ package Session;
 import Database.UserDatabase;
 import Login.User;
 import java.io.Serializable;
+import java.sql.Array;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -22,7 +23,39 @@ import javax.faces.bean.SessionScoped;
 public class userData implements Serializable {
 
     String LoggedInName = "Pieter";
-    String NameUserToGiveFeedback = "t";
+    String NameUserToGiveFeedback;
+    String PictureUserToGiveFeedback;
+    String idUserToGiveFeedbackTo;
+
+    public String getIdUserToGiveFeedbackTo() {
+        return idUserToGiveFeedbackTo;
+    }
+
+    public void setIdUserToGiveFeedbackTo(String idUserToGiveFeedbackTo) {
+        this.idUserToGiveFeedbackTo = idUserToGiveFeedbackTo;
+    }
+
+    public String getNameUserToGiveFeedback() {
+        return NameUserToGiveFeedback;
+    }
+
+    public void setNameUserToGiveFeedback(String NameUserToGiveFeedback) {
+        this.NameUserToGiveFeedback = NameUserToGiveFeedback;
+    }
+
+    public String getPictureUserToGiveFeedback() {
+        return PictureUserToGiveFeedback;
+    }
+
+    public void setPictureUserToGiveFeedback(String PictureUserToGiveFeedback) {
+        this.PictureUserToGiveFeedback = PictureUserToGiveFeedback;
+    }
+
+    public String setGiveFeedback() {
+        //name;picture;id
+        return "giveFeedback";
+        
+    }
     //@ManagedProperty(value = "#{searchKeyWord}")
     String searchKeyWord;
     ArrayList<User> searchedUsers;
@@ -49,6 +82,7 @@ public class userData implements Serializable {
 
     public String search() {
         searchedUsers = UserDatabase.searchUser(searchKeyWord);
+        //searchedUsers = new ArrayList<>();
         searchedUsers.add(new User(1,"Pieter","Beukelman","pieter@beukelman.eu","https://pbs.twimg.com/profile_images/3153805472/8e34159787675b620c6773224d44cc19.jpeg","CEO"));
         searchedUsers.add(new User(1,"Frederick","the","fred@the.eu","https://pbs.twimg.com/profile_images/3432967857/9b811b619c00d8d32c4f50bac292644f.jpeg","FEO"));
         return ("searchUser");
