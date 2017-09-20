@@ -123,5 +123,5 @@ public class DatabaseTest {
 //        Assert.assertEquals("wrong password", result.getPassword(), "test");
 //        
 //        instance.disconnectFromDB(); //disconnect after test
-//    }
+    }
 }
