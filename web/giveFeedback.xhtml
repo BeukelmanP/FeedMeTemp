@@ -29,38 +29,33 @@ and open the template in the editor.
             <div class="row" style="height: 10%"></div>
             <div style="background-color: #fcfcfc;" class="col s8 offset-s2 z-depth-5">
                 <!--Image off User to give feedback to-->
-                <H2><img src="#{userData.pictureUserToGiveFeedback}" style="border-radius: 50%; Height:100px;width:100px;"/>
+                <h2><img src="https://www.thewrap.com/wp-content/uploads/2015/11/Donald-Trump.jpg" style="border-radius: 50%; Height:100px;width:100px;"/>
                     <!--Name of user to give Feedback to-->
-                    <h:outputText value = "#{userData.nameUserToGiveFeedback}"/>
-                </H2>
-                <form>
+                    <h:outputText value = "#{userData.getNameUserToGiveFeedbackTo()}"/>
+                </h2>
+                <h:form id="giveFeedback">
                     <div class="input-field col s12">
-                        <input  id="Title" type="text" class="validate"></input>
+                        <h:inputText id="Title" class="validate" value="#{giveFeedback.title}" />
                         <label for="Title">Title</label>
                     </div>
                     <div class="input-field col s12">
-                        <textarea id="textareaTips" class="materialize-textarea"></textarea>
+                        <h:inputTextarea id="textareaTips" class="materialize-textarea" value="#{giveFeedback.tips}" />
                         <label for="textareaTips">Tips</label>
                     </div>
                     <div class="input-field col s12">
-                        <textarea id="textareaTops" class="materialize-textarea"></textarea>
+                        <h:inputTextarea id="textareaTops" class="materialize-textarea" value="#{giveFeedback.tops}" />
                         <label for="textareaTops">Tops</label>
                     </div>
                     <div class="input-field col s12">
-                        <textarea id="textareaFeedback" class="materialize-textarea"></textarea>
+                        <h:inputTextarea id="textareaFeedback" class="validate materialize-textarea" value="#{giveFeedback.feedback}" />
                         <label for="textareaFeedback">General Feedback</label>
                     </div>
                     Overall score:
+                        <input type="range" id="score" min="1" max="10" value="#{giveFeedback.score}" />
                     <p class="range-field">
-                        <input type="range" id="test5" min="0" max="10" />
                     </p>
-                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                        <i class="material-icons right">send</i>
-                    </button>
-                    <br/>
-                    <br/>
-
-                </form>
+                        <input type="submit" id="submit" class="btn waves-effect waves-light" value="Submit" action="#{giveFeedback.submitFeedback(userData.getNameUserToGiveFeedbackTo(), userData.loggedInName)}"/>
+                </h:form>
             </div>
         </div>
     </h:body>
