@@ -13,13 +13,13 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-@ManagedBean(name = "userData", eager = true)
+@ManagedBean
 @SessionScoped
 public class userData implements Serializable{
     String LoggedInName="Pieter";
-    String NameUserToGiveFeedback;
+    String NameUserToGiveFeedback="t";
     public String getLoggedInName(){
-        return (LoggedInName);
+        return ("Pieter");
     }
     public String getNameUserToGiveFeedbackTo(){
         return (NameUserToGiveFeedback);
