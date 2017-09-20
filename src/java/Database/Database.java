@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+//test comment blabla merging shit
+
 /**
  *
  * @author wesle
@@ -25,14 +27,14 @@ public class Database {
     private java.sql.Connection conn;
     private PreparedStatement pstmt;
     private ResultSet rs;
-    
+
     private String dbServer;
     private String dbName;
     private String dbUsername;
     private String dbPassword;
     private int dbPort;
 
-    public Database() {       
+    public Database() {
         dbServer = "sql11.freemysqlhosting.net";
         dbName = "sql11194356";
         dbUsername = "sql11194356";
@@ -42,6 +44,7 @@ public class Database {
 
     /**
      * Connects with the database.
+     *
      * @return true if connected, false if failed to connect.
      */
     public boolean connectToDB() {
@@ -64,6 +67,7 @@ public class Database {
 
     /**
      * Closes the connection with the database
+     *
      * @return true if the connection is closed, false if it failed.
      */
     public boolean disconnectFromDB() {
@@ -85,15 +89,16 @@ public class Database {
             return false;
         }
     }
-    
+
     /**
      * Gets all users from the database.
+     *
      * @return ArrayList<User>
      */
     public ArrayList<User> getAllUsers() {
         ArrayList<User> result = new ArrayList<User>();
-        
-        int id; 
+
+        int id;
         String firstname;
         String lastname;
         String email;
@@ -121,20 +126,21 @@ public class Database {
             }
         } else {
             System.out.println("There is no existing connection");
-        }        
-        
+        }
+
         return result;
     }
-    
+
     /**
      * gets all feedback from the database
+     *
      * @return ArrayList<Feedback>
      */
     public ArrayList<Feedback> getAllFeedback() {
         ArrayList<Feedback> result = new ArrayList<Feedback>();
-        int id; 
-        int sendTo; 
-        int sendFrom; 
+        int id;
+        int sendTo;
+        int sendFrom;
         String feedbackContent;
 
         if (conn != null) {
@@ -158,8 +164,51 @@ public class Database {
             }
         } else {
             System.out.println("There is no existing connection");
-        }        
-        
+        }
+
+        return result;
+    }
+
+    /**
+     * Get a user from the database.
+     *
+     * @param username The username of the user. This typically is the user's email.
+     * @param password The password of the user.
+     * @return User with the given username and password
+     */
+    public User getUser(String username, String password) {
+        User result = null;
+
+        int id;
+        String firstname;
+        String lastname;
+        String email;
+
+        if (!username.isEmpty() && !password.isEmpty()) {
+            try {
+                pstmt = conn.prepareStatement("SELECT * FROM user WHERE BINARY email = ? and BINARY password = ?");
+                pstmt.setString(1, username);
+                pstmt.setString(2, password);
+
+                rs = pstmt.executeQuery();
+                rs.next();
+                id = rs.getInt("id");
+                firstname = rs.getString("firstname");
+                lastname = rs.getString("lastname");
+                email = rs.getString("email");
+                password = rs.getString("password");
+                result = new User(id, firstname, lastname, email, password);
+
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger("User not found");
+                System.out.println(ex.getMessage());
+                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            System.out.println("Username and password may not be empty.");
+        }
         return result;
     }
 }
