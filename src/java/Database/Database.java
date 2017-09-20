@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+//test comment blabla merging shit
+
 /**
  *
  * @author wesle
@@ -170,7 +172,7 @@ public class Database {
     /**
      * Get a user from the database.
      *
-     * @param username The username of the user.
+     * @param username The username of the user. This typically is the user's email.
      * @param password The password of the user.
      * @return User with the given username and password
      */
@@ -184,7 +186,7 @@ public class Database {
 
         if (!username.isEmpty() && !password.isEmpty()) {
             try {
-                pstmt = conn.prepareStatement("SELECT * FROM user WHERE BINARY username = ? and BINARY password = ?");
+                pstmt = conn.prepareStatement("SELECT * FROM user WHERE BINARY email = ? and BINARY password = ?");
                 pstmt.setString(1, username);
                 pstmt.setString(2, password);
 
