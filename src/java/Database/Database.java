@@ -30,8 +30,8 @@ public class Database {
      * @throws java.sql.SQLException
      */
     public static Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11194356";
-        return DriverManager.getConnection(url, "sql11194356", "YpVPS7iJwE");
+        String url = "jdbc:mysql://s2.one2xs.com:3306/streedie_profs4";
+        return DriverManager.getConnection(url, "streedie_profs4", "test123");
     }
 
     /**
@@ -42,11 +42,11 @@ public class Database {
     public static ArrayList<User> getAllUsers() {
         ArrayList<User> result = new ArrayList<>();
         Connection con = null;
-        
+
         try {
             con = getConnection();
             ResultSet rs;
-            
+
             try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user")) {
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
@@ -55,13 +55,11 @@ public class Database {
                 }
             }
             rs.close();
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally
-        {
+        } finally {
             if (con != null) {
                 try {
                     con.close();
@@ -86,11 +84,14 @@ public class Database {
         int sendFrom;
         String feedbackContent;
 
-        if (conn != null) {
-            try {
-                pstmt = conn.prepareStatement("SELECT * FROM user");
-                rs = pstmt.executeQuery();
+        Connection con = null;
 
+        try {
+            con = getConnection();
+            ResultSet rs;
+
+            try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM feedback")) {
+                rs = pstmt.executeQuery();
                 while (rs.next()) {
                     id = rs.getInt("id");
                     sendTo = rs.getInt("sendTo");
@@ -99,16 +100,21 @@ public class Database {
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
                     result.add(feedback);
                 }
-                pstmt.close();
-                rs.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            System.out.println("There is no existing connection");
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("connection isnt closed but cant close");
+                }
+            }
         }
-
         return result;
     }
 
@@ -122,37 +128,41 @@ public class Database {
      */
     public User getUser(String username, String password) {
         User result = null;
+        Connection con = null;
 
-        int id;
-        String firstname;
-        String lastname;
-        String email;
+        try {
+            con = getConnection();
+            ResultSet rs;
 
-        if (!username.isEmpty() && !password.isEmpty()) {
-            try {
-                pstmt = conn.prepareStatement("SELECT * FROM user WHERE BINARY email = ? and BINARY password = ?");
+            if (!username.isEmpty() && !password.isEmpty()) {
+                PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE email = ? and BINARY password = ?");
                 pstmt.setString(1, username);
                 pstmt.setString(2, password);
 
                 rs = pstmt.executeQuery();
                 rs.next();
-                id = rs.getInt("id");
-                firstname = rs.getString("firstname");
-                lastname = rs.getString("lastname");
-                email = rs.getString("email");
-                password = rs.getString("password");
-                result = new User(id, firstname, lastname, email, password);
+                int id = rs.getInt("id");
+                String firstname = rs.getString("firstname");
+                String lastname = rs.getString("lastname");
+                String email = rs.getString("email");
 
-                pstmt.close();
+                result = new User(id, firstname, lastname, email);
                 rs.close();
-            } catch (SQLException ex) {
-                Logger.getLogger("User not found");
-                System.out.println(ex.getMessage());
-                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            System.out.println("Username and password may not be empty.");
+        } catch (SQLException ex) {
+            Logger.getLogger("User not found");
+            System.out.println(ex.getMessage());
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("connection isnt closed but cant close");
+                }
+            }
+            return result;
         }
-        return result;
     }
 }
