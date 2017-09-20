@@ -66,7 +66,7 @@ public class UserDatabase extends Database {
             con = getConnection();
             ResultSet rs;
 
-            try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE firstname LIKE %"+keyword+"% OR lastname LIKE %"+keyword+"% OR firstname LIKE %"+keyword+"% AND lastname LIKE %"+keyword+"% ")) {
+            try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE firstname LIKE ? OR lastname LIKE ? OR firstname LIKE ? AND lastname LIKE ? ")) {
                 pstmt.setString(1, "%"+keyword+"%");
                 pstmt.setString(2, "%"+keyword+"%");
                 pstmt.setString(3, "%"+keyword+"%");

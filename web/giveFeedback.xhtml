@@ -29,9 +29,9 @@ and open the template in the editor.
             <div class="row" style="height: 10%"></div>
             <div style="background-color: #fcfcfc;" class="col s8 offset-s2 z-depth-5">
                 <!--Image off User to give feedback to-->
-                <H2><img src="https://www.thewrap.com/wp-content/uploads/2015/11/Donald-Trump.jpg" style="border-radius: 50%; Height:100px;width:100px;"/>
+                <H2><img src="#{userData.pictureUserToGiveFeedback}" style="border-radius: 50%; Height:100px;width:100px;"/>
                     <!--Name of user to give Feedback to-->
-                    <h:outputText value = "#{userData.getNameUserToGiveFeedbackTo()}"/>
+                    <h:outputText value = "#{userData.nameUserToGiveFeedback}"/>
                 </H2>
                 <form>
                     <div class="input-field col s12">

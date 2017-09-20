@@ -7,11 +7,9 @@ package Database;
 
 import Feedback.Feedback;
 import Login.User;
-import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +28,8 @@ public class Database {
      * @throws java.sql.SQLException
      */
     public static Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://s2.one2xs.com:3306/streedie_profs4";
-        return DriverManager.getConnection(url, "streedie_profs4", "test123");
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver ());
+        String url = "jdbc:mysql://localhost:3307/streedie_profs4";
+        return DriverManager.getConnection(url, "root", "usbw");
     }
 }
