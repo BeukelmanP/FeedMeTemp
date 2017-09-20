@@ -60,7 +60,7 @@ public class Login implements Serializable {
         //fixdb con
         //boolean valid = Database.validate(username, hashPassword(password);
         User usr = new User(0, "test", "test", "test@test.nl", "test123");
-        
+                
         if (getUsername().equals(usr.getEmail()) && getPassword().equals(usr.getPassword())) {
             System.out.println("loggedin");
             HttpSession session = SessionUtils.getSession();

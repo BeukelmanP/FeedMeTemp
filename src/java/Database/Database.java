@@ -153,7 +153,7 @@ public class Database {
                     sendTo = rs.getInt("sendTo");
                     sendFrom = rs.getInt("sendFrom");
                     feedbackContent = rs.getString("feedback");
-                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
+                    Feedback feedback = new Feedback(id, sendTo, sendFrom, "", "", "", feedbackContent);
                     result.add(feedback);
                 }
                 pstmt.close();

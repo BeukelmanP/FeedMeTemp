@@ -17,7 +17,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class userData implements Serializable{
     String LoggedInName="Pieter";
-    String NameUserToGiveFeedback;
+    String NameUserToGiveFeedback = "Donald Dumpert";
     public String getLoggedInName(){
         return (LoggedInName);
     }
