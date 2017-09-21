@@ -22,8 +22,23 @@ import Login.User;
 public class userData implements Serializable {
 
     User userLoggedIn = new User(1,"Frederick","the","fred@the.eu","https://pbs.twimg.com/profile_images/3432967857/9b811b619c00d8d32c4f50bac292644f.jpeg","FEO");
-    String NameUserToGiveFeedback = "t";
     String LoggedInName = "Pieter";
+
+    public User getUserLoggedIn() {
+        return userLoggedIn;
+    }
+
+    public void setUserLoggedIn(User userLoggedIn) {
+        this.userLoggedIn = userLoggedIn;
+    }
+
+    public String getLoggedInName() {
+        return LoggedInName;
+    }
+
+    public void setLoggedInName(String LoggedInName) {
+        this.LoggedInName = LoggedInName;
+    }
     String NameUserToGiveFeedback;
     String PictureUserToGiveFeedback;
     String idUserToGiveFeedbackTo;

@@ -63,7 +63,7 @@ public class Login implements Serializable {
             System.out.println("loggedin");
             HttpSession session = SessionUtils.getSession();
             session.setAttribute("username", username);
-            return "admin";
+            return "homePage";
         } else {
             FacesMessage error = new FacesMessage("Incorrect Username and Password combination!");
             FacesContext.getCurrentInstance().addMessage("loginform:Loginbtn", error);
