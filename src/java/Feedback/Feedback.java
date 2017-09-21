@@ -5,6 +5,9 @@
  */
 package Feedback;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author Sam Dirkx
@@ -17,6 +20,13 @@ public class Feedback {
     private String tips;
     private String tops;
     private String feedback;
+    
+    private Map<Integer,Boolean> user_feedback;
+    
+    public Map<Integer,Boolean> user_feedback()
+    {
+        return user_feedback;
+    }
 
     public int getId() {
         return id;
@@ -42,6 +52,17 @@ public class Feedback {
         this.tips = tips;
         this.tops = tops;
         this.feedback = feedback;
+        user_feedback = new HashMap<Integer,Boolean>();
+    }
+
+    /**
+     * adds a like to this feedback.
+     * @param id The id of the user that (dis)liked the feedback
+     * @param helpful Whether the feedback was helpfull or not. (similiar to like/dislike)
+     */
+    public void likeFeedback(Integer id, Boolean helpful)
+    {
+        user_feedback.put(id, helpful);
     }
 
     @Override
