@@ -36,7 +36,7 @@ public class UserDatabase extends Database {
             try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user")) {
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
-                    User user = new User(rs.getInt("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("email"), rs.getString("picture"), rs.getString("department"));
+                    User user = new User(rs.getInt("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("email"), rs.getString("image"), rs.getString("department"));
                     result.add(user);
                 }
             }
@@ -72,7 +72,7 @@ public class UserDatabase extends Database {
                 pstmt.setString(4, "%"+keyword+"%");
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
-                    User user = new User(rs.getInt("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("email"), rs.getString("picture"), rs.getString("department"));
+                    User user = new User(rs.getInt("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("email"), rs.getString("image"), rs.getString("department"));
                     result.add(user);
                 }
             }
@@ -121,7 +121,7 @@ public class UserDatabase extends Database {
                 String firstname = rs.getString("firstname");
                 String lastname = rs.getString("lastname");
                 String email = rs.getString("email");
-                String picture = rs.getString("picture");
+                String picture = rs.getString("image");
                 String department = rs.getString("department");
 
                 result = new User(id, firstname, lastname, email, picture, department);
