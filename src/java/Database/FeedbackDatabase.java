@@ -28,10 +28,6 @@ public class FeedbackDatabase extends Database {
      */
     public ArrayList<Feedback> getAllFeedback() {
         ArrayList<Feedback> result = new ArrayList<Feedback>();
-        int id;
-        int sendTo;
-        int sendFrom;
-        String feedbackContent;
 
         Connection con = null;
 
@@ -42,11 +38,14 @@ public class FeedbackDatabase extends Database {
             try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM feedback")) {
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
-                    id = rs.getInt("id");
-                    sendTo = rs.getInt("sendTo");
-                    sendFrom = rs.getInt("sendFrom");
-                    feedbackContent = rs.getString("feedback");
-                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
+                    int id = rs.getInt("id");
+                    int sendTo = rs.getInt("sendTo");
+                    int sendFrom = rs.getInt("sendFrom");
+                    String feedbackTitle = rs.getString("title");
+                    String feedbackTips = rs.getString("tips");
+                    String feedbackTops = rs.getString("tops");
+                    String feedbackContent = rs.getString("feedback");
+                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);
                     result.add(feedback);
                 }
             }
@@ -66,17 +65,16 @@ public class FeedbackDatabase extends Database {
         }
         return result;
     }
-    
+
     /**
-     * gets all feedback related to user ordered by timeCreated from the database DESC
+     * gets all feedback related to user ordered by timeCreated from the
+     * database DESC
      *
      * @return ArrayList<Feedback>
      */
-    public ArrayList<Feedback> getFeedbackSendedReceivedUser(int id) {
+    public ArrayList<Feedback> getFeedbackSendedReceivedUser(int userId) {
         ArrayList<Feedback> result = new ArrayList<Feedback>();
-        int sendTo;
-        int sendFrom;
-        String feedbackContent;
+
 
         Connection con = null;
 
@@ -85,16 +83,19 @@ public class FeedbackDatabase extends Database {
             ResultSet rs;
 
             try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM feedback WHERE sendTo = ? OR sendFrom = ? ORDER BY timeCreated DESC")) {
-                pstmt.setInt(1, id);
-                pstmt.setInt(2, id);
+                pstmt.setInt(1, userId);
+                pstmt.setInt(2, userId);
 
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
-                    id = rs.getInt("id");
-                    sendTo = rs.getInt("sendTo");
-                    sendFrom = rs.getInt("sendFrom");
-                    feedbackContent = rs.getString("feedback");
-                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
+                    int id = rs.getInt("id");
+                    int sendTo = rs.getInt("sendTo");
+                    int sendFrom = rs.getInt("sendFrom");
+                    String feedbackTitle = rs.getString("title");
+                    String feedbackTips = rs.getString("tips");
+                    String feedbackTops = rs.getString("tops");
+                    String feedbackContent = rs.getString("feedback");
+                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);
                     result.add(feedback);
                 }
             }
@@ -114,17 +115,15 @@ public class FeedbackDatabase extends Database {
         }
         return result;
     }
-    
+
     /**
-     * gets all feedback sended by the user ordered by timeCreated from the database DESC
+     * gets all feedback sended by the user ordered by timeCreated from the
+     * database DESC
      *
      * @return ArrayList<Feedback>
      */
-    public ArrayList<Feedback> getFeedbackSendedByUser(int id) {
+    public ArrayList<Feedback> getFeedbackSendedByUser(int userId) {
         ArrayList<Feedback> result = new ArrayList<Feedback>();
-        int sendTo;
-        int sendFrom;
-        String feedbackContent;
 
         Connection con = null;
 
@@ -133,16 +132,18 @@ public class FeedbackDatabase extends Database {
             ResultSet rs;
 
             try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM feedback WHERE sendFrom = ? ORDER BY timeCreated DESC")) {
-                pstmt.setInt(1, id);
-                pstmt.setInt(2, id);
+                pstmt.setInt(1, userId);
 
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
-                    id = rs.getInt("id");
-                    sendTo = rs.getInt("sendTo");
-                    sendFrom = rs.getInt("sendFrom");
-                    feedbackContent = rs.getString("feedback");
-                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
+                    int id = rs.getInt("id");
+                    int sendTo = rs.getInt("sendTo");
+                    int sendFrom = rs.getInt("sendFrom");
+                    String feedbackTitle = rs.getString("title");
+                    String feedbackTips = rs.getString("tips");
+                    String feedbackTops = rs.getString("tops");
+                    String feedbackContent = rs.getString("feedback");
+                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);
                     result.add(feedback);
                 }
             }
@@ -162,18 +163,15 @@ public class FeedbackDatabase extends Database {
         }
         return result;
     }
-    
+
     /**
-     * gets all feedback sended to user ordered by timeCreated from the database DESC
+     * gets all feedback sended to user ordered by timeCreated from the database
+     * DESC
      *
      * @return ArrayList<Feedback>
      */
-    public ArrayList<Feedback> getFeedbackReceivedByUser(int id) {
+    public static ArrayList<Feedback> getFeedbackReceivedByUser(int userId) {
         ArrayList<Feedback> result = new ArrayList<Feedback>();
-        int sendTo;
-        int sendFrom;
-        String feedbackContent;
-
         Connection con = null;
 
         try {
@@ -181,16 +179,18 @@ public class FeedbackDatabase extends Database {
             ResultSet rs;
 
             try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM feedback WHERE sendTo = ? ORDER BY timeCreated DESC")) {
-                pstmt.setInt(1, id);
-                pstmt.setInt(2, id);
+                pstmt.setInt(1, userId);
 
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
-                    id = rs.getInt("id");
-                    sendTo = rs.getInt("sendTo");
-                    sendFrom = rs.getInt("sendFrom");
-                    feedbackContent = rs.getString("feedback");
-                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
+                    int id = rs.getInt("id");
+                    int sendTo = rs.getInt("sendTo");
+                    int sendFrom = rs.getInt("sendFrom");
+                    String feedbackTitle = rs.getString("title");
+                    String feedbackTips = rs.getString("tips");
+                    String feedbackTops = rs.getString("tops");
+                    String feedbackContent = rs.getString("feedback");
+                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);
                     result.add(feedback);
                 }
             }

@@ -14,6 +14,30 @@ import java.util.Map;
  * @author Sam Dirkx
  */
 public class Feedback implements Serializable{
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTips() {
+        return tips;
+    }
+
+    public void setTips(String tips) {
+        this.tips = tips;
+    }
+
+    public String getTops() {
+        return tops;
+    }
+
+    public void setTops(String tops) {
+        this.tops = tops;
+    }
     private int id;
     private int sendTo;
     private int sendFrom;

@@ -49,12 +49,21 @@ and open the template in the editor.
                         </div>
                     </div>
                 </div>
-                <div class="row" style="position: relative; left: 5%; top: 25px">
+                <div class="row" style="position: relative;  top: 25px">
                     <div class="row">
-                        <h:dataTable value = "#{userData.getUserFeedback}" var = "Feedback">
+                        <h:dataTable value = "#{userData.getUserFeedback()}" var = "Feedback">
                             <h:column>    				
-                                <f:facet name = "header">Feedback</f:facet>    				
-                                <img style="border-radius: 50%; Height:100px;width:100px;" src=""/>
+                                <f:facet name = "header">Feedback</f:facet> 
+                                <hr></hr>
+                                <p style="width: 100%;">
+                                    <h4 style="text-align: center">#{Feedback.title}</h4>
+                                    <h5>Tips</h5>
+                                    <p style=" left:5%;">#{Feedback.tips}</p>
+                                    <h5>Tops</h5>
+                                    <p style="left:20px;">#{Feedback.tops}</p>
+                                    <h5>feedback</h5>
+                                    <p style="left:20px;">#{Feedback.feedback}</p>
+                                </p>
                             </h:column>
                         </h:dataTable>
                     </div>
