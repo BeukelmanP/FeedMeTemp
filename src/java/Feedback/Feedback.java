@@ -5,6 +5,7 @@
  */
 package Feedback;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import java.util.Map;
  *
  * @author Sam Dirkx
  */
-public class Feedback {
+public class Feedback implements Serializable{
     private int id;
     private int sendTo;
     private int sendFrom;

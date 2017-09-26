@@ -102,7 +102,7 @@ public class UserDatabase extends Database {
      * @param password The password of the user.
      * @return User with the given username and password
      */
-    public User User(String username, String password) {
+    public static User User(String username, String password) {
         User result = null;
         Connection con = null;
 
@@ -118,6 +118,47 @@ public class UserDatabase extends Database {
                 rs = pstmt.executeQuery();
                 rs.next();
                 int id = rs.getInt("id");
+                String firstname = rs.getString("firstname");
+                String lastname = rs.getString("lastname");
+                String email = rs.getString("email");
+                String picture = rs.getString("image");
+                String department = rs.getString("department");
+
+                result = new User(id, firstname, lastname, email, picture, department);
+                rs.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger("User not found");
+            System.out.println(ex.getMessage());
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("connection isnt closed but cant close");
+                }
+            }
+        }
+        return result;
+    }
+    
+    public static User getUser(int id) {
+        User result = null;
+        Connection con = null;
+
+        try {
+            con = getConnection();
+            ResultSet rs;
+
+            if (id != 0){
+                PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE id = ?");
+                pstmt.setInt(1, id);
+
+                rs = pstmt.executeQuery();
+                rs.next();
+                id = rs.getInt("id");
                 String firstname = rs.getString("firstname");
                 String lastname = rs.getString("lastname");
                 String email = rs.getString("email");

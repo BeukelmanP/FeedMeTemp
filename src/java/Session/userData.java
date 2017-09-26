@@ -10,6 +10,7 @@ package Session;
  * @author piete
  */
 import Database.UserDatabase;
+import Feedback.Feedback;
 import java.io.Serializable;
 import java.sql.Array;
 import java.util.ArrayList;
@@ -23,7 +24,15 @@ public class userData implements Serializable {
 
     User userLoggedIn = new User(1,"Frederick","the","fred@the.eu","https://pbs.twimg.com/profile_images/3432967857/9b811b619c00d8d32c4f50bac292644f.jpeg","FEO");
     String LoggedInName = "Pieter";
+    User userToVisit;
 
+    public User getUserToVisit() {
+        return userToVisit;
+    }
+
+    public void setUserToVisit(User userToVisit) {
+        this.userToVisit = userToVisit;
+    }
     public User getUserLoggedIn() {
         return userLoggedIn;
     }
@@ -98,6 +107,15 @@ public class userData implements Serializable {
 
     public String search() {
         searchedUsers = UserDatabase.searchUser(searchKeyWord);return ("searchUser");
+    }
+    
+    public String visitUser() {
+        userToVisit = UserDatabase.getUser( Integer.parseInt(idUserToGiveFeedbackTo));
+        return ("colleagueProfile");
+    }
+    
+    public ArrayList<Feedback>getUserFeedback(){
+    
     }
 
 }
