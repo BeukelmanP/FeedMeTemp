@@ -31,48 +31,31 @@ public class FeedbackRequest {
         return imageTo;
     }
 
-    public void setImageTo(String imageTo) {
-        this.imageTo = imageTo;
-    }
 
     public String getImageFrom() {
         return imageFrom;
     }
 
-    public void setImageFrom(String imageFrom) {
-        this.imageFrom = imageFrom;
-    }
 
     public int getIDto() {
         return IDto;
     }
 
-    public void setIDto(int IDto) {
-        this.IDto = IDto;
-    }
 
     public int getIDFrom() {
         return IDFrom;
     }
 
-    public void setIDFrom(int IDFrom) {
-        this.IDFrom = IDFrom;
-    }
 
     public String getNameTo() {
         return NameTo;
     }
 
-    public void setNameTo(String NameTo) {
-        this.NameTo = NameTo;
-    }
+
 
     public String getNameFrom() {
         return NameFrom;
     }
 
-    public void setNameFrom(String NameFrom) {
-        this.NameFrom = NameFrom;
-    }
 
 }

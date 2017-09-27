@@ -14,6 +14,7 @@ import static Database.FeedbackDatabase.InsertFeedbackRequest;
 import Database.UserDatabase;
 import Feedback.Feedback;
 import Feedback.FeedbackRequest;
+import Login.SessionUtils;
 import java.io.Serializable;
 import java.sql.Array;
 import java.util.ArrayList;
@@ -21,14 +22,19 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import Login.User;
 import java.util.HashMap;
+import javax.servlet.http.HttpSession;
 
 @ManagedBean(name = "userData", eager = true)
 @SessionScoped
 public class userData implements Serializable {
 
-    User userLoggedIn = new User(1, "Frederick", "the", "fred@the.eu", "https://pbs.twimg.com/profile_images/3432967857/9b811b619c00d8d32c4f50bac292644f.jpeg", "FEO");
-    String LoggedInName = "Pieter";
+    User userLoggedIn = getUserAccount();
     User userToVisit;
+
+    public User getUserAccount() {
+        HttpSession session = SessionUtils.getSession();
+        return (User) session.getAttribute("user");
+    }
 
     public User getUserToVisit() {
         return userToVisit;
@@ -151,7 +157,7 @@ public class userData implements Serializable {
     public String requestFeedback(boolean goOn) {
         if (goOn) {
             System.out.println(idUserToGiveFeedbackTo);
-           InsertFeedbackRequest(userLoggedIn.getId(), Integer.parseInt(idUserToGiveFeedbackTo));
+            InsertFeedbackRequest(userLoggedIn.getId(), Integer.parseInt(idUserToGiveFeedbackTo));
         }
         return "requestFeedback";
     }
