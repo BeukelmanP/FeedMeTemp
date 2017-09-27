@@ -102,7 +102,7 @@ public class UserDatabase extends Database {
      * @param password The password of the user.
      * @return User with the given username and password
      */
-    public static User User(String username, String password) {
+    public static User getUser(String username, String password) {
         User result = null;
         Connection con = null;
 
