@@ -58,6 +58,15 @@ public class Feedback {
     {
         user_feedback.put(id, helpful);
     }
+    
+    /**
+     * removes a like from this feedback of user
+     * @param id id of user that placed the feedback
+     */
+    public void removeFeedback(Integer id)
+    {
+        user_feedback.remove(id);
+    }
 
     @Override
     public String toString() {
