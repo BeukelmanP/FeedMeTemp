@@ -7,51 +7,35 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f = "http://java.sun.com/jsf/core"    
-      xmlns:h = "http://java.sun.com/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" style="height: 100%;">
+      xmlns:ui = "http://java.sun.com/jsf/facelets"  
+      xmlns:h = "http://java.sun.com/jsf/html">
+
     <h:head>
         <title>FeedMe</title>
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
             <!--Import materialize.css-->
             <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/></link>
+
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
     </h:head>
     <h:body>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <ui:include src="/includes/nav.xhtml" />
+        <!--include Nav bar-->
         <div class="row">
-            <div class="row"></div>
-            <div style="background-color: #fcfcfc; min-height: 500px;" class="col s8 offset-s2 z-depth-5">
-                <div class="row" style="position: relative; left: 5%; top: 25px">
-                    <div class="row">
-                        <div style="float: left; margin-right:10%;"><img style ="border-radius: 40%;" src="#{userData.userToVisit.picture}"/></div>
-                        <div style="float: left;">
-                            <div>
-                                <p class="col-md-4">
-                                    <H3><h:outputText class="col-md-8" style="color: grey" value = "#{userData.userToVisit.firstname} #{userData.userToVisit.lastname}"/></H3>
-                                </p>
-                            </div>
-                            <div>
-                                <p class="col-md-4"><i class="material-icons">mail_outline</i>
-                                    <span style="display:inline-block; width: 5%;"></span>
-                                    <h:outputText class="col-md-8" style="color: grey" value = "#{userData.userToVisit.email}"/>
-                                </p>
-                                <p class="col-md-4"><i class="material-icons">phone_android</i>
-                                    <span style="display:inline-block; width: 5%;"></span>
-                                    <h:outputText class="col-md-8" style="color: grey" value = "06-TESTESTEST"/>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="row" style="height: 10%"></div>
+            <div style="background-color: #fcfcfc;" class="col s8 offset-s2 z-depth-5">
+            </div>
+            <div style="background-color: #fcfcfc;" class="col s8 offset-s2 z-depth-5">
                 <div class="row" style="position: relative;  top: 25px">
                     <div class="row">
-                        <h:dataTable value = "#{userData.getUserFeedback()}" var = "Feedback">
-                            <h:column>    				
-                                <f:facet name = "header">Feedback</f:facet> 
+                        <h:dataTable value = "#{userData.getOwnFeedback()}" var = "Feedback">
+                            <h:column>		
+                                <f:facet name = "header">Your Feedback</f:facet> 
                                 <p style="width: 100%;">
                                     <h4 style="text-align: center">#{Feedback.title}</h4>
                                     <h5><i class="material-icons">mood</i>  Tips</h5>

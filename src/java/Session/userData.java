@@ -10,14 +10,17 @@ package Session;
  * @author piete
  */
 import Database.FeedbackDatabase;
+import static Database.FeedbackDatabase.InsertFeedbackRequest;
 import Database.UserDatabase;
 import Feedback.Feedback;
+import Feedback.FeedbackRequest;
 import java.io.Serializable;
 import java.sql.Array;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import Login.User;
+import java.util.HashMap;
 
 @ManagedBean(name = "userData", eager = true)
 @SessionScoped
@@ -85,6 +88,15 @@ public class userData implements Serializable {
     }
     //@ManagedProperty(value = "#{searchKeyWord}")
     String searchKeyWord;
+    String searchRequestKeyWord;
+
+    public String getSearchRequestKeyWord() {
+        return searchRequestKeyWord;
+    }
+
+    public void setSearchRequestKeyWord(String searchRequestKeyWord) {
+        this.searchRequestKeyWord = searchRequestKeyWord;
+    }
     ArrayList<User> searchedUsers;
 
     public ArrayList<User> getSearchedUsers() {
@@ -108,8 +120,15 @@ public class userData implements Serializable {
     }
 
     public String search() {
-        searchedUsers = UserDatabase.searchUser(searchKeyWord);
         return ("searchUser");
+    }
+
+    public ArrayList<User> searchUser() {
+        return UserDatabase.searchUser(searchKeyWord);
+    }
+
+    public ArrayList<User> searchUserRequest() {
+        return UserDatabase.searchUser(searchRequestKeyWord);
     }
 
     public String visitUser() {
@@ -119,6 +138,30 @@ public class userData implements Serializable {
 
     public ArrayList<Feedback> getUserFeedback() {
         return FeedbackDatabase.getFeedbackReceivedByUser(Integer.parseInt(idUserToGiveFeedbackTo));
+    }
+
+    public ArrayList<Feedback> getOwnFeedback() {
+        return FeedbackDatabase.getFeedbackReceivedByUser(userLoggedIn.getId());
+    }
+
+    public String SearchRequest() {
+        return "requestFeedback";
+    }
+
+    public String requestFeedback(boolean goOn) {
+        if (goOn) {
+            System.out.println(idUserToGiveFeedbackTo);
+           InsertFeedbackRequest(userLoggedIn.getId(), Integer.parseInt(idUserToGiveFeedbackTo));
+        }
+        return "requestFeedback";
+    }
+
+    public ArrayList<FeedbackRequest> getSendRequest() {
+        return FeedbackDatabase.getFeedbackRequestSend(userLoggedIn.getId());
+    }
+
+    public ArrayList<FeedbackRequest> getReceivedRequest() {
+        return FeedbackDatabase.getFeedbackRequestRecieved(userLoggedIn.getId());
     }
 
 }

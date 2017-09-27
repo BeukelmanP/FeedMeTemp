@@ -31,10 +31,11 @@ and open the template in the editor.
             <div style="background-color: #fcfcfc;" class="col s8 offset-s2 z-depth-5">
                 <H6>Results for: 
                     <h:outputText value = "#{userData.getSearchKeyWord()}" /></H6>
-                <h:dataTable value = "#{userData.searchedUsers}" var = "User">
+                      <h:outputText value="No search results" rendered="#{empty userData.searchUser()}" />
+                    <h:dataTable value = "#{userData.searchUser()}" var = "User"  rendered="#{not empty userData.searchUser()}">
                     <h:column>    				
                         <f:facet name = "header">Results:</f:facet>    				
-                        <img style="border-radius: 50%; Height:100px;width:100px;" src="#{User.picture}"/>
+                        <img style="border-radius: 40%; Height:100px;width:100px;" src="#{User.picture}"/>
                     </h:column>
                     <h:column>    				
                         <f:facet name = "header">Name</f:facet>    				
@@ -47,15 +48,8 @@ and open the template in the editor.
                     </h:column>
                     <h:column>
                         <f:facet name = "header">Feedback</f:facet>
-                        <!--                        <h:form>
-                                                    <h:commandButton value="test" action ="#{userData.setGiveFeedback()}">
-                                                        <f:setPropertyActionListener target="#{userData.nameUserToGiveFeedback}" value="#{User.firstname}" />
-                                                        <f:setPropertyActionListener target="#{userData.pictureUserToGiveFeedback}" value="#{User.picture}" />
-                                                        <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{User.id}" />
-                                                    </h:commandButton>
-                        
-                                                </h:form>--><h:form>
-                            <h:commandLink action ="#{userData.visitUser()}"  ><i class="material-icons">feedback</i>
+                        <h:form>
+                            <h:commandLink action ="#{userData.setGiveFeedback()}"  ><i class="material-icons">feedback</i>
                                 <f:setPropertyActionListener target="#{userData.nameUserToGiveFeedback}" value="#{User.firstname}" />
                                 <f:setPropertyActionListener target="#{userData.pictureUserToGiveFeedback}" value="#{User.picture}" />
                                 <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{User.id}" /></h:commandLink></h:form>
@@ -66,6 +60,12 @@ and open the template in the editor.
                             <h:commandLink action ="#{userData.visitUser()}" ><i class="material-icons">person</i>
                                 <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{User.id}" /></h:commandLink></h:form>
                     </h:column>
+<!--                    <h:column>
+                        <f:facet name = "header">Request Feedback</f:facet>
+                        <h:form>
+                            <h:commandLink action ="" ><i class="material-icons">loyalty</i>
+                                <f:setPropertyActionListener target="" value="#{User.id}" /></h:commandLink></h:form>
+                    </h:column>-->
                 </h:dataTable>
             </div>
         </div>

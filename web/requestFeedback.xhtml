@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f = "http://java.sun.com/jsf/core"    
+      xmlns:ui = "http://java.sun.com/jsf/facelets"  
+      xmlns:h = "http://java.sun.com/jsf/html">
+
+    <h:head>
+        <title>FeedMe</title>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <!--Import materialize.css-->
+            <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/></link>
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    </h:head>
+    <h:body>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <ui:include src="/includes/nav.xhtml" />
+        <!--include Nav bar-->
+        <div class="row">
+            <div class="row" style="height: 10%"></div>
+            <div style="background-color: #fcfcfc;" class="col s8 offset-s2 z-depth-5">
+                <div style="background-color: #fcfcfc;" class="col s6">
+                    <H5>Search User to send request</H5>
+                    <h:form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <h:inputText id="search" value="#{userData.searchRequestKeyWord}" style="height:54px; "/>
+                            </div>
+                            <input type="submit" id="submit" style="top:25px;" class="btn waves-effect waves-light" value="Search" action="#{userData.SearchRequest()}"/>
+                        </div>
+                    </h:form>
+                    <h:outputText value="No search results" rendered="#{empty userData.searchUserRequest()}" />
+                    <h:dataTable value = "#{userData.searchUserRequest()}" var = "User" rendered="#{not empty userData.searchUserRequest()}">
+                        <h:column>    				
+                            <f:facet name = "header">Results:</f:facet>    				
+                            <img style="border-radius: 40%; Height:100px;width:100px;" src="#{User.picture}"/>
+                        </h:column>
+                        <h:column>    				
+                            <f:facet name = "header">Name</f:facet>    				
+                            <H5>#{User.firstname} #{User.lastname}</H5>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name = "header">Department</f:facet>
+                            <H5>#{User.department}</H5>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name = "header">Request Feedback</f:facet>
+                            <h:form>
+
+                                <h:commandLink onclick="if (!confirm('Are you sure you want to ask feedback from #{User.firstname}?'))
+                                            return false"
+                                                action="#{userData.requestFeedback(true)}"  class="edit_icon" >
+                                    <i class="material-icons">loyalty</i>
+                                    <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{User.id}" />
+                                </h:commandLink> 
+                            </h:form>
+                        </h:column>
+                        </h:dataTable>
+                </div>
+                <div style="background-color: #fcfcfc;" class="col s6 ">
+                    <H5>Requests:</H5>                  
+                    <h:dataTable value = "#{userData.getReceivedRequest()}" var = "User" rendered="#{not empty userData.getReceivedRequest()}">
+                        <h:column>    				
+                            <f:facet name = "header">Request's Received</f:facet>    				
+                            <img style="border-radius: 40%; Height:100px;width:100px;" src="#{FeedbackRequest.imageFrom}"/>
+                        </h:column>
+                        <h:column>    				
+                            <f:facet name = "header">Name</f:facet>    				
+                            <H5>#{FeedbackRequest.nameFrom}</H5>
+                        </h:column>
+                        <h:column>
+                        <f:facet name = "header">Give Feedback</f:facet>
+                        <h:form>
+                            <h:commandLink action ="#{userData.setGiveFeedback()}"  ><i class="material-icons">feedback</i>
+                                <f:setPropertyActionListener target="#{userData.nameUserToGiveFeedback}" value="#{FeedbackRequest.nameFrom}" />
+                                <f:setPropertyActionListener target="#{userData.pictureUserToGiveFeedback}" value="#{FeedbackRequest.imageFrom}" />
+                                <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{FeedbackRequest.IDFrom}" /></h:commandLink></h:form>
+                    </h:column>
+                    </h:dataTable>
+                    
+                    <h:dataTable value = "#{userData.getSendRequest()}" var = "FeedbackRequest" rendered="#{not empty userData.getSendRequest()}">
+                        <h:column>    				
+                            <f:facet name = "header">Request's Send</f:facet>    				
+                            <img style="border-radius: 40%; Height:100px;width:100px;" src="#{FeedbackRequest.imageTo}"/>
+                        </h:column>
+                        <h:column>    				
+                            <f:facet name = "header">Name</f:facet>    				
+                            <H5>#{FeedbackRequest.nameTo}</H5>
+                        </h:column>
+                        <h:column>
+                        <f:facet name = "header">Go To Profile</f:facet>
+                        <h:form>
+                            <h:commandLink action ="#{userData.visitUser()}" ><i class="material-icons">person</i>
+                                <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{FeedbackRequest.IDto}" /></h:commandLink></h:form>
+                    </h:column>
+                    </h:dataTable>
+                    <h:outputText value="You haven't recieved any requests" rendered="#{empty userData.getReceivedRequest()}" />
+                    <h:outputText value="None of your send request are unanswered" rendered="#{empty userData.getSendRequest()}" />
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>

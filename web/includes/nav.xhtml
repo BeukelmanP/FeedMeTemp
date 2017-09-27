@@ -11,9 +11,11 @@ and open the template in the editor.
       xmlns:h = "http://java.sun.com/jsf/html">
     <nav>
         <div class="nav-wrapper">
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
-                <li><h:link outcome="Profile.xhtml">Profile  </h:link></li>
-                <li><a href="badges.html">My Feedback</a></li>
+
+                <li><h:link outcome="Profile.xhtml">My Profile</h:link></li>
+                <li><h:link outcome="feedback.xhtml">My Feedback</h:link></li>
             </ul>
             <!--<a href="homePage.xhtml"  class="brand-logo center">FeedMe</a>-->
             <h:link outcome = "homePage.xhtml" class="brand-logo center" >FeedMe</h:link>
@@ -32,8 +34,27 @@ and open the template in the editor.
                         <h:commandButton id="hdnBtn" action ="#{userData.search}" style="display: none;" />
 
                     </h:form></li>
-                <li ><h:link outcome="giveFeedback.xhtml">Request Feedback</h:link></li>
-                <li><a href="giveFeedback.xhtml"><i class="material-icons">more_vert</i></a></li>
+                <li ><h:link outcome="requestFeedback.xhtml">Request Feedback</h:link></li>
+                <li><a href="giveFeedback.xhtml"><i class="material-icons">notifications</i></a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li><h:link outcome="Profile.xhtml">My Profile</h:link></li>
+                <li><h:link outcome="feedback.xhtml">My Feedback</h:link></li>
+                <li><h:form onkeypress="if (event.keyCode == 13) {
+                            document.getElementById('hdnBtn').click()
+                        }
+                        ;
+                        return false;
+                        }">
+                        <div class="input-field" style="height: 54px ;width: 300px;padding: 5px; margin:0;">
+                            <h:inputText id="search" value="#{userData.searchKeyWord}" style="height:54px; "/>
+                            <label class="label-icon" for="search" style="padding: 0px 0px 0px 250px; margin: 0;"><i class="material-icons">search</i></label>
+                            <!--                                    <i class="material-icons">close</i>-->
+                        </div>
+                        <h:commandButton id="hdnBtn" action ="#{userData.search}" style="display: none;" />
+
+                    </h:form></li>
+                <li><h:link outcome="requestFeedback.xhtml">Request Feedback</h:link></li>
             </ul>
         </div>
     </nav>    
