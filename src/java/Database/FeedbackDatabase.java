@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,9 +68,10 @@ public class FeedbackDatabase extends Database {
         }
         return result;
     }
-    
+
     /**
-     * gets all feedback related to user ordered by timeCreated from the database DESC
+     * gets all feedback related to user ordered by timeCreated from the
+     * database DESC
      *
      * @return ArrayList<Feedback>
      */
@@ -114,9 +117,10 @@ public class FeedbackDatabase extends Database {
         }
         return result;
     }
-    
+
     /**
-     * gets all feedback sended by the user ordered by timeCreated from the database DESC
+     * gets all feedback sended by the user ordered by timeCreated from the
+     * database DESC
      *
      * @return ArrayList<Feedback>
      */
@@ -162,9 +166,10 @@ public class FeedbackDatabase extends Database {
         }
         return result;
     }
-    
+
     /**
-     * gets all feedback sended to user ordered by timeCreated from the database DESC
+     * gets all feedback sended to user ordered by timeCreated from the database
+     * DESC
      *
      * @return ArrayList<Feedback>
      */
@@ -193,6 +198,129 @@ public class FeedbackDatabase extends Database {
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
                     result.add(feedback);
                 }
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("connection isnt closed but cant close");
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * gets all (dis)likes of a feedback-object from the database.
+     *
+     * @param feedbackID
+     * @return
+     */
+    public static Map<Integer, Boolean> getLikesOfFeedback(Integer feedbackID) {
+        Map<Integer, Boolean> result = new HashMap<Integer, Boolean>();
+
+        Connection con = null;
+
+        try {
+            con = getConnection();
+            ResultSet rs;
+
+            try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user_feedback WHERE feedbackId = ?")) {
+                pstmt.setInt(1, feedbackID);
+
+                rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    Integer likeFrom = rs.getInt("likeFrom");
+                    Boolean helpful = rs.getBoolean("helpful");
+                    result.put(likeFrom, helpful);
+                }
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("connection isnt closed but cant close");
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * uploads (dis)like to the database.
+     *
+     * @param feedbackId id of feedback that receives the (dis)like
+     * @param likeFrom feedbackGiver's id
+     * @param helpful helpful or not helpful?
+     * @return
+     */
+    public static Boolean giveLikeToFeedback(Integer feedbackId, Integer likeFrom, Boolean helpful) {
+        Boolean result = false;
+
+        Connection con = null;
+
+        try {
+            con = getConnection();
+            ResultSet rs;
+
+            try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO user_feedback(feedbackId, likeFrom, helpful) VALUES(?, ?, ?)")) {
+                pstmt.setInt(1, feedbackId);
+                pstmt.setInt(2, likeFrom);
+                pstmt.setBoolean(3, helpful);
+
+                rs = pstmt.executeQuery();
+                result = true;
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("connection isnt closed but cant close");
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * removes (dis)like of feedback from the database.
+     *
+     * @param feedbackId
+     * @param likeFrom
+     * @return
+     */
+    public static Boolean removeLikeFromFeedback(Integer feedbackId, Integer likeFrom) {
+        Boolean result = false;
+
+        Connection con = null;
+
+        try {
+            con = getConnection();
+            ResultSet rs;
+
+            try (PreparedStatement pstmt = con.prepareStatement("DELETE user_feedback WHERE feedbackId = ? AND likeFrom = ?")) {
+                pstmt.setInt(1, feedbackId);
+                pstmt.setInt(2, likeFrom);
+                rs = pstmt.executeQuery();
+                result = rs.rowDeleted();
             }
             rs.close();
         } catch (SQLException ex) {
