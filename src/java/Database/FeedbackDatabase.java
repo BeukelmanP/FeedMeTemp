@@ -28,7 +28,7 @@ public class FeedbackDatabase extends Database {
      *
      * @return ArrayList<Feedback>
      */
-    public ArrayList<Feedback> getAllFeedback() {
+    public static ArrayList<Feedback> getAllFeedback() {
         ArrayList<Feedback> result = new ArrayList<Feedback>();
         int id;
         int sendTo;
@@ -49,7 +49,7 @@ public class FeedbackDatabase extends Database {
                     sendFrom = rs.getInt("sendFrom");
                     feedbackContent = rs.getString("feedback");
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
-                    feedback = this.FeedbackWithLikes(feedback);
+                    feedback = new FeedbackDatabase().FeedbackWithLikes(feedback);
                     result.add(feedback);
                 }
             }
@@ -76,7 +76,7 @@ public class FeedbackDatabase extends Database {
      *
      * @return ArrayList<Feedback>
      */
-    public ArrayList<Feedback> getFeedbackSendedReceivedUser(int id) {
+    public static ArrayList<Feedback> getFeedbackSendedReceivedUser(int id) {
         ArrayList<Feedback> result = new ArrayList<Feedback>();
         int sendTo;
         int sendFrom;
@@ -99,7 +99,7 @@ public class FeedbackDatabase extends Database {
                     sendFrom = rs.getInt("sendFrom");
                     feedbackContent = rs.getString("feedback");
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
-                    feedback = this.FeedbackWithLikes(feedback);
+                    feedback = new FeedbackDatabase().FeedbackWithLikes(feedback);
 
                     result.add(feedback);
                 }
@@ -127,7 +127,7 @@ public class FeedbackDatabase extends Database {
      *
      * @return ArrayList<Feedback>
      */
-    public ArrayList<Feedback> getFeedbackSendedByUser(int id) {
+    public static ArrayList<Feedback> getFeedbackSendedByUser(int id) {
         ArrayList<Feedback> result = new ArrayList<Feedback>();
         int sendTo;
         int sendFrom;
@@ -141,7 +141,6 @@ public class FeedbackDatabase extends Database {
 
             try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM feedback WHERE sendFrom = ? ORDER BY timeCreated DESC")) {
                 pstmt.setInt(1, id);
-                pstmt.setInt(2, id);
 
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
@@ -150,8 +149,7 @@ public class FeedbackDatabase extends Database {
                     sendFrom = rs.getInt("sendFrom");
                     feedbackContent = rs.getString("feedback");
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
-                    feedback = this.FeedbackWithLikes(feedback);
-
+                    feedback = new FeedbackDatabase().FeedbackWithLikes(feedback);
                     result.add(feedback);
                 }
             }
@@ -178,7 +176,7 @@ public class FeedbackDatabase extends Database {
      *
      * @return ArrayList<Feedback>
      */
-    public ArrayList<Feedback> getFeedbackReceivedByUser(int id) {
+    public static ArrayList<Feedback> getFeedbackReceivedByUser(int id) {
         ArrayList<Feedback> result = new ArrayList<Feedback>();
         int sendTo;
         int sendFrom;
@@ -192,7 +190,6 @@ public class FeedbackDatabase extends Database {
 
             try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM feedback WHERE sendTo = ? ORDER BY timeCreated DESC")) {
                 pstmt.setInt(1, id);
-                pstmt.setInt(2, id);
 
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
@@ -201,9 +198,7 @@ public class FeedbackDatabase extends Database {
                     sendFrom = rs.getInt("sendFrom");
                     feedbackContent = rs.getString("feedback");
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
-
-                    feedback = this.FeedbackWithLikes(feedback);
-
+                    feedback = new FeedbackDatabase().FeedbackWithLikes(feedback);
                     result.add(feedback);
                 }
             }
