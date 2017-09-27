@@ -5,6 +5,7 @@
  */
 package Feedback;
 
+import static Database.FeedbackDatabase.InsertFeedback;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -70,13 +71,11 @@ public class GiveFeedback implements Serializable {
     }
     
     public void submitFeedback(String sendTo, String sendFrom) {
-        profile = sendTo;
-        System.out.println(profile);
-        if(title != "" && feedback != "") 
+        if(!"".equals(title) && !"".equals(feedback)) 
         {
             //TODO: Fetch ID
-            Feedback fb = new Feedback(0, 1, 1, title, tips, tops, feedback);
-            //TODO: Database insert
+            //Feedback fb = new Feedback(0, 1, 1, title, tips, tops, feedback);
+            InsertFeedback(Integer.parseInt(sendFrom), Integer.parseInt(sendTo), title,  tips,  tops,  feedback);
             //TODO: Cooldown            
         }
         else

@@ -222,8 +222,8 @@ public class FeedbackDatabase extends Database {
 
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
-                    String nameFrom = rs.getString("user1first") +" "+ rs.getString("user1last");
-                    String nameTo = rs.getString("user2first") +" "+ rs.getString("user2last");
+                    String nameFrom = rs.getString("user1first") + " " + rs.getString("user1last");
+                    String nameTo = rs.getString("user2first") + " " + rs.getString("user2last");
                     int idFrom = rs.getInt("sendFrom");
                     int idTo = rs.getInt("sendTo");
                     String imageFrom = rs.getString("user1image");
@@ -261,8 +261,8 @@ public class FeedbackDatabase extends Database {
 
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
-                    String nameFrom = rs.getString("user1first") +" "+ rs.getString("user1last");
-                    String nameTo = rs.getString("user2first") +" "+ rs.getString("user2last");
+                    String nameFrom = rs.getString("user1first") + " " + rs.getString("user1last");
+                    String nameTo = rs.getString("user2first") + " " + rs.getString("user2last");
                     int idFrom = rs.getInt("sendFrom");
                     int idTo = rs.getInt("sendTo");
                     String imageFrom = rs.getString("user1image");
@@ -296,6 +296,34 @@ public class FeedbackDatabase extends Database {
             try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO request_feedback (`sendFrom`, `sendTo`) VALUES (?, ?);")) {
                 pstmt.setInt(1, from);
                 pstmt.setInt(2, to);
+                pstmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("connection isnt closed but cant close");
+                }
+            }
+        }
+    }
+
+    public static void InsertFeedback(int from, int to, String title, String tips, String tops, String feedback) {
+        Connection con = null;
+        try {
+            con = getConnection();
+            try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO feedback (sendTo, sendFrom, title, tips, tops, feedback, timeCreated) VALUES (?,?,?,?,?,?, CURRENT_TIMESTAMP);")) {
+                pstmt.setInt(1, to);
+                pstmt.setInt(2, from);
+                pstmt.setString(3, title);
+                pstmt.setString(4, tips);
+                pstmt.setString(5, tops);
+                pstmt.setString(6, feedback);
                 pstmt.executeUpdate();
             }
         } catch (SQLException ex) {
