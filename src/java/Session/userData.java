@@ -52,13 +52,6 @@ public class userData implements Serializable {
         this.userLoggedIn = userLoggedIn;
     }
 
-    public String getLoggedInName() {
-        return LoggedInName;
-    }
-
-    public void setLoggedInName(String LoggedInName) {
-        this.LoggedInName = LoggedInName;
-    }
     String NameUserToGiveFeedback;
     String PictureUserToGiveFeedback;
     String idUserToGiveFeedbackTo;
