@@ -43,16 +43,39 @@ and open the template in the editor.
                                     <span style="display:inline-block; width: 5%;"></span>
                                     <h:outputText class="col-md-8" style="color: grey" value = "06-TESTESTEST"/>
                                 </p>
+                                <h:form>
+                                    <h:commandLink action ="#{userData.setGiveFeedback()}"  ><i class="material-icons">feedback</i> Give feedback
+                                <f:setPropertyActionListener target="#{userData.nameUserToGiveFeedback}" value="#{User.firstname}" />
+                                <f:setPropertyActionListener target="#{userData.pictureUserToGiveFeedback}" value="#{User.picture}" />
+                                <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{User.id}" /></h:commandLink>
+                                    <h:commandLink onclick="if (!confirm('Are you sure you want to ask feedback from #{User.firstname}?'))
+                                        return false"
+                                                   action="#{userData.requestFeedback(true)}"  class="edit_icon" >
+                                        <i class="material-icons">loyalty</i> Ask Feedback
+                                        <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{userData.userToVisit.id}" />
+                                    </h:commandLink> 
+                                </h:form>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row" style="position: relative;  top: 25px">
                     <div class="row">
-                        <h:dataTable value = "#{userData.getUserFeedback()}" var = "Feedback">
-                            <h:column>    				
+                        <h:outputText value="This user don't has received any feedback" rendered="#{empty userData.getUserFeedback()}" />
+                        <h:dataTable value = "#{userData.getUserFeedback()}" var = "Feedback" rendered="#{not empty userData.getUserFeedback()}">
+                            <h:column>		
+                                <f:facet name = "header">Given by</f:facet> 
+                                <p style="width: 10%;">
+                                    <p style="text-align: center;">
+                                        <IMG src="#{Feedback.user.picture}" style="border-radius: 40%; height: 100px; width: 100px;"/></p>
+                                    <p style="text-align: center;">#{Feedback.user.firstname} #{Feedback.user.lastname}</p>
+                                    <hr style="position: absolute; left: 0; bottom: 5;"></hr>
+                                </p>
+                            </h:column>
+                            <h:column>	
                                 <f:facet name = "header">Feedback</f:facet> 
                                 <p style="width: 100%;">
+
                                     <h4 style="text-align: center">#{Feedback.title}</h4>
                                     <h5><i class="material-icons">mood</i>  Tips</h5>
                                     <p style=" left:20px;">#{Feedback.tips}</p>
