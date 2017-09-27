@@ -14,7 +14,7 @@ and open the template in the editor.
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
 
-                <li><h:link outcome="Profile.xhtml">My Profile</h:link></li>
+                <li><h:link outcome="Profile.xhtml"><img style="border-radius: 40%; Height:30px;width:30px; "  src="#{userData.loggedInUser.picture}"/> #{userData.loggedInUser.firstname} #{userData.loggedInUser.lastname}</h:link></li>
                 <li><h:link outcome="feedback.xhtml">My Feedback</h:link></li>
             </ul>
             <!--<a href="homePage.xhtml"  class="brand-logo center">FeedMe</a>-->

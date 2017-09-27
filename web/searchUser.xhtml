@@ -31,8 +31,8 @@ and open the template in the editor.
             <div style="background-color: #fcfcfc;" class="col s8 offset-s2 z-depth-5">
                 <H6>Results for: 
                     <h:outputText value = "#{userData.getSearchKeyWord()}" /></H6>
-                      <h:outputText value="No search results" rendered="#{empty userData.searchUser()}" />
-                    <h:dataTable value = "#{userData.searchUser()}" var = "User"  rendered="#{not empty userData.searchUser()}">
+                <h:outputText value="No search results" rendered="#{empty userData.searchUser()}" />
+                <h:dataTable value = "#{userData.searchUser()}" var = "User"  rendered="#{not empty userData.searchUser()}">
                     <h:column>    				
                         <f:facet name = "header">Results:</f:facet>    				
                         <img style="border-radius: 40%; Height:100px;width:100px;" src="#{User.picture}"/>
@@ -60,12 +60,18 @@ and open the template in the editor.
                             <h:commandLink action ="#{userData.visitUser()}" ><i class="material-icons">person</i>
                                 <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{User.id}" /></h:commandLink></h:form>
                     </h:column>
-<!--                    <h:column>
+                    <h:column>
                         <f:facet name = "header">Request Feedback</f:facet>
                         <h:form>
-                            <h:commandLink action ="" ><i class="material-icons">loyalty</i>
-                                <f:setPropertyActionListener target="" value="#{User.id}" /></h:commandLink></h:form>
-                    </h:column>-->
+
+                            <h:commandLink onclick="if (!confirm('Are you sure you want to ask feedback from #{User.firstname}?'))
+                                            return false"
+                                           action="#{userData.requestFeedback(true)}"  class="edit_icon" >
+                                <i class="material-icons">loyalty</i>
+                                <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{User.id}" />
+                            </h:commandLink> 
+                        </h:form>
+                    </h:column>
                 </h:dataTable>
             </div>
         </div>

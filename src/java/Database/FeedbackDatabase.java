@@ -222,8 +222,8 @@ public class FeedbackDatabase extends Database {
 
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
-                    String nameFrom = rs.getString("user1first") + rs.getString("user1last");
-                    String nameTo = rs.getString("user2first") + rs.getString("user2last");
+                    String nameFrom = rs.getString("user1first") +" "+ rs.getString("user1last");
+                    String nameTo = rs.getString("user2first") +" "+ rs.getString("user2last");
                     int idFrom = rs.getInt("sendFrom");
                     int idTo = rs.getInt("sendTo");
                     String imageFrom = rs.getString("user1image");
@@ -261,8 +261,8 @@ public class FeedbackDatabase extends Database {
 
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
-                    String nameFrom = rs.getString("user1first") + rs.getString("user1last");
-                    String nameTo = rs.getString("user2first") + rs.getString("user2last");
+                    String nameFrom = rs.getString("user1first") +" "+ rs.getString("user1last");
+                    String nameTo = rs.getString("user2first") +" "+ rs.getString("user2last");
                     int idFrom = rs.getInt("sendFrom");
                     int idTo = rs.getInt("sendTo");
                     String imageFrom = rs.getString("user1image");
