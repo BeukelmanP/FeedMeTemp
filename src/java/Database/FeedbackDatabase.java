@@ -49,6 +49,7 @@ public class FeedbackDatabase extends Database {
                     sendFrom = rs.getInt("sendFrom");
                     feedbackContent = rs.getString("feedback");
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
+                    feedback = this.FeedbackWithLikes(feedback);
                     result.add(feedback);
                 }
             }
@@ -98,6 +99,8 @@ public class FeedbackDatabase extends Database {
                     sendFrom = rs.getInt("sendFrom");
                     feedbackContent = rs.getString("feedback");
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
+                    feedback = this.FeedbackWithLikes(feedback);
+
                     result.add(feedback);
                 }
             }
@@ -147,6 +150,8 @@ public class FeedbackDatabase extends Database {
                     sendFrom = rs.getInt("sendFrom");
                     feedbackContent = rs.getString("feedback");
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
+                    feedback = this.FeedbackWithLikes(feedback);
+
                     result.add(feedback);
                 }
             }
@@ -196,6 +201,9 @@ public class FeedbackDatabase extends Database {
                     sendFrom = rs.getInt("sendFrom");
                     feedbackContent = rs.getString("feedback");
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackContent);
+
+                    feedback = this.FeedbackWithLikes(feedback);
+
                     result.add(feedback);
                 }
             }
@@ -273,17 +281,16 @@ public class FeedbackDatabase extends Database {
 
         try {
             con = getConnection();
-            ResultSet rs;
 
             try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO user_feedback(feedbackId, likeFrom, helpful) VALUES(?, ?, ?)")) {
                 pstmt.setInt(1, feedbackId);
                 pstmt.setInt(2, likeFrom);
                 pstmt.setBoolean(3, helpful);
 
-                rs = pstmt.executeQuery();
-                result = true;
+                if (pstmt.executeUpdate() > 0) {
+                    result = true;
+                }
             }
-            rs.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
@@ -314,15 +321,15 @@ public class FeedbackDatabase extends Database {
 
         try {
             con = getConnection();
-            ResultSet rs;
 
-            try (PreparedStatement pstmt = con.prepareStatement("DELETE user_feedback WHERE feedbackId = ? AND likeFrom = ?")) {
+            try (PreparedStatement pstmt = con.prepareStatement("DELETE FROM user_feedback WHERE feedbackId = ? AND likeFrom = ?")) {
                 pstmt.setInt(1, feedbackId);
                 pstmt.setInt(2, likeFrom);
-                rs = pstmt.executeQuery();
-                result = rs.rowDeleted();
+
+                if (pstmt.executeUpdate() > 0) {
+                    result = true;
+                }
             }
-            rs.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
@@ -338,4 +345,25 @@ public class FeedbackDatabase extends Database {
         }
         return result;
     }
+
+    /**
+     * adds likes to a feedback-object
+     *
+     * @param feedback
+     * @return
+     */
+    private Feedback FeedbackWithLikes(Feedback feedback) {
+        Feedback result = feedback;
+
+        //add the likes to the feedback
+        Map<Integer, Boolean> likesOfFeedback = this.getLikesOfFeedback(result.getId());
+        for (Map.Entry<Integer, Boolean> entry : likesOfFeedback.entrySet()) {
+            Integer key = entry.getKey();
+            Boolean value = entry.getValue();
+            result.likeFeedback(key, value);
+        }
+
+        return result;
+    }
+
 }
