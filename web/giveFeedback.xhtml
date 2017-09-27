@@ -54,7 +54,8 @@ and open the template in the editor.
                         <input type="range" id="score" min="1" max="10" value="#{giveFeedback.score}" />
                     <p class="range-field">
                     </p>
-                        <input type="submit" id="submit" class="btn waves-effect waves-light" value="Submit" action="#{giveFeedback.submitFeedback(userData.idUserToGiveFeedbackTo, userData.loggedInUser.id)}"/>
+                        <input type="submit" id="submit" class="btn waves-effect waves-light" value="Submit" onclick="if (!confirm('Are you sure you want to give this feedback to #{userData.nameUserToGiveFeedback}?'))
+                                            return false" action="#{giveFeedback.submitFeedback(userData.idUserToGiveFeedbackTo, userData.loggedInUser.id, true)}"/>
                 </h:form>
             </div>
         </div>

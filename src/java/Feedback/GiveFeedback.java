@@ -18,16 +18,16 @@ import javax.faces.bean.ManagedProperty;
 @ManagedBean
 @SessionScoped
 public class GiveFeedback implements Serializable {
-    
-   private static final long serialVersionUID = 1344828042104158294L;
-        
+
+    private static final long serialVersionUID = 1344828042104158294L;
+
     private String title;
     private String tips;
     private String tops;
     private String feedback;
-    
+
     private String profile;
-    
+
     private int score = 0;
 
     public String getTitle() {
@@ -69,18 +69,13 @@ public class GiveFeedback implements Serializable {
     public void setScore(int score) {
         this.score = score;
     }
-    
-    public void submitFeedback(String sendTo, String sendFrom) {
-        if(!"".equals(title) && !"".equals(feedback)) 
-        {
-            //TODO: Fetch ID
-            //Feedback fb = new Feedback(0, 1, 1, title, tips, tops, feedback);
-            InsertFeedback(Integer.parseInt(sendFrom), Integer.parseInt(sendTo), title,  tips,  tops,  feedback);
-            //TODO: Cooldown            
-        }
-        else
-        {
-            //TODO: Empty
+
+    public String submitFeedback(String sendTo, String sendFrom, boolean goOn) {
+        if (!"".equals(title) && !"".equals(feedback) && goOn) {
+            InsertFeedback(Integer.parseInt(sendFrom), Integer.parseInt(sendTo), title, tips, tops, feedback);
+            return "searchUser";
+        } else {
+            return "giveFeedback";
         }
     }
 }

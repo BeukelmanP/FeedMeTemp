@@ -5,6 +5,8 @@
  */
 package Feedback;
 
+import Database.UserDatabase;
+import Login.User;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -93,5 +95,9 @@ public class Feedback implements Serializable{
     @Override
     public String toString() {
         return "Feedback{" + "id=" + id + ", sendTo=" + sendTo + ", sendFrom=" + sendFrom + ", title=" + title + ", tips=" + tips + ", tops=" + tops + ", feedback=" + feedback + "}";
+    }
+    
+    public User getUser(){
+        return UserDatabase.getUser(sendFrom);
     }
 }
