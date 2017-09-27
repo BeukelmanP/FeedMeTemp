@@ -45,7 +45,7 @@ and open the template in the editor.
                                 </p>
                                 <p class="col-md-4"><i class="material-icons">highlight</i> Score:
                                     <span style="display:inline-block; width: 5%;"></span>
-                                    <h:outputText class="col-md-8" style="color: grey" value = "06-TESTESTEST"/>
+                                    <h:outputText class="col-md-8" style="color: grey" value = "#{userData.userToVisit.score}"/>
                                 </p>
                                 <h:form>
                                     <h:commandLink action ="#{userData.setGiveFeedback()}"  ><i class="material-icons">feedback</i> Give feedback
