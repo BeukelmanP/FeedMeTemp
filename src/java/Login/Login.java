@@ -71,10 +71,6 @@ public class Login implements Serializable {
             return "Index";
         }
     }
-    
-    public String hashPassword(String password){
-        throw new NotImplementedException();
-    }
 
     //logout event, invalidate session
     public String logout() {
