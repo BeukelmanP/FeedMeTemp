@@ -118,13 +118,14 @@ public class UserDatabase extends Database {
                     rs = pstmt.executeQuery();
                     rs.next();
                     int id = rs.getInt("id");
+                    int score = FeedbackDatabase.Score(id);
                     String firstname = rs.getString("firstname");
                     String lastname = rs.getString("lastname");
                     String email = rs.getString("email");
                     String picture = rs.getString("image");
                     String department = rs.getString("department");
 
-                    result = new User(id, firstname, lastname, email, picture, department);
+                    result = new User(id, firstname, lastname, email, picture, department, score);
                     rs.close();
                 }
             }
@@ -154,21 +155,20 @@ public class UserDatabase extends Database {
             ResultSet rs;
 
             if (id != 0) {
-                try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE id = ?")) {
-                    pstmt.setInt(1, id);
+                PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE id = ?");
+                pstmt.setInt(1, id);
 
-                    rs = pstmt.executeQuery();
-                    rs.next();
-                    int userid = rs.getInt("id");
-                    String firstname = rs.getString("firstname");
-                    String lastname = rs.getString("lastname");
-                    String email = rs.getString("email");
-                    String picture = rs.getString("image");
-                    String department = rs.getString("department");
-
-                    result = new User(userid, firstname, lastname, email, picture, department);
-                    rs.close();
-                }
+                rs = pstmt.executeQuery();
+                rs.next();
+                id = rs.getInt("id");
+                int score = FeedbackDatabase.Score(id);
+                String firstname = rs.getString("firstname");
+                String lastname = rs.getString("lastname");
+                String email = rs.getString("email");
+                String picture = rs.getString("image");
+                String department = rs.getString("department");
+                result = new User(id, firstname, lastname, email, picture, department, score);
+                rs.close();
             }
         } catch (SQLException ex) {
             Logger.getLogger("User not found");

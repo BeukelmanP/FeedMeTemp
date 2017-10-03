@@ -341,4 +341,45 @@ public class FeedbackDatabase extends Database {
         }
     }
 
+    public static int Score(int userId) {
+        int score = 0;
+        Connection con = null;
+
+        try {
+            con = getConnection();
+            ResultSet rs;
+
+            try (PreparedStatement pstmt = con.prepareStatement("SELECT COUNT(id) AS Score FROM feedback WHERE sendFrom = ?")) {
+                pstmt.setInt(1, userId);
+
+                rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    score = rs.getInt("Score");
+                }
+            }
+
+            try (PreparedStatement pstmt = con.prepareStatement("SELECT COUNT(*) AS Score FROM user_feedback WHERE feedbackId IN (SELECT id FROM feedback WHERE sendFrom = ?) AND helpful = 1")) {
+                pstmt.setInt(1, userId);
+                rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    score = score + rs.getInt("Score");
+                }
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("connection isnt closed but cant close");
+                }
+            }
+        }
+        return score;
+    }
+
 }

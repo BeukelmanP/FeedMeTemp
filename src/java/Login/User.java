@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author wesle
  */
-public class User implements Serializable{
+public class User implements Serializable {
 
     private int id;
     private String firstname;
@@ -20,6 +20,7 @@ public class User implements Serializable{
     private String password;
     private String picture;
     private String department;
+    private int score;
 
     public String getPicture() {
         return picture;
@@ -77,13 +78,32 @@ public class User implements Serializable{
         this.password = password;
     }
 
+    public int getScore() {
+        System.out.println(score);
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public User(int id, String firstname, String lastname, String email, String picture, String department) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
-        this.department=department;
-        this.picture=picture;
+        this.department = department;
+        this.picture = picture;
+    }
+
+    public User(int id, String firstname, String lastname, String email, String picture, String department, int Score) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.department = department;
+        this.picture = picture;
+        this.score = Score;
     }
 
     @Override
