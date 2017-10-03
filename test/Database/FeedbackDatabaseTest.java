@@ -47,7 +47,7 @@ public class FeedbackDatabaseTest {
     public void testGetAllFeedback() {
         System.out.println("getAllFeedback");
         ArrayList<Feedback> result = FeedbackDatabase.getAllFeedback();
-        assertTrue("niets gevonden", result.size() > 0);
+        assertTrue("geen feedback gevonden", result.size() > 0);
     }
 
     /**
@@ -56,7 +56,7 @@ public class FeedbackDatabaseTest {
     @Test
     public void testGetFeedbackSendedReceivedUser() {
         System.out.println("getFeedbackSendedReceivedUser");
-        ArrayList<Feedback> result = FeedbackDatabase.getFeedbackSendedReceivedUser(1);
+        ArrayList<Feedback> result = FeedbackDatabase.getFeedbackSendedReceivedUser(2);
         assertTrue("niets gevonden", result.size() > 0);
     }
 
@@ -66,7 +66,7 @@ public class FeedbackDatabaseTest {
     @Test
     public void testGetFeedbackSendedByUser() {
         System.out.println("getFeedbackSendedByUser");
-        ArrayList<Feedback> result = FeedbackDatabase.getFeedbackSendedByUser(1);
+        ArrayList<Feedback> result = FeedbackDatabase.getFeedbackSendedByUser(2);
         assertTrue("niets gevonden", result.size() > 0);
     }
 
@@ -76,7 +76,7 @@ public class FeedbackDatabaseTest {
     @Test
     public void testGetFeedbackReceivedByUser() {
         System.out.println("getFeedbackReceivedByUser");
-        ArrayList<Feedback> result = FeedbackDatabase.getFeedbackReceivedByUser(1);
+        ArrayList<Feedback> result = FeedbackDatabase.getFeedbackReceivedByUser(2);
         assertTrue("niets gevonden", result.size() > 0);
     }
 
