@@ -47,6 +47,7 @@ public class Feedback implements Serializable{
     private String tips;
     private String tops;
     private String feedback;
+    private int helpfulAmount;
     
     private Map<Integer,Boolean> user_feedback;
     
@@ -87,6 +88,14 @@ public class Feedback implements Serializable{
      * @param id The id of the user that (dis)liked the feedback
      * @param helpful Whether the feedback was helpfull or not. (similiar to like/dislike)
      */
+    
+    public String addLike(Integer id, Integer userID, Boolean helpful)
+    {
+        Database.FeedbackDatabase.giveLikeToFeedback(id, userID, helpful);
+        return "colleagueProfile";
+    }
+        
+    
     public void likeFeedback(Integer id, Boolean helpful)
     {
         user_feedback.put(id, helpful);
@@ -108,5 +117,26 @@ public class Feedback implements Serializable{
     
     public User getUser(){
         return UserDatabase.getUser(sendFrom);
+    }
+    
+    public int getHelpfulAmount() {
+        int amount = 0;
+        
+        for(Boolean b : user_feedback.values())
+        {
+            if(b == true) {
+                amount++;
+            }
+            else {
+                amount--;
+            }
+        }
+        
+        if(amount < 0)
+        {
+            amount = 0;
+        }
+        
+        return amount;
     }
 }

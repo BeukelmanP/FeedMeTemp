@@ -90,8 +90,11 @@ and open the template in the editor.
                                     <p style="left:20px;">#{Feedback.feedback}</p>
                                 </p>    
                                 <p>
-                                    <h:commandButton type="submit" class="green btn waves-effect waves-light" value="👍 helpful" action="#{Feedback.likeFeedback(Feedback.id, true)}" />
-                                    <h:commandButton type="submit" style="margin-left:10px" class="red btn waves-effect waves-light" value="👎 unhelpful" action="#{Feedback.likeFeedback(Feedback.id,false)}" />
+                                    <h:form>
+                                        <h:commandButton id="like" class="green btn waves-effect waves-light" value="👍 helpful" action="#{Feedback.addLike(Feedback.id, userData.loggedInUser.id, true)}" />
+                                        <h:commandButton id="unlike" style="margin-left:10px" class="red btn waves-effect waves-light" value="👎 unhelpful" action="#{Feedback.addLike(Feedback.id, userData.loggedInUser.id, false)}" />
+                                        <font style="float: right">#{Feedback.helpfulAmount}</font>
+                                    </h:form>
                                 </p>
                                 <hr style="width:100%;color:lightgrey;" />
                             </h:column>
