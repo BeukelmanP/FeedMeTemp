@@ -6,7 +6,7 @@
 package Feedback;
 
 import static Database.FeedbackDatabase.InsertFeedback;
-import javax.enterprise.context.SessionScoped;
+//import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -16,7 +16,7 @@ import javax.faces.bean.ManagedProperty;
  * @author Sander
  */
 @ManagedBean
-@SessionScoped
+//@SessionScoped
 public class GiveFeedback implements Serializable {
 
     private static final long serialVersionUID = 1344828042104158294L;
