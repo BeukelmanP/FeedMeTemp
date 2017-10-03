@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Login.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;FeedMe_Calve&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Login</a> &gt; <span class="el_source">Login.java</span></div><h1>Login.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Login;
+
+import Database.UserDatabase;
+import java.io.Serializable;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+/**
+ *
+ * @author Sander
+ */
+@ManagedBean
+@SessionScoped
+<span class="fc" id="L24">public class Login implements Serializable {</span>
+
+    private static final long serialVersionUID = 1344828042104158293L;
+
+    private String password;
+    private String message;
+    private String username;
+
+    public String getPassword() {
+<span class="fc" id="L33">        return password;</span>
+    }
+
+    public void setPassword(String password) {
+<span class="fc" id="L37">        this.password = password;</span>
+<span class="fc" id="L38">    }</span>
+
+    public String getMessage() {
+<span class="fc" id="L41">        return message;</span>
+    }
+
+    public void setMessage(String message) {
+<span class="fc" id="L45">        this.message = message;</span>
+<span class="fc" id="L46">    }</span>
+
+    public String getUsername() {
+<span class="fc" id="L49">        return username;</span>
+    }
+
+    public void setUsername(String username) {
+<span class="fc" id="L53">        this.username = username;</span>
+<span class="fc" id="L54">    }</span>
+
+    //validate login
+    public String validateUsernamePassword() {
+        //fixdb con
+        //boolean valid = Database.validate(username, hashPassword(password);
+<span class="fc" id="L60">         User usr = UserDatabase.getUser(username, password);</span>
+        //String pw = &quot;Test123&quot;;
+        
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if (usr != null) {</span>
+<span class="fc" id="L64">            System.out.println(&quot;loggedin&quot;);</span>
+<span class="nc" id="L65">            HttpSession session = SessionUtils.getSession();</span>
+<span class="nc" id="L66">            session.setAttribute(&quot;user&quot;, usr);</span>
+<span class="nc" id="L67">            return &quot;homePage&quot;;</span>
+        } else {
+<span class="nc" id="L69">            FacesMessage error = new FacesMessage(&quot;Incorrect Username and Password combination!&quot;);</span>
+<span class="nc" id="L70">            FacesContext.getCurrentInstance().addMessage(&quot;loginform:Loginbtn&quot;, error);</span>
+<span class="nc" id="L71">            return &quot;Index&quot;;</span>
+        }
+    }
+
+    //logout event, invalidate session
+    public String logout() {
+<span class="nc" id="L77">        HttpSession session = SessionUtils.getSession();</span>
+<span class="nc" id="L78">        session.invalidate();</span>
+<span class="nc" id="L79">        return &quot;login&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
