@@ -46,12 +46,8 @@ public class FeedbackDatabaseTest {
     @Test
     public void testGetAllFeedback() {
         System.out.println("getAllFeedback");
-        FeedbackDatabase instance = new FeedbackDatabase();
-        ArrayList<Feedback> expResult = null;
-        ArrayList<Feedback> result = instance.getAllFeedback();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ArrayList<Feedback> result = FeedbackDatabase.getAllFeedback();
+        assertTrue("niets gevonden", result.size() > 0);
     }
 
     /**
@@ -60,13 +56,8 @@ public class FeedbackDatabaseTest {
     @Test
     public void testGetFeedbackSendedReceivedUser() {
         System.out.println("getFeedbackSendedReceivedUser");
-        int userId = 0;
-        FeedbackDatabase instance = new FeedbackDatabase();
-        ArrayList<Feedback> expResult = null;
-        ArrayList<Feedback> result = instance.getFeedbackSendedReceivedUser(userId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ArrayList<Feedback> result = FeedbackDatabase.getFeedbackSendedReceivedUser(1);
+        assertTrue("niets gevonden", result.size() > 0);
     }
 
     /**
@@ -75,13 +66,8 @@ public class FeedbackDatabaseTest {
     @Test
     public void testGetFeedbackSendedByUser() {
         System.out.println("getFeedbackSendedByUser");
-        int userId = 0;
-        FeedbackDatabase instance = new FeedbackDatabase();
-        ArrayList<Feedback> expResult = null;
-        ArrayList<Feedback> result = instance.getFeedbackSendedByUser(userId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ArrayList<Feedback> result = FeedbackDatabase.getFeedbackSendedByUser(1);
+        assertTrue("niets gevonden", result.size() > 0);
     }
 
     /**
@@ -90,12 +76,24 @@ public class FeedbackDatabaseTest {
     @Test
     public void testGetFeedbackReceivedByUser() {
         System.out.println("getFeedbackReceivedByUser");
-        int userId = 0;
-        ArrayList<Feedback> expResult = null;
-        ArrayList<Feedback> result = FeedbackDatabase.getFeedbackReceivedByUser(userId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ArrayList<Feedback> result = FeedbackDatabase.getFeedbackReceivedByUser(1);
+        assertTrue("niets gevonden", result.size() > 0);
+    }
+
+    /**
+     * Test of getLikesOfFeedback & giveLikeToFeedback & removeLikeFromFeedback method, of class FeedbackDatabase.
+     */
+    @Test
+    public void testGiveGetRemoveLikeOfFeedback() {
+        System.out.println("giveLikeToFeedback");
+
+        assertTrue("give like 1 failed", FeedbackDatabase.giveLikeToFeedback(1, 1, true));
+        assertTrue("give like 2 failed", FeedbackDatabase.giveLikeToFeedback(1, 2, false));
+
+        assertTrue("Less than 2 likes found", FeedbackDatabase.getLikesOfFeedback(1).size() >= 2);
+        
+        assertTrue("remove like failed", FeedbackDatabase.removeLikeFromFeedback(1, 1));
+        assertTrue("remove like failed", FeedbackDatabase.removeLikeFromFeedback(1, 2));
     }
 
     
