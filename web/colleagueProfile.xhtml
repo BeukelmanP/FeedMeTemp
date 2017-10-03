@@ -75,23 +75,28 @@ and open the template in the editor.
                                 <p style="width: 10%;">
                                     <p style="text-align: center;">
                                         <IMG src="#{Feedback.user.picture}" style="border-radius: 40%; height: 100px; width: 100px;"/></p>
-                                    <p style="text-align: center;">#{Feedback.user.firstname} #{Feedback.user.lastname}</p>
-                                    <hr style="position: absolute; left: 0; bottom: 5;"></hr>
+                                        <p style="text-align: center;">#{Feedback.user.firstname} #{Feedback.user.lastname}<br /></p>
                                 </p>
                             </h:column>
                             <h:column>	
                                 <f:facet name = "header">Feedback</f:facet> 
                                 <p style="width: 100%;">
-
-                                    <h4 style="text-align: center">#{Feedback.title}</h4>
+                                    <h4 style="text-align: left">#{Feedback.title}</h4>
                                     <h5><i class="material-icons">mood</i>  Tips</h5>
-                                    <p style=" left:20px;">#{Feedback.tips}</p>
+                                    <p style="left:20px;">#{Feedback.tips}</p>
                                     <h5><i class="material-icons">thumb_up</i>  Tops</h5>
                                     <p style="left:20px;">#{Feedback.tops}</p>
                                     <h5><i class="material-icons">message</i>  Feedback</h5>
                                     <p style="left:20px;">#{Feedback.feedback}</p>
-                                    <hr></hr>
+                                </p>    
+                                <p>
+                                    <h:form>
+                                        <h:commandButton id="like" class="green btn waves-effect waves-light" value="👍 helpful" action="#{Feedback.addLike(Feedback.id, userData.loggedInUser.id, true)}" />
+                                        <h:commandButton id="unlike" style="margin-left:10px" class="red btn waves-effect waves-light" value="👎 unhelpful" action="#{Feedback.addLike(Feedback.id, userData.loggedInUser.id, false)}" />
+                                        <font style="float: right">#{Feedback.helpfulAmount}</font>
+                                    </h:form>
                                 </p>
+                                <hr style="width:100%;color:lightgrey;" />
                             </h:column>
                         </h:dataTable>
                     </div>
