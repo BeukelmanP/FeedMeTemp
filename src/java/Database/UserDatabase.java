@@ -66,10 +66,10 @@ public class UserDatabase extends Database {
             ResultSet rs;
 
             try (PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE firstname LIKE ? OR lastname LIKE ? OR firstname LIKE ? AND lastname LIKE ? ")) {
-                pstmt.setString(1, "%"+keyword+"%");
-                pstmt.setString(2, "%"+keyword+"%");
-                pstmt.setString(3, "%"+keyword+"%");
-                pstmt.setString(4, "%"+keyword+"%");
+                pstmt.setString(1, "%" + keyword + "%");
+                pstmt.setString(2, "%" + keyword + "%");
+                pstmt.setString(3, "%" + keyword + "%");
+                pstmt.setString(4, "%" + keyword + "%");
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
                     User user = new User(rs.getInt("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("email"), rs.getString("image"), rs.getString("department"));
@@ -118,13 +118,14 @@ public class UserDatabase extends Database {
                 rs = pstmt.executeQuery();
                 rs.next();
                 int id = rs.getInt("id");
+                int score = FeedbackDatabase.Score(id);
                 String firstname = rs.getString("firstname");
                 String lastname = rs.getString("lastname");
                 String email = rs.getString("email");
                 String picture = rs.getString("image");
                 String department = rs.getString("department");
 
-                result = new User(id, firstname, lastname, email, picture, department);
+                result = new User(id, firstname, lastname, email, picture, department, score);
                 rs.close();
             }
         } catch (SQLException ex) {
@@ -143,7 +144,7 @@ public class UserDatabase extends Database {
         }
         return result;
     }
-    
+
     public static User getUser(int id) {
         User result = null;
         Connection con = null;
@@ -152,20 +153,21 @@ public class UserDatabase extends Database {
             con = getConnection();
             ResultSet rs;
 
-            if (id != 0){
+            if (id != 0) {
                 PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE id = ?");
                 pstmt.setInt(1, id);
 
                 rs = pstmt.executeQuery();
                 rs.next();
                 id = rs.getInt("id");
+                int score = FeedbackDatabase.Score(id);
                 String firstname = rs.getString("firstname");
                 String lastname = rs.getString("lastname");
                 String email = rs.getString("email");
                 String picture = rs.getString("image");
                 String department = rs.getString("department");
 
-                result = new User(id, firstname, lastname, email, picture, department);
+                result = new User(id, firstname, lastname, email, picture, department, score);
                 rs.close();
             }
         } catch (SQLException ex) {

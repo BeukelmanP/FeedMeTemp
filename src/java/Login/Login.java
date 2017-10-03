@@ -55,10 +55,7 @@ public class Login implements Serializable {
 
     //validate login
     public String validateUsernamePassword() {
-        //fixdb con
-        //boolean valid = Database.validate(username, hashPassword(password);
          User usr = UserDatabase.getUser(username, password);
-        //String pw = "Test123";
         
         if (usr != null) {
             System.out.println("loggedin");

@@ -340,10 +340,8 @@ public class FeedbackDatabase extends Database {
             }
         }
     }
-    
-        
-    public static int Score(int userId)
-    {
+
+    public static int Score(int userId) {
         int score = 0;
         Connection con = null;
 
@@ -351,7 +349,7 @@ public class FeedbackDatabase extends Database {
             con = getConnection();
             ResultSet rs;
 
-            try (PreparedStatement pstmt = con.prepareStatement("SELECT COUNT(id) AS Score FROM feedback WHERE sendFrom = ?" )) {
+            try (PreparedStatement pstmt = con.prepareStatement("SELECT COUNT(id) AS Score FROM feedback WHERE sendFrom = ?")) {
                 pstmt.setInt(1, userId);
 
                 rs = pstmt.executeQuery();
@@ -359,8 +357,8 @@ public class FeedbackDatabase extends Database {
                     score = rs.getInt("Score");
                 }
             }
-            
-            try (PreparedStatement pstmt = con.prepareStatement("SELECT COUNT(*) AS Points FROM user_feedback WHERE feedbackId IN (SELECT id FROM feedback WHERE sendFrom = ?) AND helpful = 1" )) {
+
+            try (PreparedStatement pstmt = con.prepareStatement("SELECT COUNT(*) AS Score FROM user_feedback WHERE feedbackId IN (SELECT id FROM feedback WHERE sendFrom = ?) AND helpful = 1")) {
                 pstmt.setInt(1, userId);
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
