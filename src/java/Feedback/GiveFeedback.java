@@ -16,7 +16,7 @@ import javax.faces.bean.SessionScoped;
  * @author Sander
  */
 @ManagedBean
-@SessionScoped
+//@SessionScoped
 public class GiveFeedback implements Serializable {
 
     private static final long serialVersionUID = 1344828042104158294L;
