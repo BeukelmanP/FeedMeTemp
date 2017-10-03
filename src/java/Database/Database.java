@@ -18,9 +18,9 @@ import java.util.logging.Logger;
  */
 public class Database {
     
-     private static final String url = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11195566";
-     private static final String username = "sql11195566";
-     private static final String password = "EVS7xj7jdW";
+     private static final String url = "jdbc:mysql://studmysql01.fhict.local:3306/dbi338170";
+     private static final String username = "dbi338170";
+     private static final String password = "PTS4FM4";
      
 
     
