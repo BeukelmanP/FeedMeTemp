@@ -7,8 +7,10 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f = "http://java.sun.com/jsf/core"    
+      xmlns:ui = "http://java.sun.com/jsf/facelets"  
       xmlns:h = "http://java.sun.com/jsf/html">
-    <head>
+
+    <h:head>
         <title>FeedMe</title>
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -18,38 +20,20 @@ and open the template in the editor.
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    </head>
-    <body>
+    </h:head>
+    <h:body>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
-        <nav>
-            <div class="nav-wrapper">
-                <ul id="nav-mobile" class="left hide-on-med-and-down">
-                    <li><a href="sass.html">My Profile</a></li>
-                    <li><a href="badges.html">My Feedback</a></li>
-                </ul>
-                <a href="homePage.xhtml" class="brand-logo center">FeedMe</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><form>
-                            <div class="input-field" style="height: 54px ;width: 300px;padding: 5px; margin:0;">
-                                <input id="search" type="search" style="height:54px;"/>
-                                <label class="label-icon" for="search" style="padding: 0px 0px 0px 250px; margin: 0;"><i class="material-icons">search</i></label>
-                                <!--                                    <i class="material-icons">close</i>-->
-                            </div>
-                        </form></li>
-                    <li><a href="giveFeedback.xhtml">Request Feedback</a></li>
-                    <li><a href="giveFeedback.xhtml"><i class="material-icons">more_vert</i></a></li>
-                </ul>
-            </div>
-        </nav>   
+        <ui:include src="/includes/nav.xhtml" />
+         <!--include Nav bar-->
         <div class="row">
             <div class="row" style="height: 10%"></div>
             <div style="background-color: #fcfcfc;" class="col s8 offset-s2 z-depth-5">
                 <H4>
-                Welcome back
-                <h:outputText value = "#{userData.getLoggedInName}"/>
+                    Welcome back
+                    <h:outputText value = "#{userData.loggedInUser.firstname}"/>
                 </H4>
             </div>
         </div>
-    </body>
+    </h:body>
 </html>

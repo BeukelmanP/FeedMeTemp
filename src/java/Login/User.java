@@ -5,17 +5,37 @@
  */
 package Login;
 
+import java.io.Serializable;
+
 /**
  *
  * @author wesle
  */
-public class User {
-    
+public class User implements Serializable{
+
     private int id;
     private String firstname;
     private String lastname;
     private String email;
     private String password;
+    private String picture;
+    private String department;
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
 
     public int getId() {
         return id;
@@ -57,11 +77,13 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String firstname, String lastname, String email) {
+    public User(int id, String firstname, String lastname, String email, String picture, String department) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
+        this.department=department;
+        this.picture=picture;
     }
 
     @Override

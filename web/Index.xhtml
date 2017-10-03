@@ -38,13 +38,13 @@
                 <div id="alertlogin"></div>
                 <div class="row">
                     <div class="input-field col s6 offset-s3">
-                        <input id="email" type="email" class="validate" value="#{login.username}" />
+                        <h:inputText id="email" class="validate" value="#{login.username}" />
                         <label for="email">Email</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s6 offset-s3">
-                        <input id="password" type="password" class="validate" value="#{login.password}" />
+                        <h:inputSecret id="password" class="validate" value="#{login.password}" />
                         <label for="password">Password</label>
                     </div>
                 </div>
@@ -60,13 +60,5 @@
                 </div>
             </h:form>
         </div>
-
-
-        <!--        <div class="parallax-container">
-                    <div class="parallax"><img src="images/FrontImage.jpg"></img></div>
-                </div>-->
-
-
-
     </h:body>
 </html>

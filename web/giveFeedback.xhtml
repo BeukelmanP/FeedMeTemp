@@ -7,7 +7,8 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f = "http://java.sun.com/jsf/core"    
-      xmlns:h = "http://java.sun.com/jsf/html">
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:ui = "http://java.sun.com/jsf/facelets"  >
     <h:head>
         <title>FeedMe</title>
         <!--Import Google Icon Font-->
@@ -22,62 +23,40 @@ and open the template in the editor.
     <h:body>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
-        <nav>
-            <div class="nav-wrapper">
-                <ul id="nav-mobile" class="left hide-on-med-and-down">
-                    <li><a href="sass.html">My Profile</a></li>
-                    <li><a href="badges.html">My Feedback</a></li>
-                </ul>
-                <a href="homePage.xhtml" class="brand-logo center">FeedMe</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><form>
-                            <div class="input-field" style="height: 54px ;width: 300px;padding: 5px; margin:0;">
-                                <input id="search" type="search" style="height:54px;"/>
-                                <label class="label-icon" for="search" style="padding: 0px 0px 0px 250px; margin: 0;"><i class="material-icons">search</i></label>
-                                <!--                                    <i class="material-icons">close</i>-->
-                            </div>
-                        </form></li>
-                    <li><a href="giveFeedback.xhtml">Request Feedback</a></li>
-                    <li><a href="giveFeedback.xhtml"><i class="material-icons">more_vert</i></a></li>
-                </ul>
-            </div>
-        </nav>   
+        <!--include Nav bar-->
+        <ui:include src="/includes/nav.xhtml" />
         <div class="row">
             <div class="row" style="height: 10%"></div>
             <div style="background-color: #fcfcfc;" class="col s8 offset-s2 z-depth-5">
                 <!--Image off User to give feedback to-->
-                <H2><img src="https://www.thewrap.com/wp-content/uploads/2015/11/Donald-Trump.jpg" style="border-radius: 50%; Height:100px;width:100px;"/>
+                <H2><img src="#{userData.pictureUserToGiveFeedback}" style="border-radius: 50%; Height:100px;width:100px;"/>
                     <!--Name of user to give Feedback to-->
-                    <h:outputText value = "#{userData.getNameUserToGiveFeedbackTo()}"/>
+                    <h:outputText value = "#{userData.nameUserToGiveFeedback}"/>
                 </H2>
-                <form>
+                <h:form>
                     <div class="input-field col s12">
-                        <input  id="Title" type="text" class="validate"></input>
+                        <h:inputText id="Title" class="validate" value="#{giveFeedback.title}" />
                         <label for="Title">Title</label>
                     </div>
                     <div class="input-field col s12">
-                        <textarea id="textareaTips" class="materialize-textarea"></textarea>
+                        <h:inputTextarea id="textareaTips" class="materialize-textarea" value="#{giveFeedback.tips}" />
                         <label for="textareaTips">Tips</label>
                     </div>
                     <div class="input-field col s12">
-                        <textarea id="textareaTops" class="materialize-textarea"></textarea>
+                        <h:inputTextarea id="textareaTops" class="materialize-textarea" value="#{giveFeedback.tops}" />
                         <label for="textareaTops">Tops</label>
                     </div>
                     <div class="input-field col s12">
-                        <textarea id="textareaFeedback" class="materialize-textarea"></textarea>
+                        <h:inputTextarea id="textareaFeedback" class="validate materialize-textarea" value="#{giveFeedback.feedback}" />
                         <label for="textareaFeedback">General Feedback</label>
                     </div>
                     Overall score:
+                        <input type="range" id="score" min="1" max="10" value="#{giveFeedback.score}" />
                     <p class="range-field">
-                        <input type="range" id="test5" min="0" max="10" />
                     </p>
-                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                        <i class="material-icons right">send</i>
-                    </button>
-                    <br/>
-                    <br/>
-
-                </form>
+                        <input type="submit" id="submit" class="btn waves-effect waves-light" value="Submit" onclick="if (!confirm('Are you sure you want to give this feedback to #{userData.nameUserToGiveFeedback}?'))
+                                            return false" action="#{giveFeedback.submitFeedback(userData.idUserToGiveFeedbackTo, userData.loggedInUser.id, true)}"/>
+                </h:form>
             </div>
         </div>
     </h:body>

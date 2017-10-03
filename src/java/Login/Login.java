@@ -5,6 +5,7 @@
  */
 package Login;
 
+import Database.UserDatabase;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -56,23 +57,19 @@ public class Login implements Serializable {
     public String validateUsernamePassword() {
         //fixdb con
         //boolean valid = Database.validate(username, hashPassword(password);
-        User usr = new User(0, "Fred", "The", "f-the@hotmail.com");
-        String pw = "Test123";
+         User usr = UserDatabase.getUser(username, password);
+        //String pw = "Test123";
         
-        if (getUsername().equals(usr.getEmail()) && getPassword().equals(pw)) {
+        if (usr != null) {
             System.out.println("loggedin");
             HttpSession session = SessionUtils.getSession();
-            session.setAttribute("username", username);
-            return "admin";
+            session.setAttribute("user", usr);
+            return "homePage";
         } else {
             FacesMessage error = new FacesMessage("Incorrect Username and Password combination!");
             FacesContext.getCurrentInstance().addMessage("loginform:Loginbtn", error);
             return "Index";
         }
-    }
-    
-    public String hashPassword(String password){
-        throw new NotImplementedException();
     }
 
     //logout event, invalidate session

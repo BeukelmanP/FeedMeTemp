@@ -5,6 +5,9 @@
  */
 package Feedback;
 
+import Database.UserDatabase;
+import Login.User;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,10 +15,37 @@ import java.util.Map;
  *
  * @author Sam Dirkx
  */
-public class Feedback {
+public class Feedback implements Serializable{
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTips() {
+        return tips;
+    }
+
+    public void setTips(String tips) {
+        this.tips = tips;
+    }
+
+    public String getTops() {
+        return tops;
+    }
+
+    public void setTops(String tops) {
+        this.tops = tops;
+    }
     private int id;
     private int sendTo;
     private int sendFrom;
+    private String title;
+    private String tips;
+    private String tops;
     private String feedback;
     
     private Map<Integer,Boolean> user_feedback;
@@ -41,10 +71,13 @@ public class Feedback {
         return feedback;
     }
 
-    public Feedback(int id, int sendTo, int sendFrom, String feedback) {
+    public Feedback(int id, int sendTo, int sendFrom, String title, String tips, String tops, String feedback) {
         this.id = id;
         this.sendTo = sendTo;
         this.sendFrom = sendFrom;
+        this.title = title;
+        this.tips = tips;
+        this.tops = tops;
         this.feedback = feedback;
         user_feedback = new HashMap<Integer,Boolean>();
     }
@@ -70,6 +103,10 @@ public class Feedback {
 
     @Override
     public String toString() {
-        return "Feedback{" + "id=" + id + ", sendTo=" + sendTo + ", sendFrom=" + sendFrom + ", feedback=" + feedback + '}';
+        return "Feedback{" + "id=" + id + ", sendTo=" + sendTo + ", sendFrom=" + sendFrom + ", title=" + title + ", tips=" + tips + ", tops=" + tops + ", feedback=" + feedback + "}";
+    }
+    
+    public User getUser(){
+        return UserDatabase.getUser(sendFrom);
     }
 }
