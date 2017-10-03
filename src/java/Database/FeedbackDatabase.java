@@ -273,7 +273,7 @@ public class FeedbackDatabase extends Database {
 
         try {
             con = getConnection();
-
+            removeLikeFromFeedback(feedbackId, likeFrom);
             try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO user_feedback(feedbackId, likeFrom, helpful) VALUES(?, ?, ?)")) {
                 pstmt.setInt(1, feedbackId);
                 pstmt.setInt(2, likeFrom);
