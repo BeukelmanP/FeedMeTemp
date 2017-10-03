@@ -49,11 +49,14 @@ and open the template in the editor.
                                 </p>
                                 <h:form>
                                     <h:commandLink action ="#{userData.setGiveFeedback()}"  ><i class="material-icons">feedback</i> Give feedback
-                                <f:setPropertyActionListener target="#{userData.nameUserToGiveFeedback}" value="#{User.firstname}" />
-                                <f:setPropertyActionListener target="#{userData.pictureUserToGiveFeedback}" value="#{User.picture}" />
-                                <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{User.id}" /></h:commandLink>
+                                        <f:setPropertyActionListener target="#{userData.nameUserToGiveFeedback}" value="#{User.firstname}" />
+                                        <f:setPropertyActionListener target="#{userData.pictureUserToGiveFeedback}" value="#{User.picture}" />
+                                        <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{User.id}" />
+                                    </h:commandLink>
+                                </h:form>
+                                <h:form>
                                     <h:commandLink onclick="if (!confirm('Are you sure you want to ask feedback from #{User.firstname}?'))
-                                        return false"
+                                                return false"
                                                    action="#{userData.requestFeedback(true)}"  class="edit_icon" >
                                         <i class="material-icons">loyalty</i> Ask Feedback
                                         <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{userData.userToVisit.id}" />
