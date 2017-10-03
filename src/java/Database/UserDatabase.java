@@ -72,6 +72,7 @@ public class UserDatabase extends Database {
                 pstmt.setString(4, "%" + keyword + "%");
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
+
                     User user = new User(rs.getInt("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("email"), rs.getString("image"), rs.getString("department"));
                     result.add(user);
                 }

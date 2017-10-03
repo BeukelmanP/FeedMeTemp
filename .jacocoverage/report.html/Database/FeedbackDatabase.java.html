@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,51 +22,52 @@ import java.util.logging.Logger;
  *
  * @author Gebruiker
  */
-<span class="fc" id="L23">public class FeedbackDatabase extends Database {</span>
+<span class="nc" id="L25">public class FeedbackDatabase extends Database {</span>
 
     /**
      * gets all feedback from the database
      *
      * @return ArrayList&lt;Feedback&gt;
      */
-    public ArrayList&lt;Feedback&gt; getAllFeedback() {
-<span class="fc" id="L31">        ArrayList&lt;Feedback&gt; result = new ArrayList&lt;Feedback&gt;();</span>
+    public static ArrayList&lt;Feedback&gt; getAllFeedback() {
+<span class="fc" id="L33">        ArrayList&lt;Feedback&gt; result = new ArrayList&lt;Feedback&gt;();</span>
 
-<span class="fc" id="L33">        Connection con = null;</span>
+<span class="fc" id="L35">        Connection con = null;</span>
 
         try {
-<span class="fc" id="L36">            con = getConnection();</span>
+<span class="fc" id="L38">            con = getConnection();</span>
             ResultSet rs;
 
-<span class="pc" id="L39">            try (PreparedStatement pstmt = con.prepareStatement(&quot;SELECT * FROM feedback&quot;)) {</span>
-<span class="fc" id="L40">                rs = pstmt.executeQuery();</span>
-<span class="fc bfc" id="L41" title="All 2 branches covered.">                while (rs.next()) {</span>
-<span class="fc" id="L42">                    int id = rs.getInt(&quot;id&quot;);</span>
-<span class="fc" id="L43">                    int sendTo = rs.getInt(&quot;sendTo&quot;);</span>
-<span class="fc" id="L44">                    int sendFrom = rs.getInt(&quot;sendFrom&quot;);</span>
-<span class="fc" id="L45">                    String feedbackTitle = rs.getString(&quot;title&quot;);</span>
-<span class="fc" id="L46">                    String feedbackTips = rs.getString(&quot;tips&quot;);</span>
-<span class="fc" id="L47">                    String feedbackTops = rs.getString(&quot;tops&quot;);</span>
-<span class="fc" id="L48">                    String feedbackContent = rs.getString(&quot;feedback&quot;);</span>
-<span class="fc" id="L49">                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);</span>
-<span class="fc" id="L50">                    result.add(feedback);</span>
-<span class="fc" id="L51">                }</span>
-<span class="pc bpc" id="L52" title="6 of 8 branches missed.">            }</span>
-<span class="fc" id="L53">            rs.close();</span>
-<span class="nc" id="L54">        } catch (SQLException ex) {</span>
-<span class="nc" id="L55">            System.out.println(ex.getMessage());</span>
-<span class="nc" id="L56">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="pc" id="L41">            try (PreparedStatement pstmt = con.prepareStatement(&quot;SELECT * FROM feedback&quot;)) {</span>
+<span class="fc" id="L42">                rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">                while (rs.next()) {</span>
+<span class="fc" id="L44">                    int id = rs.getInt(&quot;id&quot;);</span>
+<span class="fc" id="L45">                    int sendTo = rs.getInt(&quot;sendTo&quot;);</span>
+<span class="fc" id="L46">                    int sendFrom = rs.getInt(&quot;sendFrom&quot;);</span>
+<span class="fc" id="L47">                    String feedbackTitle = rs.getString(&quot;title&quot;);</span>
+<span class="fc" id="L48">                    String feedbackTips = rs.getString(&quot;tips&quot;);</span>
+<span class="fc" id="L49">                    String feedbackTops = rs.getString(&quot;tops&quot;);</span>
+<span class="fc" id="L50">                    String feedbackContent = rs.getString(&quot;feedback&quot;);</span>
+<span class="fc" id="L51">                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);</span>
+<span class="fc" id="L52">                    feedback = FeedbackDatabase.FeedbackWithLikes(feedback);</span>
+<span class="fc" id="L53">                    result.add(feedback);</span>
+<span class="fc" id="L54">                }</span>
+<span class="pc bpc" id="L55" title="6 of 8 branches missed.">            }</span>
+<span class="fc" id="L56">            rs.close();</span>
+<span class="nc" id="L57">        } catch (SQLException ex) {</span>
+<span class="nc" id="L58">            System.out.println(ex.getMessage());</span>
+<span class="nc" id="L59">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
         } finally {
-<span class="pc bpc" id="L58" title="5 of 6 branches missed.">            if (con != null) {</span>
+<span class="pc bpc" id="L61" title="5 of 6 branches missed.">            if (con != null) {</span>
                 try {
-<span class="pc" id="L60">                    con.close();</span>
-<span class="nc" id="L61">                } catch (SQLException ex) {</span>
-<span class="nc" id="L62">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L63">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
-<span class="pc" id="L64">                }</span>
+<span class="pc" id="L63">                    con.close();</span>
+<span class="nc" id="L64">                } catch (SQLException ex) {</span>
+<span class="nc" id="L65">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L66">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
+<span class="pc" id="L67">                }</span>
             }
         }
-<span class="fc" id="L67">        return result;</span>
+<span class="fc" id="L70">        return result;</span>
     }
 
     /**
@@ -73,47 +76,48 @@ import java.util.logging.Logger;
      *
      * @return ArrayList&lt;Feedback&gt;
      */
-    public ArrayList&lt;Feedback&gt; getFeedbackSendedReceivedUser(int userId) {
-<span class="fc" id="L77">        ArrayList&lt;Feedback&gt; result = new ArrayList&lt;Feedback&gt;();</span>
+    public static ArrayList&lt;Feedback&gt; getFeedbackSendedReceivedUser(int userId) {
+<span class="fc" id="L80">        ArrayList&lt;Feedback&gt; result = new ArrayList&lt;Feedback&gt;();</span>
 
-<span class="fc" id="L79">        Connection con = null;</span>
+<span class="fc" id="L82">        Connection con = null;</span>
 
         try {
-<span class="fc" id="L82">            con = getConnection();</span>
+<span class="fc" id="L85">            con = getConnection();</span>
             ResultSet rs;
 
-<span class="pc" id="L85">            try (PreparedStatement pstmt = con.prepareStatement(&quot;SELECT * FROM feedback WHERE sendTo = ? OR sendFrom = ? ORDER BY timeCreated DESC&quot;)) {</span>
-<span class="fc" id="L86">                pstmt.setInt(1, userId);</span>
-<span class="fc" id="L87">                pstmt.setInt(2, userId);</span>
+<span class="pc" id="L88">            try (PreparedStatement pstmt = con.prepareStatement(&quot;SELECT * FROM feedback WHERE sendTo = ? OR sendFrom = ? ORDER BY timeCreated DESC&quot;)) {</span>
+<span class="fc" id="L89">                pstmt.setInt(1, userId);</span>
+<span class="fc" id="L90">                pstmt.setInt(2, userId);</span>
 
-<span class="fc" id="L89">                rs = pstmt.executeQuery();</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">                while (rs.next()) {</span>
-<span class="nc" id="L91">                    int id = rs.getInt(&quot;id&quot;);</span>
-<span class="nc" id="L92">                    int sendTo = rs.getInt(&quot;sendTo&quot;);</span>
-<span class="nc" id="L93">                    int sendFrom = rs.getInt(&quot;sendFrom&quot;);</span>
-<span class="nc" id="L94">                    String feedbackTitle = rs.getString(&quot;title&quot;);</span>
-<span class="nc" id="L95">                    String feedbackTips = rs.getString(&quot;tips&quot;);</span>
-<span class="nc" id="L96">                    String feedbackTops = rs.getString(&quot;tops&quot;);</span>
-<span class="nc" id="L97">                    String feedbackContent = rs.getString(&quot;feedback&quot;);</span>
-<span class="nc" id="L98">                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);</span>
-<span class="nc" id="L99">                    result.add(feedback);</span>
-<span class="nc" id="L100">                }</span>
-<span class="pc bpc" id="L101" title="6 of 8 branches missed.">            }</span>
-<span class="fc" id="L102">            rs.close();</span>
-<span class="nc" id="L103">        } catch (SQLException ex) {</span>
-<span class="nc" id="L104">            System.out.println(ex.getMessage());</span>
-<span class="nc" id="L105">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="fc" id="L92">                rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">                while (rs.next()) {</span>
+<span class="fc" id="L94">                    int id = rs.getInt(&quot;id&quot;);</span>
+<span class="fc" id="L95">                    int sendTo = rs.getInt(&quot;sendTo&quot;);</span>
+<span class="fc" id="L96">                    int sendFrom = rs.getInt(&quot;sendFrom&quot;);</span>
+<span class="fc" id="L97">                    String feedbackTitle = rs.getString(&quot;title&quot;);</span>
+<span class="fc" id="L98">                    String feedbackTips = rs.getString(&quot;tips&quot;);</span>
+<span class="fc" id="L99">                    String feedbackTops = rs.getString(&quot;tops&quot;);</span>
+<span class="fc" id="L100">                    String feedbackContent = rs.getString(&quot;feedback&quot;);</span>
+<span class="fc" id="L101">                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);</span>
+<span class="fc" id="L102">                    feedback = FeedbackDatabase.FeedbackWithLikes(feedback);</span>
+<span class="fc" id="L103">                    result.add(feedback);</span>
+<span class="fc" id="L104">                }</span>
+<span class="pc bpc" id="L105" title="6 of 8 branches missed.">            }</span>
+<span class="fc" id="L106">            rs.close();</span>
+<span class="nc" id="L107">        } catch (SQLException ex) {</span>
+<span class="nc" id="L108">            System.out.println(ex.getMessage());</span>
+<span class="nc" id="L109">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
         } finally {
-<span class="pc bpc" id="L107" title="5 of 6 branches missed.">            if (con != null) {</span>
+<span class="pc bpc" id="L111" title="5 of 6 branches missed.">            if (con != null) {</span>
                 try {
-<span class="pc" id="L109">                    con.close();</span>
-<span class="nc" id="L110">                } catch (SQLException ex) {</span>
-<span class="nc" id="L111">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L112">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
-<span class="pc" id="L113">                }</span>
+<span class="pc" id="L113">                    con.close();</span>
+<span class="nc" id="L114">                } catch (SQLException ex) {</span>
+<span class="nc" id="L115">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L116">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
+<span class="pc" id="L117">                }</span>
             }
         }
-<span class="fc" id="L116">        return result;</span>
+<span class="fc" id="L120">        return result;</span>
     }
 
     /**
@@ -122,46 +126,47 @@ import java.util.logging.Logger;
      *
      * @return ArrayList&lt;Feedback&gt;
      */
-    public ArrayList&lt;Feedback&gt; getFeedbackSendedByUser(int userId) {
-<span class="fc" id="L126">        ArrayList&lt;Feedback&gt; result = new ArrayList&lt;Feedback&gt;();</span>
+    public static ArrayList&lt;Feedback&gt; getFeedbackSendedByUser(int userId) {
+<span class="fc" id="L130">        ArrayList&lt;Feedback&gt; result = new ArrayList&lt;Feedback&gt;();</span>
 
-<span class="fc" id="L128">        Connection con = null;</span>
+<span class="fc" id="L132">        Connection con = null;</span>
 
         try {
-<span class="fc" id="L131">            con = getConnection();</span>
+<span class="fc" id="L135">            con = getConnection();</span>
             ResultSet rs;
 
-<span class="pc" id="L134">            try (PreparedStatement pstmt = con.prepareStatement(&quot;SELECT * FROM feedback WHERE sendFrom = ? ORDER BY timeCreated DESC&quot;)) {</span>
-<span class="fc" id="L135">                pstmt.setInt(1, userId);</span>
+<span class="pc" id="L138">            try (PreparedStatement pstmt = con.prepareStatement(&quot;SELECT * FROM feedback WHERE sendFrom = ? ORDER BY timeCreated DESC&quot;)) {</span>
+<span class="fc" id="L139">                pstmt.setInt(1, userId);</span>
 
-<span class="fc" id="L137">                rs = pstmt.executeQuery();</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">                while (rs.next()) {</span>
-<span class="nc" id="L139">                    int id = rs.getInt(&quot;id&quot;);</span>
-<span class="nc" id="L140">                    int sendTo = rs.getInt(&quot;sendTo&quot;);</span>
-<span class="nc" id="L141">                    int sendFrom = rs.getInt(&quot;sendFrom&quot;);</span>
-<span class="nc" id="L142">                    String feedbackTitle = rs.getString(&quot;title&quot;);</span>
-<span class="nc" id="L143">                    String feedbackTips = rs.getString(&quot;tips&quot;);</span>
-<span class="nc" id="L144">                    String feedbackTops = rs.getString(&quot;tops&quot;);</span>
-<span class="nc" id="L145">                    String feedbackContent = rs.getString(&quot;feedback&quot;);</span>
-<span class="nc" id="L146">                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);</span>
-<span class="nc" id="L147">                    result.add(feedback);</span>
-<span class="nc" id="L148">                }</span>
-<span class="pc bpc" id="L149" title="6 of 8 branches missed.">            }</span>
-<span class="fc" id="L150">            rs.close();</span>
-<span class="nc" id="L151">        } catch (SQLException ex) {</span>
-<span class="nc" id="L152">            System.out.println(ex.getMessage());</span>
-<span class="nc" id="L153">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="fc" id="L141">                rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">                while (rs.next()) {</span>
+<span class="fc" id="L143">                    int id = rs.getInt(&quot;id&quot;);</span>
+<span class="fc" id="L144">                    int sendTo = rs.getInt(&quot;sendTo&quot;);</span>
+<span class="fc" id="L145">                    int sendFrom = rs.getInt(&quot;sendFrom&quot;);</span>
+<span class="fc" id="L146">                    String feedbackTitle = rs.getString(&quot;title&quot;);</span>
+<span class="fc" id="L147">                    String feedbackTips = rs.getString(&quot;tips&quot;);</span>
+<span class="fc" id="L148">                    String feedbackTops = rs.getString(&quot;tops&quot;);</span>
+<span class="fc" id="L149">                    String feedbackContent = rs.getString(&quot;feedback&quot;);</span>
+<span class="fc" id="L150">                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);</span>
+<span class="fc" id="L151">                    feedback = FeedbackDatabase.FeedbackWithLikes(feedback);</span>
+<span class="fc" id="L152">                    result.add(feedback);</span>
+<span class="fc" id="L153">                }</span>
+<span class="pc bpc" id="L154" title="6 of 8 branches missed.">            }</span>
+<span class="fc" id="L155">            rs.close();</span>
+<span class="nc" id="L156">        } catch (SQLException ex) {</span>
+<span class="nc" id="L157">            System.out.println(ex.getMessage());</span>
+<span class="nc" id="L158">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
         } finally {
-<span class="pc bpc" id="L155" title="5 of 6 branches missed.">            if (con != null) {</span>
+<span class="pc bpc" id="L160" title="5 of 6 branches missed.">            if (con != null) {</span>
                 try {
-<span class="pc" id="L157">                    con.close();</span>
-<span class="nc" id="L158">                } catch (SQLException ex) {</span>
-<span class="nc" id="L159">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L160">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
-<span class="pc" id="L161">                }</span>
+<span class="pc" id="L162">                    con.close();</span>
+<span class="nc" id="L163">                } catch (SQLException ex) {</span>
+<span class="nc" id="L164">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L165">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
+<span class="pc" id="L166">                }</span>
             }
         }
-<span class="fc" id="L164">        return result;</span>
+<span class="fc" id="L169">        return result;</span>
     }
 
     /**
@@ -171,175 +176,318 @@ import java.util.logging.Logger;
      * @return ArrayList&lt;Feedback&gt;
      */
     public static ArrayList&lt;Feedback&gt; getFeedbackReceivedByUser(int userId) {
-<span class="fc" id="L174">        ArrayList&lt;Feedback&gt; result = new ArrayList&lt;Feedback&gt;();</span>
-<span class="fc" id="L175">        Connection con = null;</span>
+<span class="fc" id="L179">        ArrayList&lt;Feedback&gt; result = new ArrayList&lt;Feedback&gt;();</span>
+<span class="fc" id="L180">        Connection con = null;</span>
 
         try {
-<span class="fc" id="L178">            con = getConnection();</span>
+<span class="fc" id="L183">            con = getConnection();</span>
             ResultSet rs;
-<span class="pc" id="L180">            try (PreparedStatement pstmt = con.prepareStatement(&quot;SELECT * FROM feedback WHERE sendTo = ? ORDER BY timeCreated DESC&quot;)) {</span>
-<span class="fc" id="L181">                pstmt.setInt(1, userId);</span>
+<span class="pc" id="L185">            try (PreparedStatement pstmt = con.prepareStatement(&quot;SELECT * FROM feedback WHERE sendTo = ? ORDER BY timeCreated DESC&quot;)) {</span>
+<span class="fc" id="L186">                pstmt.setInt(1, userId);</span>
 
-<span class="fc" id="L183">                rs = pstmt.executeQuery();</span>
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">                while (rs.next()) {</span>
-<span class="nc" id="L185">                    int id = rs.getInt(&quot;id&quot;);</span>
-<span class="nc" id="L186">                    int sendTo = rs.getInt(&quot;sendTo&quot;);</span>
-<span class="nc" id="L187">                    int sendFrom = rs.getInt(&quot;sendFrom&quot;);</span>
-<span class="nc" id="L188">                    String feedbackTitle = rs.getString(&quot;title&quot;);</span>
-<span class="nc" id="L189">                    String feedbackTips = rs.getString(&quot;tips&quot;);</span>
-<span class="nc" id="L190">                    String feedbackTops = rs.getString(&quot;tops&quot;);</span>
-<span class="nc" id="L191">                    String feedbackContent = rs.getString(&quot;feedback&quot;);</span>
-<span class="nc" id="L192">                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);</span>
-<span class="nc" id="L193">                    result.add(feedback);</span>
-<span class="nc" id="L194">                }</span>
-<span class="pc bpc" id="L195" title="6 of 8 branches missed.">            }</span>
-<span class="fc" id="L196">            rs.close();</span>
-<span class="nc" id="L197">        } catch (SQLException ex) {</span>
-<span class="nc" id="L198">            System.out.println(ex.getMessage());</span>
-<span class="nc" id="L199">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="fc" id="L188">                rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">                while (rs.next()) {</span>
+<span class="fc" id="L190">                    int id = rs.getInt(&quot;id&quot;);</span>
+<span class="fc" id="L191">                    int sendTo = rs.getInt(&quot;sendTo&quot;);</span>
+<span class="fc" id="L192">                    int sendFrom = rs.getInt(&quot;sendFrom&quot;);</span>
+<span class="fc" id="L193">                    String feedbackTitle = rs.getString(&quot;title&quot;);</span>
+<span class="fc" id="L194">                    String feedbackTips = rs.getString(&quot;tips&quot;);</span>
+<span class="fc" id="L195">                    String feedbackTops = rs.getString(&quot;tops&quot;);</span>
+<span class="fc" id="L196">                    String feedbackContent = rs.getString(&quot;feedback&quot;);</span>
+<span class="fc" id="L197">                    Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);</span>
+<span class="fc" id="L198">                    feedback = FeedbackDatabase.FeedbackWithLikes(feedback);</span>
+<span class="fc" id="L199">                    result.add(feedback);</span>
+<span class="fc" id="L200">                }</span>
+<span class="pc bpc" id="L201" title="6 of 8 branches missed.">            }</span>
+<span class="fc" id="L202">            rs.close();</span>
+<span class="nc" id="L203">        } catch (SQLException ex) {</span>
+<span class="nc" id="L204">            System.out.println(ex.getMessage());</span>
+<span class="nc" id="L205">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
         } finally {
-<span class="pc bpc" id="L201" title="5 of 6 branches missed.">            if (con != null) {</span>
+<span class="pc bpc" id="L207" title="5 of 6 branches missed.">            if (con != null) {</span>
                 try {
-<span class="pc" id="L203">                    con.close();</span>
-<span class="nc" id="L204">                } catch (SQLException ex) {</span>
-<span class="nc" id="L205">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L206">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
-<span class="pc" id="L207">                }</span>
+<span class="pc" id="L209">                    con.close();</span>
+<span class="nc" id="L210">                } catch (SQLException ex) {</span>
+<span class="nc" id="L211">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L212">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
+<span class="pc" id="L213">                }</span>
             }
         }
-<span class="fc" id="L210">        return result;</span>
+<span class="fc" id="L216">        return result;</span>
+    }
+
+    /**
+     * gets all (dis)likes of a feedback-object from the database.
+     *
+     * @param feedbackID
+     * @return
+     */
+    public static Map&lt;Integer, Boolean&gt; getLikesOfFeedback(Integer feedbackID) {
+<span class="fc" id="L226">        Map&lt;Integer, Boolean&gt; result = new HashMap&lt;Integer, Boolean&gt;();</span>
+
+<span class="fc" id="L228">        Connection con = null;</span>
+
+        try {
+<span class="fc" id="L231">            con = getConnection();</span>
+            ResultSet rs;
+
+<span class="pc" id="L234">            try (PreparedStatement pstmt = con.prepareStatement(&quot;SELECT * FROM user_feedback WHERE feedbackId = ?&quot;)) {</span>
+<span class="fc" id="L235">                pstmt.setInt(1, feedbackID);</span>
+
+<span class="fc" id="L237">                rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">                while (rs.next()) {</span>
+<span class="fc" id="L239">                    Integer likeFrom = rs.getInt(&quot;likeFrom&quot;);</span>
+<span class="fc" id="L240">                    Boolean helpful = rs.getBoolean(&quot;helpful&quot;);</span>
+<span class="fc" id="L241">                    result.put(likeFrom, helpful);</span>
+<span class="fc" id="L242">                }</span>
+<span class="pc bpc" id="L243" title="6 of 8 branches missed.">            }</span>
+<span class="fc" id="L244">            rs.close();</span>
+<span class="nc" id="L245">        } catch (SQLException ex) {</span>
+<span class="nc" id="L246">            System.out.println(ex.getMessage());</span>
+<span class="nc" id="L247">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
+        } finally {
+<span class="pc bpc" id="L249" title="5 of 6 branches missed.">            if (con != null) {</span>
+                try {
+<span class="pc" id="L251">                    con.close();</span>
+<span class="nc" id="L252">                } catch (SQLException ex) {</span>
+<span class="nc" id="L253">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L254">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
+<span class="pc" id="L255">                }</span>
+            }
+        }
+<span class="fc" id="L258">        return result;</span>
+    }
+
+    /**
+     * uploads (dis)like to the database.
+     *
+     * @param feedbackId id of feedback that receives the (dis)like
+     * @param likeFrom feedbackGiver's id
+     * @param helpful helpful or not helpful?
+     * @return
+     */
+    public static Boolean giveLikeToFeedback(Integer feedbackId, Integer likeFrom, Boolean helpful) {
+<span class="fc" id="L270">        Boolean result = false;</span>
+
+<span class="fc" id="L272">        Connection con = null;</span>
+
+        try {
+<span class="fc" id="L275">            con = getConnection();</span>
+
+<span class="pc" id="L277">            try (PreparedStatement pstmt = con.prepareStatement(&quot;INSERT INTO user_feedback(feedbackId, likeFrom, helpful) VALUES(?, ?, ?)&quot;)) {</span>
+<span class="fc" id="L278">                pstmt.setInt(1, feedbackId);</span>
+<span class="fc" id="L279">                pstmt.setInt(2, likeFrom);</span>
+<span class="fc" id="L280">                pstmt.setBoolean(3, helpful);</span>
+
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">                if (pstmt.executeUpdate() &gt; 0) {</span>
+<span class="fc" id="L283">                    result = true;</span>
+                }
+<span class="pc bpc" id="L285" title="6 of 8 branches missed.">            }</span>
+<span class="nc" id="L286">        } catch (SQLException ex) {</span>
+<span class="nc" id="L287">            System.out.println(ex.getMessage());</span>
+<span class="nc" id="L288">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
+        } finally {
+<span class="pc bpc" id="L290" title="5 of 6 branches missed.">            if (con != null) {</span>
+                try {
+<span class="pc" id="L292">                    con.close();</span>
+<span class="nc" id="L293">                } catch (SQLException ex) {</span>
+<span class="nc" id="L294">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L295">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
+<span class="pc" id="L296">                }</span>
+            }
+        }
+<span class="fc" id="L299">        return result;</span>
+    }
+
+    /**
+     * removes (dis)like of feedback from the database.
+     *
+     * @param feedbackId
+     * @param likeFrom
+     * @return
+     */
+    public static Boolean removeLikeFromFeedback(Integer feedbackId, Integer likeFrom) {
+<span class="fc" id="L310">        Boolean result = false;</span>
+
+<span class="fc" id="L312">        Connection con = null;</span>
+
+        try {
+<span class="fc" id="L315">            con = getConnection();</span>
+
+<span class="pc" id="L317">            try (PreparedStatement pstmt = con.prepareStatement(&quot;DELETE FROM user_feedback WHERE feedbackId = ? AND likeFrom = ?&quot;)) {</span>
+<span class="fc" id="L318">                pstmt.setInt(1, feedbackId);</span>
+<span class="fc" id="L319">                pstmt.setInt(2, likeFrom);</span>
+
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">                if (pstmt.executeUpdate() &gt; 0) {</span>
+<span class="fc" id="L322">                    result = true;</span>
+                }
+<span class="pc bpc" id="L324" title="6 of 8 branches missed.">            }</span>
+<span class="nc" id="L325">        } catch (SQLException ex) {</span>
+<span class="nc" id="L326">            System.out.println(ex.getMessage());</span>
+<span class="nc" id="L327">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
+        } finally {
+<span class="pc bpc" id="L329" title="5 of 6 branches missed.">            if (con != null) {</span>
+                try {
+<span class="pc" id="L331">                    con.close();</span>
+<span class="nc" id="L332">                } catch (SQLException ex) {</span>
+<span class="nc" id="L333">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L334">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
+<span class="pc" id="L335">                }</span>
+            }
+        }
+<span class="fc" id="L338">        return result;</span>
+    }
+
+    /**
+     * adds likes to a feedback-object
+     *
+     * @param feedback
+     * @return
+     */
+    private static Feedback FeedbackWithLikes(Feedback feedback) {
+<span class="fc" id="L348">        Feedback result = feedback;</span>
+
+        //add the likes to the feedback
+<span class="fc" id="L351">        Map&lt;Integer, Boolean&gt; likesOfFeedback = FeedbackDatabase.getLikesOfFeedback(result.getId());</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">        for (Map.Entry&lt;Integer, Boolean&gt; entry : likesOfFeedback.entrySet()) {</span>
+<span class="fc" id="L353">            Integer key = entry.getKey();</span>
+<span class="fc" id="L354">            Boolean value = entry.getValue();</span>
+<span class="fc" id="L355">            result.likeFeedback(key, value);</span>
+<span class="fc" id="L356">        }</span>
+
+<span class="fc" id="L358">        return result;</span>
     }
 
     public static ArrayList&lt;FeedbackRequest&gt; getFeedbackRequestSend(int userId) {
-<span class="fc" id="L214">        ArrayList&lt;FeedbackRequest&gt; result = new ArrayList&lt;FeedbackRequest&gt;();</span>
-<span class="fc" id="L215">        Connection con = null;</span>
+<span class="fc" id="L362">        ArrayList&lt;FeedbackRequest&gt; result = new ArrayList&lt;FeedbackRequest&gt;();</span>
+<span class="fc" id="L363">        Connection con = null;</span>
 
         try {
-<span class="fc" id="L218">            con = getConnection();</span>
+<span class="fc" id="L366">            con = getConnection();</span>
             ResultSet rs;
-<span class="pc" id="L220">            try (PreparedStatement pstmt = con.prepareStatement(&quot;Select u1.firstname as 'user1first', u1.lastname as 'user1last',u1.image as 'user1image', u2.firstname as 'user2first',u2.lastname as 'user2last',u2.image as 'user2image', rf.sendFrom, rf.sendTo From user u1, user u2, request_feedback rf Where u1.id = rf.sendFrom AND u2.id = rf.sendTo AND sendFrom=?;&quot;)) {</span>
-<span class="fc" id="L221">                pstmt.setInt(1, userId);</span>
+<span class="pc" id="L368">            try (PreparedStatement pstmt = con.prepareStatement(&quot;Select u1.firstname as 'user1first', u1.lastname as 'user1last',u1.image as 'user1image', u2.firstname as 'user2first',u2.lastname as 'user2last',u2.image as 'user2image', rf.sendFrom, rf.sendTo From user u1, user u2, request_feedback rf Where u1.id = rf.sendFrom AND u2.id = rf.sendTo AND sendFrom=?;&quot;)) {</span>
+<span class="fc" id="L369">                pstmt.setInt(1, userId);</span>
 
-<span class="fc" id="L223">                rs = pstmt.executeQuery();</span>
-<span class="fc bfc" id="L224" title="All 2 branches covered.">                while (rs.next()) {</span>
-<span class="fc" id="L225">                    String nameFrom = rs.getString(&quot;user1first&quot;) + &quot; &quot; + rs.getString(&quot;user1last&quot;);</span>
-<span class="fc" id="L226">                    String nameTo = rs.getString(&quot;user2first&quot;) + &quot; &quot; + rs.getString(&quot;user2last&quot;);</span>
-<span class="fc" id="L227">                    int idFrom = rs.getInt(&quot;sendFrom&quot;);</span>
-<span class="fc" id="L228">                    int idTo = rs.getInt(&quot;sendTo&quot;);</span>
-<span class="fc" id="L229">                    String imageFrom = rs.getString(&quot;user1image&quot;);</span>
-<span class="fc" id="L230">                    String imageTo = rs.getString(&quot;user2image&quot;);</span>
-<span class="fc" id="L231">                    FeedbackRequest req = new FeedbackRequest(idFrom, idTo, nameFrom, nameTo, imageFrom, imageTo);</span>
-<span class="fc" id="L232">                    result.add(req);</span>
-<span class="fc" id="L233">                }</span>
-<span class="pc bpc" id="L234" title="6 of 8 branches missed.">            }</span>
-<span class="fc" id="L235">            rs.close();</span>
-<span class="nc" id="L236">        } catch (SQLException ex) {</span>
-<span class="nc" id="L237">            System.out.println(ex.getMessage());</span>
-<span class="nc" id="L238">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="fc" id="L371">                rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">                while (rs.next()) {</span>
+<span class="fc" id="L373">                    String nameFrom = rs.getString(&quot;user1first&quot;) + &quot; &quot; + rs.getString(&quot;user1last&quot;);</span>
+<span class="fc" id="L374">                    String nameTo = rs.getString(&quot;user2first&quot;) + &quot; &quot; + rs.getString(&quot;user2last&quot;);</span>
+<span class="fc" id="L375">                    int idFrom = rs.getInt(&quot;sendFrom&quot;);</span>
+<span class="fc" id="L376">                    int idTo = rs.getInt(&quot;sendTo&quot;);</span>
+<span class="fc" id="L377">                    String imageFrom = rs.getString(&quot;user1image&quot;);</span>
+<span class="fc" id="L378">                    String imageTo = rs.getString(&quot;user2image&quot;);</span>
+<span class="fc" id="L379">                    FeedbackRequest req = new FeedbackRequest(idFrom, idTo, nameFrom, nameTo, imageFrom, imageTo);</span>
+<span class="fc" id="L380">                    result.add(req);</span>
+<span class="fc" id="L381">                }</span>
+<span class="pc bpc" id="L382" title="6 of 8 branches missed.">            }</span>
+<span class="fc" id="L383">            rs.close();</span>
+<span class="nc" id="L384">        } catch (SQLException ex) {</span>
+<span class="nc" id="L385">            System.out.println(ex.getMessage());</span>
+<span class="nc" id="L386">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
         } finally {
-<span class="pc bpc" id="L240" title="5 of 6 branches missed.">            if (con != null) {</span>
+<span class="pc bpc" id="L388" title="5 of 6 branches missed.">            if (con != null) {</span>
                 try {
-<span class="pc" id="L242">                    con.close();</span>
-<span class="nc" id="L243">                } catch (SQLException ex) {</span>
-<span class="nc" id="L244">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L245">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
-<span class="pc" id="L246">                }</span>
+<span class="pc" id="L390">                    con.close();</span>
+<span class="nc" id="L391">                } catch (SQLException ex) {</span>
+<span class="nc" id="L392">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L393">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
+<span class="pc" id="L394">                }</span>
             }
         }
-<span class="fc" id="L249">        return result;</span>
+<span class="fc" id="L397">        return result;</span>
     }
 
     public static ArrayList&lt;FeedbackRequest&gt; getFeedbackRequestRecieved(int userId) {
-<span class="fc" id="L253">        ArrayList&lt;FeedbackRequest&gt; result = new ArrayList&lt;FeedbackRequest&gt;();</span>
-<span class="fc" id="L254">        Connection con = null;</span>
+<span class="fc" id="L401">        ArrayList&lt;FeedbackRequest&gt; result = new ArrayList&lt;FeedbackRequest&gt;();</span>
+<span class="fc" id="L402">        Connection con = null;</span>
 
         try {
-<span class="fc" id="L257">            con = getConnection();</span>
+<span class="fc" id="L405">            con = getConnection();</span>
             ResultSet rs;
-<span class="pc" id="L259">            try (PreparedStatement pstmt = con.prepareStatement(&quot;Select u1.firstname as 'user1first', u1.lastname as 'user1last',u1.image as 'user1image', u2.firstname as 'user2first',u2.lastname as 'user2last',u2.image as 'user2image', rf.sendFrom, rf.sendTo From user u1, user u2, request_feedback rf Where u1.id = rf.sendFrom AND u2.id = rf.sendTo AND sendTo=?;&quot;)) {</span>
-<span class="fc" id="L260">                pstmt.setInt(1, userId);</span>
+<span class="pc" id="L407">            try (PreparedStatement pstmt = con.prepareStatement(&quot;Select u1.firstname as 'user1first', u1.lastname as 'user1last',u1.image as 'user1image', u2.firstname as 'user2first',u2.lastname as 'user2last',u2.image as 'user2image', rf.sendFrom, rf.sendTo From user u1, user u2, request_feedback rf Where u1.id = rf.sendFrom AND u2.id = rf.sendTo AND sendTo=?;&quot;)) {</span>
+<span class="fc" id="L408">                pstmt.setInt(1, userId);</span>
 
-<span class="fc" id="L262">                rs = pstmt.executeQuery();</span>
-<span class="fc bfc" id="L263" title="All 2 branches covered.">                while (rs.next()) {</span>
-<span class="fc" id="L264">                    String nameFrom = rs.getString(&quot;user1first&quot;) + &quot; &quot; + rs.getString(&quot;user1last&quot;);</span>
-<span class="fc" id="L265">                    String nameTo = rs.getString(&quot;user2first&quot;) + &quot; &quot; + rs.getString(&quot;user2last&quot;);</span>
-<span class="fc" id="L266">                    int idFrom = rs.getInt(&quot;sendFrom&quot;);</span>
-<span class="fc" id="L267">                    int idTo = rs.getInt(&quot;sendTo&quot;);</span>
-<span class="fc" id="L268">                    String imageFrom = rs.getString(&quot;user1image&quot;);</span>
-<span class="fc" id="L269">                    String imageTo = rs.getString(&quot;user2image&quot;);</span>
-<span class="fc" id="L270">                    FeedbackRequest req = new FeedbackRequest(idFrom, idTo, nameFrom, nameTo, imageFrom, imageTo);</span>
-<span class="fc" id="L271">                    result.add(req);</span>
-<span class="fc" id="L272">                }</span>
-<span class="pc bpc" id="L273" title="6 of 8 branches missed.">            }</span>
-<span class="fc" id="L274">            rs.close();</span>
-<span class="nc" id="L275">        } catch (SQLException ex) {</span>
-<span class="nc" id="L276">            System.out.println(ex.getMessage());</span>
-<span class="nc" id="L277">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="fc" id="L410">                rs = pstmt.executeQuery();</span>
+<span class="fc bfc" id="L411" title="All 2 branches covered.">                while (rs.next()) {</span>
+<span class="fc" id="L412">                    String nameFrom = rs.getString(&quot;user1first&quot;) + &quot; &quot; + rs.getString(&quot;user1last&quot;);</span>
+<span class="fc" id="L413">                    String nameTo = rs.getString(&quot;user2first&quot;) + &quot; &quot; + rs.getString(&quot;user2last&quot;);</span>
+<span class="fc" id="L414">                    int idFrom = rs.getInt(&quot;sendFrom&quot;);</span>
+<span class="fc" id="L415">                    int idTo = rs.getInt(&quot;sendTo&quot;);</span>
+<span class="fc" id="L416">                    String imageFrom = rs.getString(&quot;user1image&quot;);</span>
+<span class="fc" id="L417">                    String imageTo = rs.getString(&quot;user2image&quot;);</span>
+<span class="fc" id="L418">                    FeedbackRequest req = new FeedbackRequest(idFrom, idTo, nameFrom, nameTo, imageFrom, imageTo);</span>
+<span class="fc" id="L419">                    result.add(req);</span>
+<span class="fc" id="L420">                }</span>
+<span class="pc bpc" id="L421" title="6 of 8 branches missed.">            }</span>
+<span class="fc" id="L422">            rs.close();</span>
+<span class="nc" id="L423">        } catch (SQLException ex) {</span>
+<span class="nc" id="L424">            System.out.println(ex.getMessage());</span>
+<span class="nc" id="L425">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
         } finally {
-<span class="pc bpc" id="L279" title="5 of 6 branches missed.">            if (con != null) {</span>
+<span class="pc bpc" id="L427" title="5 of 6 branches missed.">            if (con != null) {</span>
                 try {
-<span class="pc" id="L281">                    con.close();</span>
-<span class="nc" id="L282">                } catch (SQLException ex) {</span>
-<span class="nc" id="L283">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L284">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
-<span class="pc" id="L285">                }</span>
+<span class="pc" id="L429">                    con.close();</span>
+<span class="nc" id="L430">                } catch (SQLException ex) {</span>
+<span class="nc" id="L431">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L432">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
+<span class="pc" id="L433">                }</span>
             }
         }
-<span class="fc" id="L288">        return result;</span>
+<span class="fc" id="L436">        return result;</span>
     }
 
     public static void InsertFeedbackRequest(int from, int to) {
-<span class="fc" id="L292">        Connection con = null;</span>
+<span class="fc" id="L440">        Connection con = null;</span>
 
         try {
-<span class="fc" id="L295">            con = getConnection();</span>
-<span class="fc" id="L296">            try (PreparedStatement pstmt = con.prepareStatement(&quot;INSERT INTO request_feedback (`sendFrom`, `sendTo`) VALUES (?, ?);&quot;)) {</span>
-<span class="fc" id="L297">                pstmt.setInt(1, from);</span>
-<span class="fc" id="L298">                pstmt.setInt(2, to);</span>
-<span class="nc" id="L299">                pstmt.executeUpdate();</span>
-<span class="pc bpc" id="L300" title="6 of 8 branches missed.">            }</span>
-<span class="fc" id="L301">        } catch (SQLException ex) {</span>
-<span class="fc" id="L302">            System.out.println(ex.getMessage());</span>
-<span class="fc" id="L303">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="fc" id="L443">            con = getConnection();</span>
+<span class="fc" id="L444">            try (PreparedStatement pstmt = con.prepareStatement(&quot;INSERT INTO request_feedback (`sendFrom`, `sendTo`) VALUES (?, ?);&quot;)) {</span>
+<span class="fc" id="L445">                pstmt.setInt(1, from);</span>
+<span class="fc" id="L446">                pstmt.setInt(2, to);</span>
+<span class="nc" id="L447">                pstmt.executeUpdate();</span>
+<span class="pc bpc" id="L448" title="6 of 8 branches missed.">            }</span>
+<span class="fc" id="L449">        } catch (SQLException ex) {</span>
+<span class="fc" id="L450">            System.out.println(ex.getMessage());</span>
+<span class="fc" id="L451">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
         } finally {
-<span class="pc bpc" id="L305" title="5 of 6 branches missed.">            if (con != null) {</span>
+<span class="pc bpc" id="L453" title="5 of 6 branches missed.">            if (con != null) {</span>
                 try {
-<span class="pc" id="L307">                    con.close();</span>
-<span class="nc" id="L308">                } catch (SQLException ex) {</span>
-<span class="nc" id="L309">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L310">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
-<span class="pc" id="L311">                }</span>
+<span class="pc" id="L455">                    con.close();</span>
+<span class="nc" id="L456">                } catch (SQLException ex) {</span>
+<span class="nc" id="L457">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L458">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
+<span class="pc" id="L459">                }</span>
             }
         }
-<span class="fc" id="L314">    }</span>
+<span class="fc" id="L462">    }</span>
 
     public static void InsertFeedback(int from, int to, String title, String tips, String tops, String feedback) {
-<span class="nc" id="L317">        Connection con = null;</span>
+<span class="nc" id="L465">        Connection con = null;</span>
         try {
-<span class="nc" id="L319">            con = getConnection();</span>
-<span class="nc" id="L320">            try (PreparedStatement pstmt = con.prepareStatement(&quot;INSERT INTO feedback (sendTo, sendFrom, title, tips, tops, feedback, timeCreated) VALUES (?,?,?,?,?,?, CURRENT_TIMESTAMP);&quot;)) {</span>
-<span class="nc" id="L321">                pstmt.setInt(1, to);</span>
-<span class="nc" id="L322">                pstmt.setInt(2, from);</span>
-<span class="nc" id="L323">                pstmt.setString(3, title);</span>
-<span class="nc" id="L324">                pstmt.setString(4, tips);</span>
-<span class="nc" id="L325">                pstmt.setString(5, tops);</span>
-<span class="nc" id="L326">                pstmt.setString(6, feedback);</span>
-<span class="nc" id="L327">                pstmt.executeUpdate();</span>
-<span class="nc bnc" id="L328" title="All 8 branches missed.">            }</span>
-<span class="nc" id="L329">        } catch (SQLException ex) {</span>
-<span class="nc" id="L330">            System.out.println(ex.getMessage());</span>
-<span class="nc" id="L331">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L467">            con = getConnection();</span>
+<span class="nc" id="L468">            try (PreparedStatement pstmt = con.prepareStatement(&quot;INSERT INTO feedback (sendTo, sendFrom, title, tips, tops, feedback, timeCreated) VALUES (?,?,?,?,?,?, CURRENT_TIMESTAMP);&quot;)) {</span>
+<span class="nc" id="L469">                pstmt.setInt(1, to);</span>
+<span class="nc" id="L470">                pstmt.setInt(2, from);</span>
+<span class="nc" id="L471">                pstmt.setString(3, title);</span>
+<span class="nc" id="L472">                pstmt.setString(4, tips);</span>
+<span class="nc" id="L473">                pstmt.setString(5, tops);</span>
+<span class="nc" id="L474">                pstmt.setString(6, feedback);</span>
+<span class="nc" id="L475">                pstmt.executeUpdate();</span>
+<span class="nc bnc" id="L476" title="All 8 branches missed.">            }</span>
+<span class="nc" id="L477">        } catch (SQLException ex) {</span>
+<span class="nc" id="L478">            System.out.println(ex.getMessage());</span>
+<span class="nc" id="L479">            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);</span>
         } finally {
-<span class="nc bnc" id="L333" title="All 6 branches missed.">            if (con != null) {</span>
+<span class="nc bnc" id="L481" title="All 6 branches missed.">            if (con != null) {</span>
                 try {
-<span class="nc" id="L335">                    con.close();</span>
-<span class="nc" id="L336">                } catch (SQLException ex) {</span>
-<span class="nc" id="L337">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L338">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
-<span class="nc" id="L339">                }</span>
+<span class="nc" id="L483">                    con.close();</span>
+<span class="nc" id="L484">                } catch (SQLException ex) {</span>
+<span class="nc" id="L485">                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L486">                    System.out.println(&quot;connection isnt closed but cant close&quot;);</span>
+<span class="nc" id="L487">                }</span>
             }
         }
-<span class="nc" id="L342">    }</span>
+<span class="nc" id="L490">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

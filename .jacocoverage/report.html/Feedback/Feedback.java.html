@@ -56,7 +56,7 @@ public class Feedback implements Serializable{
     }
 
     public int getId() {
-<span class="nc" id="L59">        return id;</span>
+<span class="fc" id="L59">        return id;</span>
     }
 
     public int getSendTo() {
@@ -89,16 +89,25 @@ public class Feedback implements Serializable{
      */
     public void likeFeedback(Integer id, Boolean helpful)
     {
-<span class="nc" id="L92">        user_feedback.put(id, helpful);</span>
-<span class="nc" id="L93">    }</span>
+<span class="fc" id="L92">        user_feedback.put(id, helpful);</span>
+<span class="fc" id="L93">    }</span>
+    
+    /**
+     * removes a like from this feedback of user
+     * @param id id of user that placed the feedback
+     */
+    public void removeFeedback(Integer id)
+    {
+<span class="nc" id="L101">        user_feedback.remove(id);</span>
+<span class="nc" id="L102">    }</span>
 
     @Override
     public String toString() {
-<span class="fc" id="L97">        return &quot;Feedback{&quot; + &quot;id=&quot; + id + &quot;, sendTo=&quot; + sendTo + &quot;, sendFrom=&quot; + sendFrom + &quot;, title=&quot; + title + &quot;, tips=&quot; + tips + &quot;, tops=&quot; + tops + &quot;, feedback=&quot; + feedback + &quot;}&quot;;</span>
+<span class="nc" id="L106">        return &quot;Feedback{&quot; + &quot;id=&quot; + id + &quot;, sendTo=&quot; + sendTo + &quot;, sendFrom=&quot; + sendFrom + &quot;, title=&quot; + title + &quot;, tips=&quot; + tips + &quot;, tops=&quot; + tops + &quot;, feedback=&quot; + feedback + &quot;}&quot;;</span>
     }
     
     public User getUser(){
-<span class="nc" id="L101">        return UserDatabase.getUser(sendFrom);</span>
+<span class="nc" id="L110">        return UserDatabase.getUser(sendFrom);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

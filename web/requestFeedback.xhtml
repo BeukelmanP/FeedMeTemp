@@ -71,7 +71,7 @@ and open the template in the editor.
                 </div>
                 <div style="background-color: #fcfcfc;" class="col s6 ">
                     <H5>Requests:</H5>                  
-                    <h:dataTable value = "#{userData.getReceivedRequest()}" var = "User" rendered="#{not empty userData.getReceivedRequest()}">
+                    <h:dataTable value = "#{userData.getReceivedRequest()}" var = "FeedbackRequest" rendered="#{not empty userData.getReceivedRequest()}">
                         <h:column>    				
                             <f:facet name = "header">Request's Received</f:facet>    				
                             <img style="border-radius: 40%; Height:100px;width:100px;" src="#{FeedbackRequest.imageFrom}"/>
