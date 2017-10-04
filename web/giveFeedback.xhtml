@@ -29,33 +29,32 @@ and open the template in the editor.
             <div class="row" style="height: 10%"></div>
             <div style="background-color: #fcfcfc;" class="col s8 offset-s2 z-depth-5">
                 <!--Image off User to give feedback to-->
-                <H2><img src="#{userData.pictureUserToGiveFeedback}" style="border-radius: 50%; Height:100px;width:100px;"/>
+                <H2><img src="#{SessionController.feedbackController.pictureUserToGiveFeedback}" style="border-radius: 50%; Height:100px;width:100px;"/>
                     <!--Name of user to give Feedback to-->
-                    <h:outputText value = "#{userData.nameUserToGiveFeedback}"/>
+                    <h:outputText value = "#{SessionController.feedbackController.nameUserToGiveFeedback}"/>
                 </H2>
                 <h:form>
                     <div class="input-field col s12">
-                        <h:inputText id="Title" class="validate" value="#{giveFeedback.title}" />
+                        <h:inputText id="Title" class="validate" value="#{SessionController.feedbackController.title}" />
                         <label for="Title">Title</label>
                     </div>
                     <div class="input-field col s12">
-                        <h:inputTextarea id="textareaTips" class="materialize-textarea" value="#{giveFeedback.tips}" />
+                        <h:inputTextarea id="textareaTips" class="materialize-textarea" value="#{SessionController.feedbackController.tips}" />
                         <label for="textareaTips">Tips</label>
                     </div>
                     <div class="input-field col s12">
-                        <h:inputTextarea id="textareaTops" class="materialize-textarea" value="#{giveFeedback.tops}" />
+                        <h:inputTextarea id="textareaTops" class="materialize-textarea" value="#{SessionController.feedbackController.tops}" />
                         <label for="textareaTops">Tops</label>
                     </div>
                     <div class="input-field col s12">
-                        <h:inputTextarea id="textareaFeedback" class="validate materialize-textarea" value="#{giveFeedback.feedback}" />
+                        <h:inputTextarea id="textareaFeedback" class="validate materialize-textarea" value="#{SessionController.feedbackController.feedback}" />
                         <label for="textareaFeedback">General Feedback</label>
                     </div>
                     Overall score:
-                        <input type="range" id="score" min="1" max="10" value="#{giveFeedback.score}" />
+                        <input type="range" id="score" min="1" max="10" value="#{SessionController.feedbackController.score}" />
                     <p class="range-field">
                     </p>
-                        <input type="submit" id="submit" class="btn waves-effect waves-light" value="Submit" onclick="if (!confirm('Are you sure you want to give this feedback to #{userData.nameUserToGiveFeedback}?'))
-                                            return false" action="#{giveFeedback.submitFeedback(userData.idUserToGiveFeedbackTo, userData.loggedInUser.id, true)}"/>
+                        <input type="submit" id="submit" class="btn waves-effect waves-light" value="Submit" onclick="  Materialize.toast(Feedback Send!', 3000, 'rounded') " action="#{SessionController.feedbackController.submitFeedback(SessionController.feedbackController.idUserToGiveFeedbackTo, SessionController.loggedInUser.id, true)}"/>
                 </h:form>
             </div>
         </div>

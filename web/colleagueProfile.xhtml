@@ -27,17 +27,17 @@ and open the template in the editor.
             <div style="background-color: #fcfcfc; min-height: 500px;" class="col s8 offset-s2 z-depth-5">
                 <div class="row" style="position: relative; left: 5%; top: 25px">
                     <div class="row">
-                        <div style="float: left; margin-right:10%;"><img style ="border-radius: 40%; height: 256px; width: 256px;" src="#{userData.userToVisit.picture}"/></div>
+                        <div style="float: left; margin-right:10%;"><img style ="border-radius: 40%; height: 256px; width: 256px;" src="#{SessionController.userdataController.getVisitedUser().picture}"/></div>
                         <div style="float: left;">
                             <div>
                                 <p class="col-md-4">
-                                    <H3><h:outputText class="col-md-8" style="color: grey" value = "#{userData.userToVisit.firstname} #{userData.userToVisit.lastname}"/></H3>
+                                    <H3><h:outputText class="col-md-8" style="color: grey" value = "#{SessionController.userdataController.getVisitedUser().firstname} #{SessionController.userdataController.getVisitedUser().lastname}"/></H3>
                                 </p>
                             </div>
                             <div>
                                 <p class="col-md-4"><i class="material-icons">mail_outline</i>
                                     <span style="display:inline-block; width: 5%;"></span>
-                                    <h:outputText class="col-md-8" style="color: grey" value = "#{userData.userToVisit.email}"/>
+                                    <h:outputText class="col-md-8" style="color: grey" value = "#{SessionController.userdataController.getVisitedUser().email}"/>
                                 </p>
                                 <p class="col-md-4"><i class="material-icons">phone_android</i>
                                     <span style="display:inline-block; width: 5%;"></span>
@@ -45,21 +45,21 @@ and open the template in the editor.
                                 </p>
                                 <p class="col-md-4"><i class="material-icons">highlight</i> Score:
                                     <span style="display:inline-block; width: 5%;"></span>
-                                    <h:outputText class="col-md-8" style="color: grey" value = "#{userData.userToVisit.score}"/>
+                                    <h:outputText class="col-md-8" style="color: grey" value = "#{SessionController.userdataController.getVisitedUser().score}"/>
                                 </p>
                                 <h:form>
-                                    <h:commandLink action ="#{userData.setGiveFeedback()}"  ><i class="material-icons">feedback</i> Give feedback
-                                        <f:setPropertyActionListener target="#{userData.nameUserToGiveFeedback}" value="#{User.firstname}" />
-                                        <f:setPropertyActionListener target="#{userData.pictureUserToGiveFeedback}" value="#{User.picture}" />
-                                        <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{User.id}" />
+                                    <h:commandLink action ="#{SessionController.navigationController.GiveFeedback()}"  ><i class="material-icons">feedback</i> Give feedback
+                                        <f:setPropertyActionListener target="#{SessionController.feedbackController.nameUserToGiveFeedback}" value="#{SessionController.userdataController.getVisitedUser().firstname}" />
+                                        <f:setPropertyActionListener target="#{SessionController.feedbackController.pictureUserToGiveFeedback}" value="#{SessionController.userdataController.getVisitedUser().picture}" />
+                                        <f:setPropertyActionListener target="#{SessionController.feedbackController.idUserToGiveFeedbackTo}" value="#{SessionController.userdataController.getVisitedUser().id}" />
                                     </h:commandLink>
                                 </h:form>
                                 <h:form>
-                                    <h:commandLink onclick="if (!confirm('Are you sure you want to ask feedback from #{User.firstname}?'))
+                                    <h:commandLink onclick="if (!confirm('Are you sure you want to ask feedback from #{SessionController.userdataController.getVisitedUser().firstname}?'))
                                                 return false"
-                                                   action="#{userData.requestFeedback(true)}"  class="edit_icon" >
+                                                action="#{SessionController.feedbackController.requestFeedback(true)}"  class="edit_icon" >
                                         <i class="material-icons">loyalty</i> Ask Feedback
-                                        <f:setPropertyActionListener target="#{userData.idUserToGiveFeedbackTo}" value="#{userData.userToVisit.id}" />
+                                        <f:setPropertyActionListener target="#{SessionController.feedbackController.idUserToGiveFeedbackTo}" value="#{SessionController.userdataController.getVisitedUser().id}" />
                                     </h:commandLink> 
                                 </h:form>
                             </div>
@@ -68,8 +68,8 @@ and open the template in the editor.
                 </div>
                 <div class="row" style="position: relative;  top: 25px">
                     <div class="row">
-                        <h:outputText value="This user don't has received any feedback" rendered="#{empty userData.getUserFeedback()}" />
-                        <h:dataTable value = "#{userData.getUserFeedback()}" var = "Feedback" rendered="#{not empty userData.getUserFeedback()}">
+                        <h:outputText value="This user don't has received any feedback" rendered="#{empty SessionController.feedbackController.getUserFeedback()}" />
+                        <h:dataTable value = "#{SessionController.feedbackController.getUserFeedback()}" var = "Feedback" rendered="#{not empty SessionController.feedbackController.getUserFeedback()}">
                             <h:column>		
                                 <f:facet name = "header">Given by</f:facet> 
                                 <p style="width: 10%;">
@@ -91,8 +91,8 @@ and open the template in the editor.
                                 </p>    
                                 <p>
                                     <h:form>
-                                        <h:commandButton id="like" class="green btn waves-effect waves-light" value="👍 helpful" action="#{Feedback.addLike(Feedback.id, userData.loggedInUser.id, true)}" />
-                                        <h:commandButton id="unlike" style="margin-left:10px" class="red btn waves-effect waves-light" value="👎 unhelpful" action="#{Feedback.addLike(Feedback.id, userData.loggedInUser.id, false)}" />
+                                        <h:commandButton id="like" class="green btn waves-effect waves-light" value="👍 helpful" action="#{Feedback.addLike(Feedback.id, UserdataController.loggedInUser.id, true)}" />
+                                        <h:commandButton id="unlike" style="margin-left:10px" class="red btn waves-effect waves-light" value="👎 unhelpful" action="#{Feedback.addLike(Feedback.id, UserdataController.loggedInUser.id, false)}" />
                                         <font style="float: right">#{Feedback.helpfulAmount}</font>
                                     </h:form>
                                 </p>

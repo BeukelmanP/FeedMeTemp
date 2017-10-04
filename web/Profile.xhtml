@@ -28,17 +28,17 @@ and open the template in the editor.
                 <div class="row" style="position: relative; left: 5%; top: 25px">
                     <div class="row">
                         <H5 style="text-align:center;">This is what your profile page looks like:</H5>
-                        <div style="float: left; margin-right:10%;"><img style ="border-radius: 40%; height: 256px; width: 256px;" src="#{userData.loggedInUser.picture}"/></div>
+                        <div style="float: left; margin-right:10%;"><img style ="border-radius: 40%; height: 256px; width: 256px;" src="#{SessionController.loggedInUser.picture}"/></div>
                         <div style="float: left;">
                             <div>
                                 <p class="col-md-4">
-                                    <H3><h:outputText class="col-md-8" style="color: grey" value = "#{userData.loggedInUser.firstname} #{userData.loggedInUser.lastname}"/></H3>
+                                    <H3><h:outputText class="col-md-8" style="color: grey" value = "#{SessionController.loggedInUser.firstname} #{SessionController.loggedInUser.lastname}"/></H3>
                                 </p>
                             </div>
                             <div>
                                 <p class="col-md-4"><i class="material-icons">mail_outline</i>
                                     <span style="display:inline-block; width: 5%;"></span>
-                                    <h:outputText class="col-md-8" style="color: grey" value = "#{userData.loggedInUser.email}"/>
+                                    <h:outputText class="col-md-8" style="color: grey" value = "#{SessionController.loggedInUser.email}"/>
                                 </p>
                                 <p class="col-md-4"><i class="material-icons">phone_android</i>
                                     <span style="display:inline-block; width: 5%;"></span>
@@ -46,7 +46,7 @@ and open the template in the editor.
                                 </p>
                                 <p class="col-md-4"><i class="material-icons">highlight</i> Score:
                                     <span style="display:inline-block; width: 5%;"></span>
-                                    <h:outputText class="col-md-8" style="color: grey" value = "#{userData.loggedInUser.score}"/>
+                                    <h:outputText class="col-md-8" style="color: grey" value = "#{SessionController.loggedInUser.score}"/>
                                 </p>
                                 
                             </div>

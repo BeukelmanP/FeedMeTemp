@@ -1,4 +1,4 @@
-package Login;
+package models;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;

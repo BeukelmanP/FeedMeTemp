@@ -3,25 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Login;
+package controllers;
 
-import Database.UserDatabase;
+import models.SessionUtils;
+import models.User;
+import dal.UserDAO;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 /**
  *
  * @author Sander
  */
 @ManagedBean
 @SessionScoped
-public class Login implements Serializable {
+public class LoginController implements Serializable {
 
     private static final long serialVersionUID = 1344828042104158293L;
 
@@ -55,7 +54,7 @@ public class Login implements Serializable {
 
     //validate login
     public String validateUsernamePassword() {
-         User usr = UserDatabase.getUser(username, password);
+         User usr = UserDAO.getUser(username, password);
         
         if (usr != null) {
             System.out.println("loggedin");

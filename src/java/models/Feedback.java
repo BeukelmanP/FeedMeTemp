@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Feedback;
+package models;
 
-import Database.UserDatabase;
-import Login.User;
+import dal.UserDAO;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -91,7 +90,7 @@ public class Feedback implements Serializable{
     
     public String addLike(Integer id, Integer userID, Boolean helpful)
     {
-        Database.FeedbackDatabase.giveLikeToFeedback(id, userID, helpful);
+        dal.FeedbackDAO.giveLikeToFeedback(id, userID, helpful);
         return "colleagueProfile";
     }
         
@@ -116,7 +115,7 @@ public class Feedback implements Serializable{
     }
     
     public User getUser(){
-        return UserDatabase.getUser(sendFrom);
+        return UserDAO.getUser(sendFrom);
     }
     
     public int getHelpfulAmount() {

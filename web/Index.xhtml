@@ -38,13 +38,13 @@
                 <div id="alertlogin"></div>
                 <div class="row">
                     <div class="input-field col s6 offset-s3">
-                        <h:inputText id="email" class="validate" value="#{login.username}" />
+                        <h:inputText id="email" class="validate" value="#{loginController.username}" />
                         <label for="email">Email</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s6 offset-s3">
-                        <h:inputSecret id="password" class="validate" value="#{login.password}" />
+                        <h:inputSecret id="password" class="validate" value="#{loginController.password}" />
                         <label for="password">Password</label>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                 <div class="row">
                     <div class=" col s12">
                         <p style="text-align:center" >
-                            <h:commandButton id="Loginbtn" class="btn btn-floating pulse" action="#{login.validateUsernamePassword()}" value="»" />
+                            <h:commandButton id="Loginbtn" class="btn btn-floating pulse" action="#{loginController.validateUsernamePassword()}" value="»" />
                         </p>
                     </div>
                 </div>

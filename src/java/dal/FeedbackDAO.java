@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Database;
+package dal;
 
-import static Database.Database.getConnection;
-import Feedback.Feedback;
-import Feedback.FeedbackRequest;
+import static dal.Database.getConnection;
+import models.Feedback;
+import models.FeedbackRequest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  *
  * @author Gebruiker
  */
-public class FeedbackDatabase extends Database {
+public class FeedbackDAO extends Database {
 
     /**
      * gets all feedback from the database
@@ -49,7 +49,7 @@ public class FeedbackDatabase extends Database {
                     String feedbackTops = rs.getString("tops");
                     String feedbackContent = rs.getString("feedback");
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);
-                    feedback = FeedbackDatabase.FeedbackWithLikes(feedback);
+                    feedback = FeedbackDAO.FeedbackWithLikes(feedback);
                     result.add(feedback);
                 }
             }
@@ -99,7 +99,7 @@ public class FeedbackDatabase extends Database {
                     String feedbackTops = rs.getString("tops");
                     String feedbackContent = rs.getString("feedback");
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);
-                    feedback = FeedbackDatabase.FeedbackWithLikes(feedback);
+                    feedback = FeedbackDAO.FeedbackWithLikes(feedback);
                     result.add(feedback);
                 }
             }
@@ -148,7 +148,7 @@ public class FeedbackDatabase extends Database {
                     String feedbackTops = rs.getString("tops");
                     String feedbackContent = rs.getString("feedback");
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);
-                    feedback = FeedbackDatabase.FeedbackWithLikes(feedback);
+                    feedback = FeedbackDAO.FeedbackWithLikes(feedback);
                     result.add(feedback);
                 }
             }
@@ -195,7 +195,7 @@ public class FeedbackDatabase extends Database {
                     String feedbackTops = rs.getString("tops");
                     String feedbackContent = rs.getString("feedback");
                     Feedback feedback = new Feedback(id, sendTo, sendFrom, feedbackTitle, feedbackTips, feedbackTops, feedbackContent);
-                    feedback = FeedbackDatabase.FeedbackWithLikes(feedback);
+                    feedback = FeedbackDAO.FeedbackWithLikes(feedback);
                     result.add(feedback);
                 }
             }
@@ -348,7 +348,7 @@ public class FeedbackDatabase extends Database {
         Feedback result = feedback;
 
         //add the likes to the feedback
-        Map<Integer, Boolean> likesOfFeedback = FeedbackDatabase.getLikesOfFeedback(result.getId());
+        Map<Integer, Boolean> likesOfFeedback = FeedbackDAO.getLikesOfFeedback(result.getId());
         for (Map.Entry<Integer, Boolean> entry : likesOfFeedback.entrySet()) {
             Integer key = entry.getKey();
             Boolean value = entry.getValue();

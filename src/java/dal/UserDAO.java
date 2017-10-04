@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Database;
+package dal;
 
-import static Database.Database.getConnection;
-import Login.User;
+import static dal.Database.getConnection;
+import models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author Gebruiker
  */
-public class UserDatabase extends Database {
+public class UserDAO extends Database {
 
     /**
      * Gets all users from the database. -------------------
@@ -119,7 +119,7 @@ public class UserDatabase extends Database {
                     rs = pstmt.executeQuery();
                     rs.next();
                     int id = rs.getInt("id");
-                    int score = FeedbackDatabase.Score(id);
+                    int score = FeedbackDAO.Score(id);
                     String firstname = rs.getString("firstname");
                     String lastname = rs.getString("lastname");
                     String email = rs.getString("email");
@@ -162,7 +162,7 @@ public class UserDatabase extends Database {
                 rs = pstmt.executeQuery();
                 rs.next();
                 id = rs.getInt("id");
-                int score = FeedbackDatabase.Score(id);
+                int score = FeedbackDAO.Score(id);
                 String firstname = rs.getString("firstname");
                 String lastname = rs.getString("lastname");
                 String email = rs.getString("email");

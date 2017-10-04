@@ -5,6 +5,7 @@
  */
 package Feedback;
 
+import controllers.FeedbackController;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -28,10 +29,10 @@ public class GiveFeedbackTest {
     @AfterClass
     public static void tearDownClass() {
     }
-    GiveFeedback give;
+    FeedbackController give;
     @Before
     public void setUp() {
-        give = new GiveFeedback();
+        give = new FeedbackController();
         give.setTitle("testtitle");
         give.setTips("testtips");
         give.setTops("testtops");
@@ -43,7 +44,7 @@ public class GiveFeedbackTest {
     }
 
     /**
-     * Test of getTitle method, of class GiveFeedback.
+     * Test of getTitle method, of class FeedbackController.
      */
     @Test
     public void testGetTitle() {
@@ -56,7 +57,7 @@ public class GiveFeedbackTest {
 
 
     /**
-     * Test of getTips method, of class GiveFeedback.
+     * Test of getTips method, of class FeedbackController.
      */
     @Test
     public void testGetTips() {
@@ -67,7 +68,7 @@ public class GiveFeedbackTest {
     }
 
     /**
-     * Test of getTops method, of class GiveFeedback.
+     * Test of getTops method, of class FeedbackController.
      */
     @Test
     public void testGetTops() {
@@ -80,7 +81,7 @@ public class GiveFeedbackTest {
 
 
     /**
-     * Test of getFeedback method, of class GiveFeedback.
+     * Test of getFeedback method, of class FeedbackController.
      */
     @Test
     public void testGetFeedback() {
@@ -93,7 +94,7 @@ public class GiveFeedbackTest {
 
 
     /**
-     * Test of getScore method, of class GiveFeedback.
+     * Test of getScore method, of class FeedbackController.
      */
     @Test
     public void testGetScore() {
@@ -105,7 +106,7 @@ public class GiveFeedbackTest {
 
 
     /**
-     * Test of submitFeedback method, of class GiveFeedback.
+     * Test of submitFeedback method, of class FeedbackController.
      */
     @Test
     public void testSubmitFeedback() {

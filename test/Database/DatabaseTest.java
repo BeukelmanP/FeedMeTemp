@@ -5,8 +5,9 @@
  */
 package Database;
 
-import Feedback.Feedback;
-import Login.User;
+import dal.Database;
+import models.Feedback;
+import models.User;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;

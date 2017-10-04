@@ -1,5 +1,5 @@
 projectKey=my:FEEDME
 serverUrl=http://localhost:9000
 dashboardUrl=http://localhost:9000/dashboard/index/my:FEEDME
-ceTaskId=AV7hcseHaYG-DhecWOl1
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AV7hcseHaYG-DhecWOl1
+ceTaskId=AV7jrFScXrifRyiMqCEb
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AV7jrFScXrifRyiMqCEb

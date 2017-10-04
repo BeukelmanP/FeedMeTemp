@@ -34,7 +34,7 @@ and open the template in the editor.
                 <div class="row" style="position: relative;  top: 25px">
                     <div class="row">
                         <h5>Your Feedback:</h5>
-                        <h:dataTable value = "#{userData.getOwnFeedback()}" var = "Feedback">
+                        <h:dataTable value = "#{SessionController.feedbackController.getOwnFeedback()}" var = "Feedback">
                             <h:column>		
                                 <f:facet name = "header">Given by</f:facet> 
                                 <p style="width: 10%;">

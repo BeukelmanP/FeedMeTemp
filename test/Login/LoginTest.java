@@ -5,6 +5,7 @@
  */
 package Login;
 
+import controllers.LoginController;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,12 +39,12 @@ public class LoginTest {
     }
 
     /**
-     * Test of getPassword method, of class Login.
+     * Test of getPassword method, of class LoginController.
      */
     @Test
     public void testGetPassword() {
         System.out.println("getPassword");
-        Login instance = new Login();
+        LoginController instance = new LoginController();
         instance.setPassword("testPassword");
         String expResult = "testPassword";
         String result = instance.getPassword();
@@ -51,23 +52,23 @@ public class LoginTest {
     }
 
     /**
-     * Test of setPassword method, of class Login.
+     * Test of setPassword method, of class LoginController.
      */
     @Test
     public void testSetPassword() {
         System.out.println("setPassword");
         String password = "testPassword";
-        Login instance = new Login();
+        LoginController instance = new LoginController();
         instance.setPassword(password);
     }
 
     /**
-     * Test of getMessage method, of class Login.
+     * Test of getMessage method, of class LoginController.
      */
     @Test
     public void testGetMessage() {
         System.out.println("getMessage");
-        Login instance = new Login();
+        LoginController instance = new LoginController();
         instance.setMessage("testMessage");
         String expResult = "testMessage";
         String result = instance.getMessage();
@@ -75,23 +76,23 @@ public class LoginTest {
     }
 
     /**
-     * Test of setMessage method, of class Login.
+     * Test of setMessage method, of class LoginController.
      */
     @Test
     public void testSetMessage() {
         System.out.println("setMessage");
         String message = "testMessage";
-        Login instance = new Login();
+        LoginController instance = new LoginController();
         instance.setMessage(message);
     }
 
     /**
-     * Test of getUsername method, of class Login.
+     * Test of getUsername method, of class LoginController.
      */
     @Test
     public void testGetUsername() {
         System.out.println("getUsername");
-        Login instance = new Login();
+        LoginController instance = new LoginController();
         instance.setUsername("testUsername");
         String expResult = "testUsername";
         String result = instance.getUsername();
@@ -100,23 +101,23 @@ public class LoginTest {
     }
 
     /**
-     * Test of setUsername method, of class Login.
+     * Test of setUsername method, of class LoginController.
      */
     @Test
     public void testSetUsername() {
         System.out.println("setUsername");
         String username = "testUsername";
-        Login instance = new Login();
+        LoginController instance = new LoginController();
         instance.setUsername(username);
     }
 
     /**
-     * Test of validateUsernamePassword method, of class Login.
+     * Test of validateUsernamePassword method, of class LoginController.
      */
     @Test
     public void testValidateUsernamePassword() {
         System.out.println("validateUsernamePassword");
-        Login instance = new Login();
+        LoginController instance = new LoginController();
         instance.setUsername("test");
         instance.setPassword("test");
         String expResult = "homePage";
@@ -127,12 +128,12 @@ public class LoginTest {
     }
 
     /**
-     * Test of logout method, of class Login.
+     * Test of logout method, of class LoginController.
      */
     @Test
     public void testLogout() {
         System.out.println("logout");
-        Login instance = new Login();
+        LoginController instance = new LoginController();
         String expResult = null;
         String result = instance.logout();
         assertEquals(expResult, result);
